@@ -1,8 +1,15 @@
+include scripts/global.mk
+
 ifeq ($(OS),Windows_NT)
-	include scripts/win.mk
-else
-	echo Sistema nao suportado
+	include scripts/windows.mk
+else ifeq ($(shell uname), Linux)
+	include scripts/linux.mk
 endif
+
+build_bin:
+	@$(MKDIR) $(BIN)
+
+.PHONY: build_bin
 
 include scripts/compile.mk
 include scripts/run.mk

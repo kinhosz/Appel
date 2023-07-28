@@ -3,7 +3,7 @@ TESTS := $(wildcard $(TEST)/**/*.cpp)
 BINS := $(patsubst $(TEST)/%.cpp, $(BIN)/%, $(TESTS))
 
 # make tests
-tests: $(BINS)
+tests: build_bin $(BINS)
 
 define print_message
 	@echo ------------------------

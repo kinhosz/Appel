@@ -1,3 +1,3 @@
 define run
-	@$(BIN)/$1
+	@$(PREFIX_RUNNER)$(BIN)/$1
 endef
