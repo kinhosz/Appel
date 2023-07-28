@@ -2,6 +2,8 @@
 #define GEOMETRY_VETOR_H
 
 struct Vetor{
+private:
+    void rotate(double &x, double &y, double alpha);
 public:
     double x, y, z;
     Vetor();
