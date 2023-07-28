@@ -1,5 +1,5 @@
-#ifndef GEOMETRY_LIGHT_H
-#define GEOMETRY_LIGHT_H
+#ifndef ENTITY_LIGHT_H
+#define ENTITY_LIGHT_H
 
 #include "point.h"
 
