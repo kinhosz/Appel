@@ -1,4 +1,4 @@
-#include <Vetor.h>
+#include <vetor.h>
 #include <math.h>
 
 Vetor::Vetor(): x(0), y(0), z(0) {}
