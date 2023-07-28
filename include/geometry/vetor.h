@@ -11,9 +11,9 @@ public:
     double angle(const Vetor &other) const;
     double norm() const;
     Vetor& normalize() const;
-    Vetor& rotate_x() const;
-    Vetor& rotate_y() const;
-    Vetor& rotate_z() const;
+    Vetor& rotate_x(double alpha) const;
+    Vetor& rotate_y(double alpha) const;
+    Vetor& rotate_z(double alpha) const;
 
     Vetor& operator+(Vetor &other) const;
     Vetor& operator-(Vetor &other) const;

@@ -31,6 +31,27 @@ Vetor& Vetor::normalize() const {
     return Vetor(x/n, y/n, z/n);
 }
 
+Vetor& Vetor::rotate_x(double alpha) const {
+    double ry = cos(alpha) * y + sin(alpha) * z;
+    double rz = -sin(alpha) * x + cos(alpha) * z;
+
+    return Vetor(x, ry, rz);
+}
+
+Vetor& Vetor::rotate_y(double alpha) const {
+    double rx = cos(alpha) * x + sin(alpha) * z;
+    double rz = -sin(alpha) * x + cos(alpha) * z;
+
+    return Vetor(rx, y, rz);
+}
+
+Vetor& Vetor::rotate_z(double alpha) const {
+    double rx = cos(alpha) * x + sin(alpha) * y;
+    double ry = -sin(alpha) * x + cos(alpha) * y;
+
+    return Vetor(rx, ry, z);
+}
+
 Vetor& Vetor::operator+(Vetor &other) const {
     return Vetor(x + other.x, y + other.y, z + other.z);
 }
