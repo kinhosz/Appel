@@ -38,21 +38,21 @@ void Vetor::rotate(double &x, double &y, double alpha) const {
     x = rx, y = ry;
 }
 
-Vetor Vetor::rotate_x(double alpha) const {
+Vetor Vetor::rotateX(double alpha) const {
     double ry = y, rz = z;
     rotate(ry, rz, alpha);
 
     return Vetor(x, ry, rz);
 }
 
-Vetor Vetor::rotate_y(double alpha) const {
+Vetor Vetor::rotateY(double alpha) const {
     double rx = x, rz = z;
     rotate(rx, rz, alpha);
 
     return Vetor(rx, y, rz);
 }
 
-Vetor Vetor::rotate_z(double alpha) const {
+Vetor Vetor::rotateZ(double alpha) const {
     double rx = x, ry = y;
     rotate(rx, ry, alpha);
 
