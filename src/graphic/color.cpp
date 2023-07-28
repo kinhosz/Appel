@@ -1,5 +1,7 @@
-#include <color.h>
+#include <graphic/color.h>
 #include <assert.h>
+
+Color::Color(): red(0), green(0), blue(0) {}
 
 Color::Color(int red, int green, int blue) {
     assert(red >= 0 && red <= 255);
