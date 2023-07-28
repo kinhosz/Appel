@@ -9,9 +9,9 @@ struct Color {
     int getRed() const;
     int getGreen() const;
     int getBlue() const;
-    double getNormRed();
-    double getNormGreen();
-    double getNormBlue();
+    double getNormRed() const;
+    double getNormGreen() const;
+    double getNormBlue() const;
 
     void setRed(int red);
     void setGreen(int green);

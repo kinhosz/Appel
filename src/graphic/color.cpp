@@ -23,15 +23,15 @@ int Color::getBlue() const {
     return blue;
 }
 
-double Color::getNormRed() {
+double Color::getNormRed() const {
     return (double) red / 255.0;
 }
 
-double Color::getNormGreen() {
+double Color::getNormGreen() const {
     return (double) green / 255.0;
 }
 
-double Color::getNormBlue() {
+double Color::getNormBlue() const {
     return (double) blue / 255.0;
 }
 
