@@ -7,19 +7,18 @@ class Light {
 private:
     Point location;
     int red, green, blue;
-    Light(Point location, int red, int green, int blue);
 public:
-    static Light create(Point location, int red, int green, int blue);
-    Point get_location() const;
-    int get_red() const;
-    int get_green() const;
-    int get_blue() const;
-    int get_rgb() const;
-    void set_location(Point location);
-    void set_red(int red);
-    void set_green(int green);
-    void set_blue(int blue);
-    void set_rgb(int red, int green, int blue);
+    Light(Point location, int red, int green, int blue);
+
+    Point getLocation() const;
+    int getRed() const;
+    int getGreen() const;
+    int getBlue() const;
+
+    void setLocation(Point location);
+    void setRed(int red);
+    void setGreen(int green);
+    void setBlue(int blue);
 };
 
 #endif
