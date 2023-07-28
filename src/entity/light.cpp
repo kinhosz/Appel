@@ -1,4 +1,4 @@
-#include <light.h>
+#include <entity/light.h>
 #include <assert.h>
 
 Light::Light(Point location, Color intensity) {

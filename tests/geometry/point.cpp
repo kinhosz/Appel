@@ -1,4 +1,4 @@
-#include <point.h>
+#include <geometry/point.h>
 using namespace std;
 
 int main(){
