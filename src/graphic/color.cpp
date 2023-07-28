@@ -23,6 +23,18 @@ int Color::getBlue() const {
     return blue;
 }
 
+double Color::getNormRed() {
+    return (double) red / 255.0;
+}
+
+double Color::getNormGreen() {
+    return (double) green / 255.0;
+}
+
+double Color::getNormBlue() {
+    return (double) blue / 255.0;
+}
+
 void Color::setRed(int red) {
     assert(red >= 0 && red <= 255);
     this->red = red;
