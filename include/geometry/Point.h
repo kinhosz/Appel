@@ -7,7 +7,7 @@ struct Point {
     Point();
     Point(double x, double y, double z);
 
-    double distance(const Point &other);
+    double distance(const Point &other) const;
 };
 
 #endif
