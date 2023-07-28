@@ -13,3 +13,15 @@ To facilitate development, the project will follow the below conventions:
 ### See more
 
 [Project Structure](./docs/project_structure.md)
+
+### Compile
+```sh
+make tests
+```
+ Will compile & run all tests inside `tests/` directory.
+
+```sh
+make unit FNAME=tests/geometry/vetor.cpp
+```
+Will compile & run the specific file.
+ 
