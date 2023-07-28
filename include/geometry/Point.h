@@ -2,10 +2,10 @@
 #define GEOEMTRY_POINT_H
 
 struct Point {
-    double x, y;
+    double x, y, z;
     
     Point();
-    Point(double x, double y);
+    Point(double x, double y, double z);
 
     double distance(const Point &other);
 };
