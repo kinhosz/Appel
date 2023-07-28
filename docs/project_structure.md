@@ -1,8 +1,7 @@
-# Estrutura do Projeto
-
-O projeto consiste de 5 pastas principais:
-* `assets`: armazenar todos os dados necessários como input do projeto.
-* `bin`: armazenar scripts e executáveis.
-* `docs`: documentações
-* `include`: 3rd-party libs e específicas.
-* `src`: códigos-fontes.
+# Project structure
+The project consists of 5 main folders:
+* `assets`: stores all the necessary data as input for the project;
+* `bin`: stores scripts and executables;
+* `docs`: documentation;
+* `include`: 3rd-party libraries and specifics;
+* `src`: source code.

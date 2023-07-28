@@ -1,15 +1,15 @@
 # Appel
 Computer Vision with Ray Tracing
 
-> Projeto para a disciplina de processamento gráfico CC - 2023.
+> Project for the Graphics Processing discipline of Computer Science course @ CIn/UFPE.
+## Contributing guide
+To facilitate development, the project will follow the below conventions:
+* Task management through GitHub's Kanban, using `issues`;
+* `main` branch protected: only changes via pull requests are allowed;
+* Pull requests require at least one approval to be merged;
+* Maintain the project structure to avoid complications in merges;
+* Document everything possible whenever feasible.
 
-## Contribuindo para o projeto
-Para facilitar o desenvolvimento, o projeto seguirá as seguintes especificações:
+### See more
 
-* Controle de tasks via Kaban do próprio github, utilizando `issues`.
-* branch `main` protegia: Só alterações via pull request.
-* pull request necessitam de no mínimo uma aprovação.
-* Manter a estrutura do projeto para evitar complicações nos merges.
-* Ir documentando quando possível tudo que puder
-
-Entenda a [estrutura do projeto](./docs/project_structure.md)
+[Project Structure](./docs/project_structure.md)
