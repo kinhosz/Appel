@@ -27,7 +27,8 @@ double Vetor::norm() const {
 }
 
 Vetor& Vetor::normalize() const {
-    return Vetor(x/norm(), y/norm(), z/norm());
+    dobule n = norm();
+    return Vetor(x/n, y/n, z/n);
 }
 
 Vetor& Vetor::operator+(Vetor &other) const {
