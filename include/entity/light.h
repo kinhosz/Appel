@@ -2,23 +2,20 @@
 #define ENTITY_LIGHT_H
 
 #include "point.h"
+#include "color.h"
 
 class Light {
 private:
     Point location;
-    int red, green, blue;
+    Color intensity;
 public:
-    Light(Point location, int red, int green, int blue);
+    Light(Point location, Color intensity);
 
     Point getLocation() const;
-    int getRed() const;
-    int getGreen() const;
-    int getBlue() const;
+    Color getIntensity() const;
 
     void setLocation(Point location);
-    void setRed(int red);
-    void setGreen(int green);
-    void setBlue(int blue);
+    void setIntensity(Color intensity);
 };
 
 #endif
