@@ -1,8 +1,8 @@
 #ifndef ENTITY_LIGHT_H
 #define ENTITY_LIGHT_H
 
-#include "point.h"
-#include "color.h"
+#include <point.h>
+#include <color.h>
 
 class Light {
 private:
