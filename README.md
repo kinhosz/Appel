@@ -11,3 +11,5 @@ Para facilitar o desenvolvimento, o projeto seguirá as seguintes especificaçõ
 * pull request necessitam de no mínimo uma aprovação.
 * Manter a estrutura do projeto para evitar complicações nos merges.
 * Ir documentando quando possível tudo que puder
+
+Entenda a [estrutura do projeto](./docs/project_structure.md)
