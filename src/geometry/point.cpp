@@ -12,3 +12,19 @@ double Point::distance(const Point &other) const {
 
     return sqrt(xSquared + ySquared + zSquared);
 }
+
+bool Point::operator>(const Point &other) const {
+    return x > other.x && y > other.y && z > other.z;
+}
+
+bool Point::operator<(const Point &other) const {
+    return x < other.x && y < other.y && z < other.z;
+}
+
+bool Point::operator==(const Point &other) const {
+    return x == other.x && y == other.y && z == other.z;
+}
+
+bool Point::operator!=(const Point &other) const {
+    return !(*this == other);
+}
