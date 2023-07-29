@@ -8,6 +8,11 @@ struct Point {
     Point(double x, double y, double z);
 
     double distance(const Point &other) const;
+
+    bool operator>(const Point &other) const;
+    bool operator<(const Point &other) const;
+    bool operator==(const Point &other) const;
+    bool operator!=(const Point &other) const;
 };
 
 #endif
