@@ -1,4 +1,5 @@
 #include <geometry/vetor.h>
+#include <geometry/constants.h>
 #include <math.h>
 
 Vetor::Vetor(): x(0), y(0), z(0) {}
@@ -66,4 +67,12 @@ Vetor Vetor::operator*(double p) const {
 
 Vetor Vetor::operator/(double p) const {
     return Vetor(x / p, y / p, z / p);
+}
+
+bool Vetor::operator==(const Vetor &other) const {  
+    return abs(x - other.x) < EPSILON && abs(y - other.y) < EPSILON && abs(z - other.z) < EPSILON;
+}
+
+bool Vetor::operator!=(const Vetor &other) const {
+    return !(*this == other);
 }
