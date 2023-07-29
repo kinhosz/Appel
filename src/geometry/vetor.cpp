@@ -31,30 +31,23 @@ Vetor Vetor::normalize() const {
     return Vetor(x/n, y/n, z/n);
 }
 
-void Vetor::rotate(double &x, double &y, double alpha) const {
-    double rx = cos(alpha) * x + sin(alpha) * y;
-    double ry = -sin(alpha) * x + cos(alpha) * y;
-
-    x = rx, y = ry;
-}
-
 Vetor Vetor::rotateX(double alpha) const {
-    double ry = y, rz = z;
-    rotate(ry, rz, alpha);
+    double ry = cos(alpha) * y - sin(alpha) * z;
+    double rz = sin(alpha) * y + cos(alpha) * z;
 
     return Vetor(x, ry, rz);
 }
 
 Vetor Vetor::rotateY(double alpha) const {
-    double rx = x, rz = z;
-    rotate(rx, rz, alpha);
+    double rx = cos(alpha) * x + sin(alpha) * z;
+    double rz = -sin(alpha) * x + cos(alpha) * z;
 
     return Vetor(rx, y, rz);
 }
 
 Vetor Vetor::rotateZ(double alpha) const {
-    double rx = x, ry = y;
-    rotate(rx, ry, alpha);
+    double rx = cos(alpha) * x - sin(alpha) * y;
+    double ry = sin(alpha) * x + cos(alpha) * y;
 
     return Vetor(rx, ry, z);
 }
