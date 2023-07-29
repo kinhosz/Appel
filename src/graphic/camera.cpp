@@ -31,7 +31,7 @@ void Camera::zoom(double delta) {
     distance += delta;
 }
 
-void Camera::move(Point &p) {
+void Camera::move(Point p) {
     location.x += p.x;
     location.y += p.y;
     location.z += p.z;

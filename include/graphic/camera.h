@@ -18,7 +18,7 @@ public:
     Camera(Point loc, Point focus, int vPixels, int hPixels, double dist);
 
     void zoom(double delta);
-    void move(Point &p);
+    void move(Point p);
 };
 
 #endif
