@@ -1,15 +1,15 @@
 #include <geometry/point.h>
+#include <geometry/constants.h>
 #include <assert.h>
 #include <cmath>
 using namespace std;
 
-const double eps = 1e-6;
-
 int main(){
     Point p1(1, 2, 3), p2(4, 5, 6);
 
-    assert(abs(p1.distance(p2) - 5.196152) < eps);
-    assert(abs(p2.distance(Point(0, 0, 0)) - 8.774964) < eps);
+    assert(abs(p1.distance(p2) - 5.196152) < EPSILON);
+    assert(abs(p2.distance(Point(0, 0, 0)) - 8.774964) < EPSILON);
+
     assert(p1 == Point(1, 2, 3));
     assert(p2 == Point(4, 5, 6));
     assert(p1 != p2);
