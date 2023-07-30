@@ -13,6 +13,7 @@ labels: bug
 A clear and concise description of what the bug is.
 
 ## To Reproduce
+<!-- put an empty line after details and summary -->
 <details>
 
 <Summary> Steps to reproduce the behavior: </Summary>
