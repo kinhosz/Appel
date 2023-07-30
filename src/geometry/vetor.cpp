@@ -4,6 +4,8 @@
 
 Vetor::Vetor(): x(0), y(0), z(0) {}
 
+Vetor::Vetor(Point p): x(p.x), y(p.y), z(p.z) {}
+
 Vetor::Vetor(double x, double y, double z): x(x), y(y), z(z) {}
 
 double Vetor::dot(const Vetor &other) const {

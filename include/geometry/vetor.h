@@ -1,10 +1,13 @@
 #ifndef GEOMETRY_VETOR_H
 #define GEOMETRY_VETOR_H
 
+#include <geometry/point.h>
+
 struct Vetor{
     double x, y, z;
     Vetor();
     Vetor(double x, double y, double z);
+    Vetor(Point p);
     double dot(const Vetor &other) const;
     Vetor cross(const Vetor &other) const;
     double angle(const Vetor &other) const;
