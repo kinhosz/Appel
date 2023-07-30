@@ -3,7 +3,6 @@ name: Test
 about: What's need be test?
 title: TEST
 labels: test
-assignees: ''
 
 ---
 

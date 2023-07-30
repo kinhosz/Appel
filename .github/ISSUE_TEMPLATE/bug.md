@@ -3,7 +3,6 @@ name: Bug
 about: Ping what's not working
 title: BUG
 labels: bug
-assignees: ''
 
 ---
 

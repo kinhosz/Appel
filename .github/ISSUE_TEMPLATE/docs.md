@@ -3,7 +3,6 @@ name: Documentation
 about: What's need be documented?
 title: DOCS
 labels: docs
-assignees: ''
 
 ---
 
