@@ -1,1 +1,39 @@
-update_version:
+PREFIX_IN_FILE := \#define
+
+MAJOR_IDENTIFIER = $(PREFIX_IN_FILE) APPEL_MAJOR
+MINOR_IDENTIFIER = $(PREFIX_IN_FILE) APPEL_MINOR
+PATCH_IDENTIFIER = $(PREFIX_IN_FILE) APPEL_PATCH
+
+OLD_MAJOR := $(shell grep "$(MAJOR_IDENTIFIER)" $(SEM_VER))
+OLD_MINOR := $(shell grep "$(MINOR_IDENTIFIER)" $(SEM_VER))
+OLD_PATCH := $(shell grep "$(PATCH_IDENTIFIER)" $(SEM_VER))
+
+NUMBER_MAJOR := $(subst $(MAJOR_IDENTIFIER) ,,$(OLD_MAJOR))
+NUMBER_MINOR := $(subst $(MINOR_IDENTIFIER) ,,$(OLD_MINOR))
+NUMBER_PATCH := $(subst $(PATCH_IDENTIFIER) ,,$(OLD_PATCH))
+
+INCREMENTED_MAJOR := $(shell echo $$(( $(NUMBER_MAJOR) + 1 )))
+INCREMENTED_MINOR := $(shell echo $$(( $(NUMBER_MINOR) + 1 )))
+INCREMENTED_PATCH := $(shell echo $$(( $(NUMBER_PATCH) + 1 )))
+
+NEW_MAJOR := $(MAJOR_IDENTIFIER) $(INCREMENTED_MAJOR)
+NEW_MINOR := $(MINOR_IDENTIFIER) $(INCREMENTED_MINOR)
+NEW_PATCH := $(PATCH_IDENTIFIER) $(INCREMENTED_PATCH)
+
+RESETED_MINOR := $(MINOR_IDENTIFIER) 0
+RESETED_PATCH := $(PATCH_IDENTIFIER) 0
+
+update_major: reset_minor
+	sed -i -e 's/$(OLD_MAJOR)/$(NEW_MAJOR)/g' $(SEM_VER)
+
+update_minor: reset_patch
+	sed -i -e 's/$(OLD_MINOR)/$(NEW_MINOR)/g' $(SEM_VER)
+
+update_patch:
+	sed -i -e 's/$(OLD_PATCH)/$(NEW_PATCH)/g' $(SEM_VER)
+
+reset_minor: reset_patch
+	sed -i -e 's/$(OLD_MINOR)/$(RESETED_MINOR)/g' $(SEM_VER)
+
+reset_patch:
+	sed -i -e 's/$(OLD_PATCH)/$(RESETED_PATCH)/g' $(SEM_VER)

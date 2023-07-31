@@ -10,4 +10,4 @@ include scripts/compile.mk
 include scripts/run.mk
 include scripts/tests.mk
 include scripts/unitTest.mk
-include scripts/semVer
+include scripts/semVer.mk
