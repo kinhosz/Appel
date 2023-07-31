@@ -37,10 +37,19 @@ update_major:
 	$(call update_version,NEW_MAJOR,RESETED_MINOR,RESETED_PATCH)
 	$(call update_readme,$(INCREMENTED_MAJOR),0,0)
 
+	$(call changelog_major,$(INCREMENTED_MAJOR))
+	$(call changelog_minor,0)
+	$(call changelog_patch,0,$(PR_DESCRIPTION))
+
 update_minor:
 	$(call update_version,OLD_MAJOR,NEW_MINOR,RESETED_PATCH)
 	$(call update_readme,$(NUMBER_MAJOR),$(INCREMENTED_MINOR),0)
 
+	$(call changelog_minor,$(INCREMENTED_MINOR))
+	$(call changelog_patch,0,$(PR_DESCRIPTION))
+
 update_patch:
 	$(call update_version,OLD_MAJOR,OLD_MINOR,NEW_PATCH)
 	$(call update_readme,$(NUMBER_MAJOR),$(NUMBER_MINOR),$(INCREMENTED_PATCH))
+
+	$(call changelog_patch,$(INCREMENTED_PATCH),$(PR_DESCRIPTION))
