@@ -1,5 +1,5 @@
 CC := g++
-CFLAGS := -O2 -Wall -Wextra
+CFLAGS := -Wall -Werror -O2 -std=c++17
 INCLUDE := include
 LIB_CPP := $(wildcard src/**/*.cpp)
 
