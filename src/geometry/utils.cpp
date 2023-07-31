@@ -1,5 +1,6 @@
 #include <geometry/utils.h>
 #include <cmath>
+#include <stdlib.h>
 
 const double EPSILON = 1e-12;
 

@@ -8,6 +8,8 @@ struct Vetor{
     Vetor();
     Vetor(double x, double y, double z);
     Vetor(Point p);
+
+    Point getPoint() const;
     double dot(const Vetor &other) const;
     Vetor cross(const Vetor &other) const;
     double angle(const Vetor &other) const;
@@ -17,8 +19,9 @@ struct Vetor{
     Vetor rotateY(double alpha) const;
     Vetor rotateZ(double alpha) const;
 
-    Vetor operator+(Vetor &other) const;
-    Vetor operator-(Vetor &other) const;
+    Vetor operator+(const Point &other) const;
+    Vetor operator+(const Vetor &other) const;
+    Vetor operator-(const Vetor &other) const;
     Vetor operator*(double p) const;
     Vetor operator/(double p) const;
     bool operator==(const Vetor &other) const;

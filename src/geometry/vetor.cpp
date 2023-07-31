@@ -8,6 +8,10 @@ Vetor::Vetor(Point p): x(p.x), y(p.y), z(p.z) {}
 
 Vetor::Vetor(double x, double y, double z): x(x), y(y), z(z) {}
 
+Point Vetor::getPoint() const {
+    return Point(x, y, z);
+}
+
 double Vetor::dot(const Vetor &other) const {
     return x*other.x + y*other.y + z*other.z;
 }
@@ -55,11 +59,15 @@ Vetor Vetor::rotateZ(double alpha) const {
     return Vetor(rx, ry, z);
 }
 
-Vetor Vetor::operator+(Vetor &other) const {
+Vetor Vetor::operator+(const Point &other) const {
     return Vetor(x + other.x, y + other.y, z + other.z);
 }
 
-Vetor Vetor::operator-(Vetor &other) const {
+Vetor Vetor::operator+(const Vetor &other) const {
+    return Vetor(x + other.x, y + other.y, z + other.z);
+}
+
+Vetor Vetor::operator-(const Vetor &other) const {
     return Vetor(x - other.x, y - other.y, z - other.z);
 }
 
