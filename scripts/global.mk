@@ -3,6 +3,7 @@ CFLAGS := -O2 -Wall -Wextra
 INCLUDE := include
 LIB_CPP := $(wildcard src/**/*.cpp)
 SEM_VER := include/version.hpp
+README := README.md
 
 BIN := bin
 TEST := tests

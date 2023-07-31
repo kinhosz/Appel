@@ -23,17 +23,24 @@ NEW_PATCH := $(PATCH_IDENTIFIER) $(INCREMENTED_PATCH)
 RESETED_MINOR := $(MINOR_IDENTIFIER) 0
 RESETED_PATCH := $(PATCH_IDENTIFIER) 0
 
-update_major: reset_minor
-	sed -i -e 's/$(OLD_MAJOR)/$(NEW_MAJOR)/g' $(SEM_VER)
+define update_version
+	sed -i -e 's/$(OLD_MAJOR)/$($1)/g' $(SEM_VER)
+	sed -i -e 's/$(OLD_MINOR)/$($2)/g' $(SEM_VER)
+	sed -i -e 's/$(OLD_PATCH)/$($3)/g' $(SEM_VER)
+endef
 
-update_minor: reset_patch
-	sed -i -e 's/$(OLD_MINOR)/$(NEW_MINOR)/g' $(SEM_VER)
+define update_readme
+	sed -i -e 's/\*\*Current Version\*\*: *.*.*/\*\*Current Version\*\*: $1.$2.$3/g' $(README)
+endef
+
+update_major:
+	$(call update_version,NEW_MAJOR,RESETED_MINOR,RESETED_PATCH)
+	$(call update_readme,$(INCREMENTED_MAJOR),0,0)
+
+update_minor:
+	$(call update_version,OLD_MAJOR,NEW_MINOR,RESETED_PATCH)
+	$(call update_readme,$(NUMBER_MAJOR),$(INCREMENTED_MINOR),0)
 
 update_patch:
-	sed -i -e 's/$(OLD_PATCH)/$(NEW_PATCH)/g' $(SEM_VER)
-
-reset_minor: reset_patch
-	sed -i -e 's/$(OLD_MINOR)/$(RESETED_MINOR)/g' $(SEM_VER)
-
-reset_patch:
-	sed -i -e 's/$(OLD_PATCH)/$(RESETED_PATCH)/g' $(SEM_VER)
+	$(call update_version,OLD_MAJOR,OLD_MINOR,NEW_PATCH)
+	$(call update_readme,$(NUMBER_MAJOR),$(NUMBER_MINOR),$(INCREMENTED_PATCH))
