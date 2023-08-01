@@ -71,8 +71,6 @@ jobs:
     steps:
     - name: Setting checkout
       uses: actions/checkout@v3
-      with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
 
     - name: update major for testing
       run: |
@@ -84,8 +82,8 @@ jobs:
 
     - name: Setting commiter
       run: |
-        git config --global user.name "github-actions"
-        git config --global user.email "action@github.com"
+        git config --global user.name github-actions[bot]
+        git config --global user.email github-actions[bot]@users.noreply.github.com
     
     - name: Commit & push
       run: |
