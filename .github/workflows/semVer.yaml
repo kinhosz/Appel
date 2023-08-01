@@ -30,7 +30,7 @@ jobs:
       run: echo update minor
 
   update_patch:
-    needs: [update_major, update_minor]
+    needs: [update_major, update_minor, if_merged]
     if: always() && needs.update_major.result != 'success' && needs.update_minor.result != 'success'
     runs-on: ubuntu-latest
     steps:
