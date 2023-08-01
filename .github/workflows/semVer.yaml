@@ -65,9 +65,10 @@ jobs:
       run: |
           pull_request_number="${{ github.event.number }}"
           repository_url="${{ github.event.repository.html_url }}"
-          pull_request_url="${repository_url}}/pull/${pull_request_number}"
+          pull_request_url="${repository_url}/pull/${pull_request_number}"
           echo "Pull Request URL: ${pull_request_url}"
-          $make_version_command PR_DESCRIPTION="${{ pull_request_url }}"
+          echo $make_version_command PR_DESCRIPTION="${pull_request_ur}"
+          $make_version_command PR_DESCRIPTION="${pull_request_ur}"
   
   commit_changes:
     needs: [versioning]
