@@ -68,6 +68,8 @@ jobs:
   
   versioning:
     runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
     steps:
     - name: Setting checkout
       uses: actions/checkout@v3
