@@ -71,9 +71,9 @@ jobs:
     steps:
     - name: Setting checkout
       uses: actions/checkout@v3
-    #- name: update major for testing
-    #  run: |
-    #    make update_major PR_DESCRIPTION="Espero que essa mensagem\napareca viu"
+    - name: update major for testing
+      run: |
+        make update_major PR_DESCRIPTION="Espero que essa mensagem\napareca viu"
     #- name: git commit
     #  run: |
     #    git add .
