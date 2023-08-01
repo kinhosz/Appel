@@ -59,6 +59,11 @@ jobs:
       run: echo ${{ github.ref_name }}
     - name: See github.head_ref
       run: echo ${{ github.head_ref }}
+    - name: Obter mensagem de squash commit
+      run: |
+        pr_number=$(jq -r '.number' $GITHUB_EVENT_PATH)
+        squash_commit_message=$(gh pr view $pr_number --json title -q '.merge_commit_message')
+        echo "Mensagem do squash commit: $squash_commit_message"
 
 # apenas testando
 # vamos testar se ele faz o major certinho
