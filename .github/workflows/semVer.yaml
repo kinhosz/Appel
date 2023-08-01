@@ -5,13 +5,17 @@ on:
       - closed
   push:
 
+env:
+  pr_link: ''
+  make_version_command: ''
+
 jobs:
   if_merged:
     if: github.event.pull_request.merged == true
     runs-on: ubuntu-latest
     steps:
     - name: Was Merged
-      run: echo Was merged
+      run: echo was merged
   
   update_major:
     needs: if_merged
@@ -19,7 +23,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Setting major version
-      run: echo update MAJOR
+      run: export make_version_command="make update_major"
 
   update_minor:
     needs: if_merged
@@ -27,7 +31,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Setting minor version
-      run: echo update minor
+      run: export make_version_command="make update_minor"
 
   update_patch:
     needs: [update_major, update_minor, if_merged]
@@ -40,9 +44,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: setting patch version
-      run: echo update patch
+      run: export make_version_command="make update_patch"
   
-  commit_changes:
+  versioning:
     needs: [update_patch, if_merged]
     if: |
       always() &&
@@ -52,8 +56,6 @@ jobs:
     steps:
     - name: Setting checkout
       uses: actions/checkout@v3
-    - name: See what the branch
-      run: git branch
     
     - name: See github.ref_name
       run: echo ${{ github.ref_name }}
@@ -65,16 +67,14 @@ jobs:
           repository_url="${{ github.event.repository.html_url }}"
           pull_request_url="${repository_url}}/pull/${pull_request_number}"
           echo "Pull Request URL: ${pull_request_url}"
+          ${{ make_version_command }} PR_DESCRIPTION="${{ pull_request_url }}"
   
-  versioning:
+  commit_changes:
+    needs: [versioning]
     runs-on: ubuntu-latest
     steps:
     - name: Setting checkout
       uses: actions/checkout@v3
-
-    - name: update major for testing
-      run: |
-        make update_major PR_DESCRIPTION="Espero que essa mensagem\napareca viu"
     
     - name: See branch name
       run: |
@@ -90,19 +90,3 @@ jobs:
         git add .
         git commit -m "version update"
         git push origin ${{ github.head_ref }}
-    #- name: testing endbug
-    #  uses: EndBug/add-and-commit@v9 # You can change this to use a specific version.
-    #  with:
-        # Determines the way the action fills missing author name and email. Three options are available:
-        # - github_actor -> UserName <UserName@users.noreply.github.com>
-        # - user_info -> Your Display Name <your-actual@email.com>
-        # - github_actions -> github-actions <email associated with the github logo>
-        # Default: github_actor
-    #    default_author: github_actor
-
-        # The message for the commit.
-        # Default: 'Commit from GitHub Actions (name of the workflow)'
-    #    message: 'EndBug do this'
-
-# apenas testando
-# vamos testar se ele faz o major certinho
