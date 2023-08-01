@@ -33,7 +33,7 @@ jobs:
 
   update_patch:
     needs: [update_major, update_minor]
-    if: jobs.update_major.status != success && jobs.update_minor.status != success
+    if: needs.update_major.status != 'success' && needs.update_minor.status != 'success'
     runs-on: ubuntu-latest
     steps:
     - name: setting patch version
