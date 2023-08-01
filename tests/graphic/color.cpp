@@ -6,35 +6,25 @@ using namespace std;
 int main() {
     const double epsilon = 1e-12;
 
-    Color c1, c2(0, 255, 0);
+    Color c1, c2(255, 174, 10, Color::RGB), c3(0.2, 0.8, 0.4, Color::NORMALIZED_RGB);
 
     assert(c1.getRed() == 0);
     assert(c1.getGreen() == 0);
     assert(c1.getBlue() == 0);
 
-    assert(c2.getRed() == 0);
-    assert(c2.getGreen() == 255);
-    assert(c2.getBlue() == 0);
+    assert(c2.getRed() == 255);
+    assert(c2.getGreen() == 174);
+    assert(c2.getBlue() == 10);
+
+    assert(abs(c3.getNormRed() - 0.2) < epsilon);
+    assert(abs(c3.getNormGreen() - 0.8) < epsilon);
+    assert(abs(c3.getNormBlue() - 0.4) < epsilon);
 
     c1.setRed(255);
-    c1.setGreen(255);
-    c1.setBlue(255);
-
-    c2.setRed(255);
-    c2.setGreen(0);
-    c2.setBlue(0);
+    c1.setGreen(174);
+    c1.setBlue(10);
 
     assert(c1.getRed() == 255);
-    assert(c1.getGreen() == 255);
-    assert(c1.getBlue() == 255);
-    assert(abs(c1.getNormRed() - 1.0) < epsilon);
-    assert(abs(c1.getNormGreen() - 1.0) < epsilon);
-    assert(abs(c1.getNormBlue() - 1.0) < epsilon);
-
-    assert(c2.getRed() == 255);
-    assert(c2.getGreen() == 0);
-    assert(c2.getBlue() == 0);
-    assert(abs(c2.getNormRed() - 1.0) < epsilon);
-    assert(abs(c2.getNormGreen() - 0.0) < epsilon);
-    assert(abs(c2.getNormBlue() - 0.0) < epsilon);
+    assert(c1.getGreen() == 174);
+    assert(c1.getBlue() == 10);
 }
