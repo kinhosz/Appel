@@ -68,6 +68,7 @@ jobs:
     if: |
       always() &&
       needs.if_merged.result == 'success'
+    runs-on: ubuntu-latest
 
     steps:
     - name: Setting checkout
