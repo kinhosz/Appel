@@ -1,6 +1,6 @@
 # CHANGELOG UPDATES
 <!--MAJOR-->
- ## MAJOR 1
+ ## MAJOR 0
  <details>
  <Summary> See Minor updates </Summary>
 
