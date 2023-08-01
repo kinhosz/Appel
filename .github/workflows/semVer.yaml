@@ -26,23 +26,23 @@ jobs:
     needs: if_merged
     if: startsWith(github.head_ref, 'break/')
     runs-on: ubuntu-latest
+    outputs:
+      make_cli: ${{ steps.make_cli.outputs.make_cli }}
 
     steps:
-    - name: Setting checkout
-      uses: actions/checkout@v3
-    - name: Setting major version
-      run: make update_major PR_DESCRIPTION=${{ needs.if_merged.outputs.pr_description }}
+    - id: make_cli
+      run: echo "make_cli="make update_major"" >> "$GITHUB_OUTPUT"
 
   update_minor:
     needs: if_merged
     if: startsWith(github.head_ref, 'feat/')
     runs-on: ubuntu-latest
+    outputs:
+      make_cli: ${{ steps.make_cli.outputs.make_cli }}
 
     steps:
-    - name: Setting checkout
-      uses: actions/checkout@v3
-    - name: Setting minor version
-      run: make update_minor PR_DESCRIPTION=${{ needs.if_merged.outputs.pr_description }}
+    - id: make_cli
+      run: echo "make_cli="make update_minor"" >> "$GITHUB_OUTPUT"
 
   update_patch:
     needs: [update_major, update_minor, if_merged]
@@ -52,21 +52,36 @@ jobs:
       needs.update_major.result != 'success' && 
       needs.update_minor.result != 'success'
     runs-on: ubuntu-latest
+    outputs:
+      make_cli: ${{ steps.make_cli.outputs.make_cli }}
 
     steps:
-    - name: Setting checkout
-      uses: actions/checkout@v3
-    - name: setting patch version
-      run: make update_patch PR_DESCRIPTION=${{ needs.if_merged.outputs.pr_description }}
+    - id: make_cli
+      run: echo "make_cli="make update_patch"" >> "$GITHUB_OUTPUT"
   
   commit_changes:
-    needs: [update_patch, if_merged]
+    needs: [update_major, update_minor, update_patch, if_merged]
     if: |
       always() &&
       needs.if_merged.result == 'success'
     runs-on: ubuntu-latest
 
     steps:
+    - name: Setting checkout
+      uses: actions/checkout@v3
+
+    - name: Update MAJOR
+      run: ${{ needs.update_major.outputs.make_cli }} PR_DESCRIPTION=${{ needs.if_merged.outputs.PR_DESCRIPTION }}
+      if: needs.update_major.success == true
+    
+    - name: Update MINOR
+      run: ${{ needs.update_minor.outputs.make_cli }} PR_DESCRIPTION=${{ needs.if_merged.outputs.PR_DESCRIPTION }}
+      if: needs.update_minor.success == true
+    
+    - name: Update PATCH
+      run: ${{ needs.update_patch.outputs.make_cli }} PR_DESCRIPTION=${{ needs.if_merged.outputs.PR_DESCRIPTION }}
+      if: needs.update_patch.success == true
+
     - name: See branch name
       run: |
         git branch
