@@ -14,7 +14,7 @@ jobs:
       run: echo Was merged
   
   update_major:
-    #needs: if_merged
+    needs: if_merged
     if: startsWith(github.head_ref, 'break/')
     runs-on: ubuntu-latest
     steps:
@@ -22,7 +22,7 @@ jobs:
       run: echo update MAJOR
 
   update_minor:
-    #needs: if_merged
+    needs: if_merged
     if: startsWith(github.head_ref, 'feat/')
     runs-on: ubuntu-latest
     steps:
@@ -30,8 +30,13 @@ jobs:
       run: echo update minor
 
   update_patch:
-    needs: [update_major, update_minor]
-    if: needs.update_major.result != 'success' && needs.update_minor.result != 'success'
+    needs: [update_major, update_minor, if_merged]
+    if: |
+      always() &&
+      needs.if_merged.result == 'success' && 
+      needs.update_major.result != 'success' && 
+      needs.update_minor.result != 'success'
+
     runs-on: ubuntu-latest
     steps:
     - name: setting patch version
