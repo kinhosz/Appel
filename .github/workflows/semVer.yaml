@@ -37,7 +37,7 @@ jobs:
     - run: echo is not major ${{ needs.update_major.result }}
   
   is_not_minor:
-    if: ${{ always() }} && needs.update_minor.result != 'success'
+    if: always() && needs.update_minor.result != 'success'
     needs: update_minor
     runs-on: ubuntu-latest
     steps:
@@ -51,7 +51,7 @@ jobs:
       run: echo update patch
   
   commit_changes:
-    if: ${{ always() }}
+    if: always()
     needs: [update_major, update_minor, update_patch]
     runs-on: ubuntu-latest
     steps:
