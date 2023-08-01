@@ -34,7 +34,7 @@ jobs:
     needs: update_major
     runs-on: ubuntu-latest
     steps:
-    - run: echo is not major ${{ needs.update_major }}
+    - run: echo is not major ${{ needs.update_major.result }}
   
   is_not_minor:
     if: ${{ always() }} && needs.update_minor.result != 'success'
