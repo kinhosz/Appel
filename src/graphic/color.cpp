@@ -1,6 +1,5 @@
 #include <graphic/color.h>
 #include <assert.h>
-#include <stdexcept>
 
 Color::Color() : representation(RGB), rgb{0, 0, 0} {}
 
@@ -27,78 +26,72 @@ Color::Color(double normRed, double normGreen, double normBlue, ColorRepresentat
 }
 
 int Color::getRed() const {
-    return representation == RGB ? rgb.red : std::runtime_error("You should use getNormRed(), this color is normalized");
+    assert(representation == RGB);
+    return rgb.red;
 }
 
 int Color::getGreen() const {
-    return representation == RGB ? rgb.green : std::runtime_error("You should use getNormGreen(), this color is normalized");
+    assert(representation == RGB);
+    return rgb.green;
 }
 
 int Color::getBlue() const {
-    return representation == RGB ? rgb.blue : std::runtime_error("You should use getNormBlue(), this color is normalized");
+    assert(representation == RGB);
+    return rgb.blue;
 }
 
 double Color::getNormRed() const {
-    return representation == NORMALIZED_RGB ? normalized_rgb.red : std::runtime_error("You should use getRed(), this color is not normalized");
+    assert(representation == NORMALIZED_RGB);
+    return normalized_rgb.red;
 }
 
 double Color::getNormGreen() const {
-    return representation == NORMALIZED_RGB ? normalized_rgb.green : std::runtime_error("You should use getGreen(), this color is not normalized");
+    assert(representation == NORMALIZED_RGB);
+    return normalized_rgb.green;
 }
 
 double Color::getNormBlue() const {
-    return representation == NORMALIZED_RGB ? normalized_rgb.blue : std::runtime_error("You should use getBlue(), this color is not normalized");
+    assert(representation == NORMALIZED_RGB);
+    return normalized_rgb.blue;
 }
 
 void Color::setRed(int red) {
-    if (representation == NORMALIZED_RGB)
-        throw std::runtime_error("You should use setNormRed(), this color is normalized");
-
+    assert(representation == RGB);
     assert(red >= 0 && red <= 255);
     representation = RGB;
     rgb.red = red;
 }
 
 void Color::setGreen(int green) {
-    if (representation == NORMALIZED_RGB)
-        throw std::runtime_error("You should use setNormGreen(), this color is normalized");
-
+    assert(representation == RGB);
     assert(green >= 0 && green <= 255);
     representation = RGB;
     rgb.green = green;
 }
 
 void Color::setBlue(int blue) {
-    if (representation == NORMALIZED_RGB)
-        throw std::runtime_error("You should use setNormBlue(), this color is normalized");
-
+    assert(representation == RGB);
     assert(blue >= 0 && blue <= 255);
     representation = RGB;
     rgb.blue = blue;
 }
 
 void Color::setNormRed(double normRed) {
-    if (representation == RGB)
-        throw std::runtime_error("You should use setRed(), this color is not normalized");
-
+    assert(representation == NORMALIZED_RGB);
     assert(normRed >= 0.0 && normRed <= 1.0);
     representation = NORMALIZED_RGB;
     normalized_rgb.red = normRed;
 }
 
 void Color::setNormGreen(double normGreen) {
-    if (representation == RGB)
-        throw std::runtime_error("You should use setGreen(), this color is not normalized");
-
+    assert(representation == NORMALIZED_RGB);
     assert(normGreen >= 0.0 && normGreen <= 1.0);
     representation = NORMALIZED_RGB;
     normalized_rgb.green = normGreen;
 }
 
 void Color::setNormBlue(double normBlue) {
-    if (representation == RGB)
-        throw std::runtime_error("You should use setBlue(), this color is not normalized");
-
+    assert(representation == NORMALIZED_RGB);
     assert(normBlue >= 0.0 && normBlue <= 1.0);
     representation = NORMALIZED_RGB;
     normalized_rgb.blue = normBlue;
