@@ -45,6 +45,7 @@ jobs:
         is_update_minor=${{ needs.update_minor.result == 'success' }}
 
     - name: skipped if previous versions was setted
+      run: Check if is a patch update
       if: ${{ !is_update_major && !is_update_minor }}
 
     - name: setting patch version
