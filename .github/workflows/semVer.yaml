@@ -32,7 +32,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Setting major version
-      run: make update_major ${{ needs.if_merged.outputs.pr_description }}
+      run: make update_major PR_DESCRIPTION=${{ needs.if_merged.outputs.pr_description }}
 
   update_minor:
     needs: if_merged
@@ -40,7 +40,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Setting minor version
-      run: make update_minor ${{ needs.if_merged.outputs.pr_description }}
+      run: make update_minor PR_DESCRIPTION=${{ needs.if_merged.outputs.pr_description }}
 
   update_patch:
     needs: [update_major, update_minor, if_merged]
@@ -53,7 +53,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: setting patch version
-      run: make update_patch ${{ needs.if_merged.outputs.pr_description }}
+      run: make update_patch PR_DESCRIPTION=${{ needs.if_merged.outputs.pr_description }}
   
   commit_changes:
     needs: [update_patch, if_merged]
