@@ -32,6 +32,7 @@ jobs:
       run: echo update minor
 
   update_patch:
+    if: ${{ always() }}
     needs: [update_major, update_minor]
     if: needs.update_major.status != 'success' && needs.update_minor.status != 'success'
     runs-on: ubuntu-latest
