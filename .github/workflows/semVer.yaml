@@ -43,7 +43,11 @@ jobs:
       run: echo update patch
   
   commit_changes:
-    needs: [update_major, update_minor, update_patch]
+    needs: [update_patch, if_merged]
+    if: |
+      always() &&
+      needs.if_merged.result == 'success'
+
     runs-on: ubuntu-latest
     steps:
     - name: Setting checkout
