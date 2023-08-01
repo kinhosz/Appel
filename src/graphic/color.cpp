@@ -1,5 +1,6 @@
 #include <graphic/color.h>
 #include <assert.h>
+#include <stdexcept>
 
 Color::Color() : representation(RGB), rgb{0, 0, 0} {}
 
