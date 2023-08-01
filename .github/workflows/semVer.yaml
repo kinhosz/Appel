@@ -52,6 +52,8 @@ jobs:
     needs: [update_major, update_minor, update_patch]
     runs-on: ubuntu-latest
     steps:
+    - name: Setting checkout
+      uses: actions/checkout@v3
     - name: See what the branch
       run: git branch
     
