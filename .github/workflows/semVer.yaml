@@ -11,8 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Was Merged
-      run: |
-        @echo Was merged
+      run: echo Was merged
   
   update_major:
 #    needs: if_merged
@@ -31,23 +30,15 @@ jobs:
       run: echo update minor
 
   update_patch:
-    if: ${{ always() }}
     needs: [update_major, update_minor]
+    if: always() && needs.update_major.result != 'success' && needs.update_minor.result != 'success'
     runs-on: ubuntu-latest
     steps:
-    - name: Checking if is major update
-      run: echo check major_update
-      if: needs.update_major != 'success'
-
-    - name: Checking if is minor update
-      run: echo check minor_update
-      if: needs.update_minor != 'success'
-
     - name: setting patch version
       run: echo update patch
   
   commit_changes:
-    if: ${{ always() }}
+    if: always()
     needs: [update_major, update_minor, update_patch]
     runs-on: ubuntu-latest
     steps:
@@ -58,3 +49,4 @@ jobs:
     
     - name: See github.ref_name
       run: echo ${{ github.ref_name }}
+# final test
