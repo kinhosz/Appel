@@ -49,6 +49,6 @@ jobs:
     
     - name: See github.ref_name
       run: echo ${{ github.ref_name }}
-    - name: See github.base_ref
-      run: echo ${{ github.base_ref }}
+    - name: See github.head_ref
+      run: echo ${{ github.head_ref }}
 # final test
