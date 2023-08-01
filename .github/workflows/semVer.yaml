@@ -100,5 +100,5 @@ jobs:
     - name: Commit & push
       run: |
         git add .
-        git commit -m "version update"
-        git push origin ${{ github.head_ref }}
+        git commit -m "update(version)"
+        git push
