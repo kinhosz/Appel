@@ -25,26 +25,26 @@ jobs:
         pull_request_url="${repository_url}/pull/${pull_request_number}"
         echo "Pull Request URL: ${pull_request_url}"
         echo "PR_DESCRIPTION=\"${pull_request_url}\"" >> "$GITHUB_OUTPUT"
-  
-  checkout:
-    runs-on: ubuntu-latest
-    steps:
-    - name: Setting checkout
-      uses: actions/checkout@v3
 
   update_major:
     needs: if_merged
     if: startsWith(github.head_ref, 'break/')
-    extends: checkout
+    runs-on: ubuntu-latest
+
     steps:
+    - name: Setting checkout
+      uses: actions/checkout@v3
     - name: Setting major version
       run: make update_major PR_DESCRIPTION=${{ needs.if_merged.outputs.pr_description }}
 
   update_minor:
     needs: if_merged
     if: startsWith(github.head_ref, 'feat/')
-    extends: checkout
+    runs-on: ubuntu-latest
+
     steps:
+    - name: Setting checkout
+      uses: actions/checkout@v3
     - name: Setting minor version
       run: make update_minor PR_DESCRIPTION=${{ needs.if_merged.outputs.pr_description }}
 
@@ -55,9 +55,11 @@ jobs:
       needs.if_merged.result == 'success' && 
       needs.update_major.result != 'success' && 
       needs.update_minor.result != 'success'
+    runs-on: ubuntu-latest
 
-    extends: checkout
     steps:
+    - name: Setting checkout
+      uses: actions/checkout@v3
     - name: setting patch version
       run: make update_patch PR_DESCRIPTION=${{ needs.if_merged.outputs.pr_description }}
   
@@ -69,6 +71,9 @@ jobs:
 
     extends: checkout
     steps:
+    - name: Setting checkout
+      uses: actions/checkout@v3
+
     - name: See branch name
       run: |
         git branch
