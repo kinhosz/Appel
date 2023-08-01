@@ -32,10 +32,21 @@ jobs:
       run: echo update minor
 
   update_patch:
-    if: ${{ always() }} && needs.update_major.status != 'success' && needs.update_minor.status != 'success'
+    if: ${{ always() }}
     needs: [update_major, update_minor]
     runs-on: ubuntu-latest
     steps:
+    - name: Checking if is major update
+      run: |
+        is_update_major=${{ needs.update_major.result == 'success' }}
+
+    - name: Checking if is minor update
+      run: |
+        is_update_minor=${{ needs.update_minor.result == 'success' }}
+
+    - name: skipped if previous versions was setted
+      if: ${{ !is_update_major && !is_update_minor }}
+
     - name: setting patch version
       run: echo update patch
 # commit to run action
