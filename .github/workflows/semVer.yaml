@@ -1,0 +1,60 @@
+name: Update version
+on:
+  pull_request_target:
+    types:
+      - closed
+  push:
+
+jobs:
+  if_merged:
+    if: github.event.pull_request.merged == true
+    runs-on: ubuntu-latest
+    steps:
+    - name: Was Merged
+      run: |
+        @echo Was merged
+  
+  update_major:
+#    needs: if_merged
+    if: startsWith(github.ref_name, 'break/')
+    runs-on: ubuntu-latest
+    steps:
+    - name: Setting major version
+      run: echo update MAJOR
+
+  update_minor:
+#    needs: if_merged
+    if: startsWith(github.ref_name, 'feat/')
+    runs-on: ubuntu-latest
+    steps:
+    - name: Setting minor version
+      run: echo update minor
+
+  update_patch:
+    if: ${{ always() }}
+    needs: [update_major, update_minor]
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checking if is major update
+      run: echo check major_update
+      if: needs.update_major != 'success'
+
+    - name: Checking if is minor update
+      run: echo check minor_update
+      if: needs.update_minor != 'success'
+
+    - name: setting patch version
+      run: echo update patch
+  
+  commit_changes:
+    if: ${{ always() }}
+    needs: [update_major, update_minor, update_patch]
+    runs-on: ubuntu-latest
+    steps:
+    - name: Setting checkout
+      uses: actions/checkout@v3
+    - name: See what the branch
+      run: git branch
+    
+    - name: See github.ref_name
+      run: echo ${{ github.ref_name }}
