@@ -67,6 +67,7 @@ jobs:
           echo "Pull Request URL: ${pull_request_url}"
   
   versioning:
+    steps:
     - name: Setting checkout
       uses: actions/checkout@v3
     - name: update major for testing
