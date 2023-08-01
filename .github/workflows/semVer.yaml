@@ -19,7 +19,6 @@ jobs:
     - name: Was Merged
       run: echo was merged
     - id: pr_link
-    - name: get pull request link
       run: |
         pull_request_number="${{ github.event.number }}"
         repository_url="${{ github.event.repository.html_url }}"
