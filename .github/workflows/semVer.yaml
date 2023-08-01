@@ -37,16 +37,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Checking if is major update
-      run: |
-        is_update_major=${{ needs.update_major.result == 'success' }}
+      run: echo check major_update
+      if: needs.update_major != 'success'
 
     - name: Checking if is minor update
-      run: |
-        is_update_minor=${{ needs.update_minor.result == 'success' }}
-
-    - name: skipped if previous versions was setted
-      run: Check if is a patch update
-      if: ${{ !is_update_major && !is_update_minor }}
+      run: echo check minor_update
+      if: needs.update_minor != 'success'
 
     - name: setting patch version
       run: echo update patch
