@@ -15,7 +15,7 @@ jobs:
   
   update_major:
 #    needs: if_merged
-    if: startsWith(github.ref_name, 'break/')
+    if: startsWith(github.head_ref, 'break/')
     runs-on: ubuntu-latest
     steps:
     - name: Setting major version
@@ -23,7 +23,7 @@ jobs:
 
   update_minor:
 #    needs: if_merged
-    if: startsWith(github.ref_name, 'feat/')
+    if: startsWith(github.head_ref, 'feat/')
     runs-on: ubuntu-latest
     steps:
     - name: Setting minor version
@@ -51,5 +51,3 @@ jobs:
       run: echo ${{ github.ref_name }}
     - name: See github.head_ref
       run: echo ${{ github.head_ref }}
-# deveria printar, ne
-# final test
