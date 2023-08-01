@@ -69,7 +69,6 @@ jobs:
       always() &&
       needs.if_merged.result == 'success'
 
-    extends: checkout
     steps:
     - name: Setting checkout
       uses: actions/checkout@v3
