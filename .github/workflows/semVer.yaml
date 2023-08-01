@@ -35,11 +35,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Checking if is major update
-      if: needs.update_major != 'success'
+      if: jobs.update_major.result != 'success'
       run: echo is not update_major
 
     - name: Checking if is minor update
-      if: needs.update_minor != 'success'
+      if: jobs.update_minor.result != 'success'
       run: echo is not minor_update
 
     - name: setting patch version
