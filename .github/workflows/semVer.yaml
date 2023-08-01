@@ -37,7 +37,7 @@ jobs:
     needs: [update_major, update_minor, if_merged]
     if: |
       always() &&
-      needs.if_merged.result == 'success' && 
+      needs.if_merged.result != 'success' && 
       needs.update_major.result != 'success' && 
       needs.update_minor.result != 'success'
 
@@ -50,7 +50,7 @@ jobs:
     needs: [update_patch, if_merged]
     if: |
       always() &&
-      needs.if_merged.result == 'success'
+      needs.if_merged.result != 'success'
 
     runs-on: ubuntu-latest
     steps:
