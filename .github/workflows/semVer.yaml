@@ -11,11 +11,21 @@ env:
 
 jobs:
   if_merged:
-    if: github.event.pull_request.merged == true
+    if: github.event.pull_request.merged != true
     runs-on: ubuntu-latest
+    outputs:
+      pr_description: ${{ steps.pr_link.outputs.PR_DESCRIPTION }}
     steps:
     - name: Was Merged
       run: echo was merged
+    - id: pr_link
+    - name: get pull request link
+      run: |
+        pull_request_number="${{ github.event.number }}"
+        repository_url="${{ github.event.repository.html_url }}"
+        pull_request_url="${repository_url}/pull/${pull_request_number}"
+        echo "Pull Request URL: ${pull_request_url}"
+        echo "PR_DESCRIPTION=\"${pull_request_url}\"" >> "$GITHUB_OUTPUT"
   
   update_major:
     needs: if_merged
@@ -23,7 +33,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Setting major version
-      run: export make_version_command="make update_major"
+      run: make update_major ${{ needs.if_merged.outputs.pr_description }}
 
   update_minor:
     needs: if_merged
@@ -31,47 +41,27 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Setting minor version
-      run: export make_version_command="make update_minor"
+      run: make update_minor ${{ needs.if_merged.outputs.pr_description }}
 
   update_patch:
     needs: [update_major, update_minor, if_merged]
     if: |
       always() &&
-      needs.if_merged.result != 'success' && 
+      needs.if_merged.result == 'success' && 
       needs.update_major.result != 'success' && 
       needs.update_minor.result != 'success'
 
     runs-on: ubuntu-latest
     steps:
     - name: setting patch version
-      run: export make_version_command="make update_patch"
+      run: make update_patch ${{ needs.if_merged.outputs.pr_description }}
   
-  versioning:
+  commit_changes:
     needs: [update_patch, if_merged]
     if: |
       always() &&
-      needs.if_merged.result != 'success'
+      needs.if_merged.result == 'success'
 
-    runs-on: ubuntu-latest
-    steps:
-    - name: Setting checkout
-      uses: actions/checkout@v3
-    
-    - name: See github.ref_name
-      run: echo ${{ github.ref_name }}
-    - name: See github.head_ref
-      run: echo ${{ github.head_ref }}
-    - name: Obter mensagem de squash commit
-      run: |
-          pull_request_number="${{ github.event.number }}"
-          repository_url="${{ github.event.repository.html_url }}"
-          pull_request_url="${repository_url}/pull/${pull_request_number}"
-          echo "Pull Request URL: ${pull_request_url}"
-          echo ${make_version_command} PR_DESCRIPTION="${pull_request_url}"
-          ${make_version_command} PR_DESCRIPTION="${pull_request_url}"
-  
-  commit_changes:
-    needs: [versioning]
     runs-on: ubuntu-latest
     steps:
     - name: Setting checkout
