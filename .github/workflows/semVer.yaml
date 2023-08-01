@@ -3,7 +3,6 @@ on:
   pull_request_target:
     types:
       - closed
-  push:
 
 jobs:
   if_merged:
@@ -102,3 +101,4 @@ jobs:
         git add .
         git commit -m "version(update)"
         git push
+# trying
