@@ -17,7 +17,7 @@ jobs:
   
   update_major:
 #    needs: if_merged
-    if: github.ref_name == break/*
+    if: github.ref_name =~ '^break/.*$'
     runs-on: ubuntu-latest
     steps:
     - name: Setting major version
@@ -25,7 +25,7 @@ jobs:
 
   update_minor:
 #    needs: if_merged
-    if: github.ref_name == minor/*
+    if: github.ref_name =~ '^feat/.*$'
     runs-on: ubuntu-latest
     steps:
     - name: Setting minor version
