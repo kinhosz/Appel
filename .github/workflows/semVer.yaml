@@ -11,8 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Was Merged
-      run: |
-        @echo Was merged
+      run: echo Was merged
   
   update_major:
 #    needs: if_merged
@@ -36,12 +35,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Checking if is major update
-      run: echo check major_update
       if: needs.update_major != 'success'
+      run: echo is not update_major
 
     - name: Checking if is minor update
-      run: echo check minor_update
       if: needs.update_minor != 'success'
+      run: echo is not minor_update
 
     - name: setting patch version
       run: echo update patch
