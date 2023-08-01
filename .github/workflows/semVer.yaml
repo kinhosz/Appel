@@ -5,10 +5,6 @@ on:
       - closed
   push:
 
-env:
-  pr_link: ''
-  make_version_command: ''
-
 jobs:
   if_merged:
     if: github.event.pull_request.merged != true
