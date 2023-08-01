@@ -34,14 +34,14 @@ jobs:
     needs: update_major
     runs-on: ubuntu-latest
     steps:
-      run: echo is not major
+    - run: echo is not major
   
   is_not_minor:
     if: ${{ always() }} && needs.update_minor.result != 'success'
     needs: update_minor
     runs-on: ubuntu-latest
     steps:
-      run: echo is not minor
+    - run: echo is not minor
 
   update_patch:
     needs: [is_not_major, is_not_minor]
