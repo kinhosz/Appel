@@ -31,14 +31,13 @@ jobs:
 
   update_patch:
     needs: [update_major, update_minor, if_merged]
-    if: always() && needs.update_major.result != 'success' && needs.update_minor.result != 'success'
+    if: needs.update_major.result != 'success' && needs.update_minor.result != 'success'
     runs-on: ubuntu-latest
     steps:
     - name: setting patch version
       run: echo update patch
   
   commit_changes:
-    if: always()
     needs: [update_major, update_minor, update_patch]
     runs-on: ubuntu-latest
     steps:
