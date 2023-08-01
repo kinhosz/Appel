@@ -72,15 +72,15 @@ jobs:
 
     - name: Update MAJOR
       run: ${{ needs.update_major.outputs.make_cli }} PR_DESCRIPTION=${{ needs.if_merged.outputs.PR_DESCRIPTION }}
-      if: needs.update_major.success == true
+      if: needs.update_major.result == 'success'
     
     - name: Update MINOR
       run: ${{ needs.update_minor.outputs.make_cli }} PR_DESCRIPTION=${{ needs.if_merged.outputs.PR_DESCRIPTION }}
-      if: needs.update_minor.success == true
+      if: needs.update_minor.result == 'success'
     
     - name: Update PATCH
       run: ${{ needs.update_patch.outputs.make_cli }} PR_DESCRIPTION=${{ needs.if_merged.outputs.PR_DESCRIPTION }}
-      if: needs.update_patch.success == true
+      if: needs.update_patch.result == 'success'
 
     - name: See branch name
       run: |
