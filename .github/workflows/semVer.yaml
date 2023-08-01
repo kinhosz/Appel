@@ -1,0 +1,40 @@
+name: Update version
+#on:
+#  pull_request_target:
+#    types:
+#      - closed
+
+on: push
+
+jobs:
+  if_merged:
+    if: github.event.pull_request.merged == true
+    runs-on: ubuntu-latest
+    steps:
+    - name: Was Merged
+      run: |
+        @echo Was merged
+  
+  update_major:
+#    needs: if_merged
+    if: github.ref_name == break/*
+    runs-on: ubuntu-latest
+    steps:
+    - name: Setting major version
+      run: @echo update MAJOR
+
+  update_minor:
+#    needs: if_merged
+    if: github.ref_name == minor/*
+    runs-on: ubuntu-latest
+    steps:
+    - name: Setting minor version
+      run: @echo update minor
+
+  update_patch:
+    needs: [update_major, update_minor]
+    if: jobs.update_major.status != success && jobs.update_minor.status != success
+    runs-on: ubuntu-latest
+    steps:
+    - name: setting patch version
+      run: @echo update patch
