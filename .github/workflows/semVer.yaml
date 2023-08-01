@@ -28,20 +28,25 @@ jobs:
     steps:
     - name: Setting minor version
       run: echo update minor
-
-  update_patch:
-    if: ${{ always() }}
-    needs: [update_major, update_minor]
+  
+  is_not_major:
+    if: ${{ always() }} && needs.update_major.result != 'success'
+    needs: update_major
     runs-on: ubuntu-latest
     steps:
-    - name: Checking if is major update
-      if: needs.update_major.result != 'success'
-      run: echo is not update_major
+      run: echo is not major
+  
+  is_not_minor:
+    if: ${{ always() }} && needs.update_minor.result != 'success'
+    needs: update_minor
+    runs-on: ubuntu-latest
+    steps:
+      run: echo is not minor
 
-    - name: Checking if is minor update
-      if: needs.update_minor.result != 'success'
-      run: echo is not minor_update
-
+  update_patch:
+    needs: [is_not_major, is_not_minor]
+    runs-on: ubuntu-latest
+    steps:
     - name: setting patch version
       run: echo update patch
   
