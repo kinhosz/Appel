@@ -61,9 +61,10 @@ jobs:
       run: echo ${{ github.head_ref }}
     - name: Obter mensagem de squash commit
       run: |
-        pr_number=$(jq -r '.number' $GITHUB_EVENT_PATH)
-        squash_commit_message=$(gh pr view $pr_number --json title -q '.merge_commit_message')
-        echo "Mensagem do squash commit: $squash_commit_message"
+          pull_request_number="${{ github.event.number }}"
+          repository_url="${{ github.event.repository.html_url }}"
+          pull_request_url="${repository_url}}/pull/${pull_request_number}"
+          echo "Pull Request URL: ${pull_request_url}"
 
 # apenas testando
 # vamos testar se ele faz o major certinho
