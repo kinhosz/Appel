@@ -1,14 +1,27 @@
 #include <geometry/box.h>
 #include <assert.h>
 
-Box::Box() : kd(0), ks(0), ka(0), kr(0), kt(0), roughness(0), color(Color()) {}
+Box::Box() {
+    this->diffuse_coefficient = 0.0;
+    this->specular_coefficient = 0.0;
+    this->ambient_coefficient = 0.0;
+    this->reflection_coefficient = 0.0;
+    this->transmission_coefficient = 0.0;
+    this->roughness = 0.0;
+}
 
-Box::Box(double kd, double ks, double ka, double kr, double kt, double roughness, Color color)
-    : kd(kd), ks(ks), ka(ka), kr(kr), kt(kt), roughness(roughness), color(color) {
-    assert(kd >= 0 && kd <= 1);
-    assert(ks >= 0 && ks <= 1);
-    assert(ka >= 0 && ka <= 1);
-    assert(kr >= 0 && kr <= 1);
-    assert(kt >= 0 && kt <= 1);
-    assert(roughness > 0);
+Box::Box(double kd, double ks, double ka, double kr, double kt, double roughness) {
+    assert(kd >= 0.0 && kd <= 1.0);
+    assert(ks >= 0.0 && ks <= 1.0);
+    assert(ka >= 0.0 && ka <= 1.0);
+    assert(kr >= 0.0 && kr <= 1.0);
+    assert(kt >= 0.0 && kt <= 1.0);
+    assert(roughness > 0.0);
+
+    this->diffuse_coefficient = kd;
+    this->specular_coefficient = ks;
+    this->ambient_coefficient = ka;
+    this->reflection_coefficient = kr;
+    this->transmission_coefficient = kt;
+    this->roughness = roughness;
 }
