@@ -9,7 +9,7 @@ jobs:
     if: |
       github.event.pull_request.merged == true &&
       !startsWith(github.head_ref, 'docs/') &&
-      github.base_ref == 'branch-test'
+      github.base_ref == 'main'
 
     runs-on: ubuntu-latest
     outputs:
