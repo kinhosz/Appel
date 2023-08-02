@@ -122,4 +122,6 @@ jobs:
         * Update version.hpp" \
         --repo kinhosz/Appel \
         --assignee "@me" \
-        --reviewer "@kinhosz @mateuseap"
+        --reviewer "kinhosz" \
+        --reviewer "mateuseap" \
+        --label "documentation"
