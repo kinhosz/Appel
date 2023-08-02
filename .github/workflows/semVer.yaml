@@ -6,7 +6,11 @@ on:
 
 jobs:
   if_merged:
-    if: github.event.pull_request.merged == true
+    if: |
+      github.event.pull_request.merged == true &&
+      !startsWith(github.head_ref, 'docs/') &&
+      github.base_ref == 'branch-test'
+
     runs-on: ubuntu-latest
     outputs:
       pr_description: ${{ steps.pr_link.outputs.PR_DESCRIPTION }}
@@ -96,10 +100,19 @@ jobs:
         git config --global user.name github-actions[bot]
         git config --global user.email github-actions[bot]@users.noreply.github.com
     
+    - name: Creating a new branch
+      run: |
+        git checkout -b docs/update-version
+
     - name: Commit & push
-      env:
-        GITHUB_TOKEN: ${{ secrets.ACTION_TOKEN }}
       run: |
         git add .
         git commit -m "version(update)"
         git push
+    
+    - name: Open a Pull Request
+      run: |
+        gh pr create --base ${{ github.base_ref }} --head docs/update-version \
+        --title "Update version" \
+        --body ""
+        --repo kinhosz/Appel
