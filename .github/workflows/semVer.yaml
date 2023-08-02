@@ -117,5 +117,10 @@ jobs:
       run: |
         gh pr create --base ${{ github.base_ref }} --head docs/version/${{ github.head_ref }} \
         --title "Update version" \
-        --body "* Update CHANGELOG.md\n* Update README.md\n*Update version.hpp"
-        --repo kinhosz/Appel
+        --body "* Update CHANGELOG.md
+        * Update README.md
+        * Update version.hpp" \
+        --repo kinhosz/Appel \
+        --add-assignee @me \
+        --add-reviewer @kinhosz \
+        --add-reviewer @mateuseap \
