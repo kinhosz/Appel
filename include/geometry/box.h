@@ -3,12 +3,17 @@
 
 #include <graphic/color.h>
 
-struct Box {
-    double kd, ks, ka, kr, kt, roughness;
-    Color color;
-
+class Box {
+private:
+    double diffuse_coefficient;
+    double specular_coefficient;
+    double ambient_coefficient;
+    double reflection_coefficient;
+    double transmission_coefficient;
+    double roughness;
+public:
     Box();
-    Box(double kd, double ks, double ka, double kr, double kt, double roughness, Color color);
+    Box(double kd, double ks, double ka, double kr, double kt, double roughness);
 };
 
 #endif
