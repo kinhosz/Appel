@@ -1,0 +1,43 @@
+PATCH_CHANG_KEYWORD := <!--PATCH-->
+PATCH_CHANG_TITLE := \#\#\#\# PATCH
+PATCH_TEXT = $(PATCH_CHANG_KEYWORD)\n$(PATCH_CHANG_TITLE) $1\n$2\n
+
+OPEN_DETAILS := <details>
+CLOSED_DETAILS := <\/details>
+OPEN_SUMMARY := <Summary>
+CLOSED_SUMMARY := <\/Summary>
+PATCH_TEXT_DETAILS := See Patch updates
+
+MINOR_CHANG_KEYWORD := <!--MINOR-->
+MINOR_CHANGE_TITLE := \#\#\# MINOR
+
+MINOR_TEXT = $(MINOR_CHANG_KEYWORD)\n\
+	$(MINOR_CHANGE_TITLE) $1\n\
+	$(OPEN_DETAILS)\n\
+	$(OPEN_SUMMARY) $(PATCH_TEXT_DETAILS) $(CLOSED_SUMMARY)\n\n\
+	$(PATCH_CHANG_KEYWORD)\n\
+	$(CLOSED_DETAILS)\n
+
+MAJOR_CHANG_KEYWORD := <!--MAJOR-->
+MAJOR_CHANGE_TITLE := \#\# MAJOR
+MINOR_TEXT_DETAILS := See Minor updates
+
+MAJOR_TEXT = $(MAJOR_CHANG_KEYWORD)\n\
+	$(MAJOR_CHANGE_TITLE) $1\n\
+	$(OPEN_DETAILS)\n\
+	$(OPEN_SUMMARY) $(MINOR_TEXT_DETAILS) $(CLOSED_SUMMARY)\n\n\
+	$(MINOR_CHANG_KEYWORD)\
+	$(CLOSED_DETAILS)\n
+
+# update changelog
+define changelog_patch
+	sed -i -e '0,/$(PATCH_CHANG_KEYWORD)/s//$(PATCH_TEXT)/' $(CHANGELOG)
+endef
+
+define changelog_minor
+	sed -i -e '0,/$(MINOR_CHANG_KEYWORD)/s//$(MINOR_TEXT)/' $(CHANGELOG)
+endef
+
+define changelog_major
+	sed -i -e '0,/$(MAJOR_CHANG_KEYWORD)/s//$(MAJOR_TEXT)/' $(CHANGELOG)
+endef

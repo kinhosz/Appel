@@ -1,0 +1,121 @@
+name: Update version
+on:
+  pull_request_target:
+    types:
+      - closed
+
+jobs:
+  if_merged:
+    if: |
+      github.event.pull_request.merged == true &&
+      !startsWith(github.head_ref, 'docs/') &&
+      github.base_ref == 'main'
+
+    runs-on: ubuntu-latest
+    outputs:
+      pr_description: ${{ steps.pr_link.outputs.PR_DESCRIPTION }}
+    steps:
+    - name: Was Merged
+      run: echo was merged
+    - id: pr_link
+      run: |
+        pull_request_number="${{ github.event.number }}"
+        repository_url="${{ github.event.repository.html_url }}"
+        pull_request_url="${repository_url}/pull/${pull_request_number}"
+        echo "Pull Request URL: ${pull_request_url}"
+        echo "PR_DESCRIPTION=\"${pull_request_url}\"" >> "$GITHUB_OUTPUT"
+
+  update_major:
+    needs: if_merged
+    if: startsWith(github.head_ref, 'break/')
+    runs-on: ubuntu-latest
+    outputs:
+      make_cli: ${{ steps.make_cli.outputs.make_cli }}
+
+    steps:
+    - id: make_cli
+      run: echo "make_cli="make update_major"" >> "$GITHUB_OUTPUT"
+
+  update_minor:
+    needs: if_merged
+    if: startsWith(github.head_ref, 'feat/')
+    runs-on: ubuntu-latest
+    outputs:
+      make_cli: ${{ steps.make_cli.outputs.make_cli }}
+
+    steps:
+    - id: make_cli
+      run: echo "make_cli="make update_minor"" >> "$GITHUB_OUTPUT"
+
+  update_patch:
+    needs: [update_major, update_minor, if_merged]
+    if: |
+      always() &&
+      needs.if_merged.result == 'success' && 
+      needs.update_major.result != 'success' && 
+      needs.update_minor.result != 'success'
+    runs-on: ubuntu-latest
+    outputs:
+      make_cli: ${{ steps.make_cli.outputs.make_cli }}
+
+    steps:
+    - id: make_cli
+      run: echo "make_cli="make update_patch"" >> "$GITHUB_OUTPUT"
+  
+  commit_changes:
+    needs: [update_major, update_minor, update_patch, if_merged]
+    if: |
+      always() &&
+      needs.if_merged.result == 'success'
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Setting checkout
+      uses: actions/checkout@v3
+
+    - name: Update MAJOR
+      run: |
+        echo ${{ needs.update_major.outputs.make_cli }} PR_DESCRIPTION=${{ needs.if_merged.outputs.PR_DESCRIPTION }}
+        ${{ needs.update_major.outputs.make_cli }} PR_DESCRIPTION=${{ needs.if_merged.outputs.PR_DESCRIPTION }}
+      if: needs.update_major.result == 'success'
+    
+    - name: Update MINOR
+      run: |
+        echo ${{ needs.update_minor.outputs.make_cli }} PR_DESCRIPTION=${{ needs.if_merged.outputs.PR_DESCRIPTION }}
+        ${{ needs.update_minor.outputs.make_cli }} PR_DESCRIPTION=${{ needs.if_merged.outputs.PR_DESCRIPTION }}
+      if: needs.update_minor.result == 'success'
+    
+    - name: Update PATCH
+      run: |
+        echo ${{ needs.update_patch.outputs.make_cli }} PR_DESCRIPTION=${{ needs.if_merged.outputs.PR_DESCRIPTION }}
+        ${{ needs.update_patch.outputs.make_cli }} PR_DESCRIPTION=${{ needs.if_merged.outputs.PR_DESCRIPTION }}
+      if: needs.update_patch.result == 'success'
+
+    - name: See branch name
+      run: |
+        git branch
+
+    - name: Setting commiter
+      run: |
+        git config --global user.name github-actions[bot]
+        git config --global user.email github-actions[bot]@users.noreply.github.com
+    
+    - name: Creating a new branch
+      run: |
+        git checkout -b docs/version/${{ github.head_ref }}
+        git push --set-upstream origin docs/version/${{ github.head_ref }}
+
+    - name: Commit & push
+      run: |
+        git add .
+        git commit -m "version(update)"
+        git push
+    
+    - name: Open a Pull Request
+      env:
+        GH_TOKEN: ${{ github.token }}
+      run: |
+        gh pr create --base ${{ github.base_ref }} --head docs/version/${{ github.head_ref }} \
+        --title "Update version" \
+        --body "* Update CHANGELOG.md\n* Update README.md\n*Update version.hpp"
+        --repo kinhosz/Appel
