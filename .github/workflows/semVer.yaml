@@ -97,9 +97,8 @@ jobs:
         git config --global user.email github-actions[bot]@users.noreply.github.com
     
     - name: Commit & push
-      env:
-        GITHUB_TOKEN: ${{ secrets.ACTION_TOKEN }}
       run: |
         git add .
         git commit -m "version(update)"
         git push
+# vamos
