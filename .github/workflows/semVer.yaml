@@ -98,9 +98,8 @@ jobs:
     
     - name: Commit & push
       env:
-        GITHUB_TOKEN: ${{ secretes.BYPASS_TOKEN }}
+        GITHUB_TOKEN: ${{ secrets.BYPASS_TOKEN }}
       run: |
         git add .
         git commit -m "version(update)"
         git push
-# trying
