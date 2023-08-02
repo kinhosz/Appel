@@ -102,8 +102,8 @@ jobs:
     
     - name: Creating a new branch
       run: |
-        git checkout -b docs/update-version
-        git push --set-upstream origin docs/update-version
+        git checkout -b docs/version/${{ github.head_ref }}
+        git push --set-upstream origin docs/version/${{ github.head_ref }}
 
     - name: Commit & push
       run: |
@@ -115,7 +115,7 @@ jobs:
       env:
         GH_TOKEN: ${{ github.token }}
       run: |
-        gh pr create --base ${{ github.base_ref }} --head docs/update-version \
+        gh pr create --base ${{ github.base_ref }} --head docs/version/${{ github.head_ref }} \
         --title "Update version" \
         --body ""
         --repo kinhosz/Appel
