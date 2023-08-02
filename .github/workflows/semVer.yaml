@@ -103,6 +103,7 @@ jobs:
     - name: Creating a new branch
       run: |
         git checkout -b docs/update-version
+        git push --set-upstream origin docs/update-version
 
     - name: Commit & push
       run: |
