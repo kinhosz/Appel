@@ -121,6 +121,5 @@ jobs:
         * Update README.md
         * Update version.hpp" \
         --repo kinhosz/Appel \
-        --add-assignee @me \
-        --add-reviewer @kinhosz \
-        --add-reviewer @mateuseap \
+        --assignee "@me" \
+        --reviewer "@kinhosz @mateuseap"
