@@ -121,7 +121,7 @@ jobs:
         * Update README.md
         * Update version.hpp" \
         --repo kinhosz/Appel \
-        --assignee "@me" \
+        --assignee "github-actions[bot]" \
         --reviewer "kinhosz" \
         --reviewer "mateuseap" \
         --label "documentation"
