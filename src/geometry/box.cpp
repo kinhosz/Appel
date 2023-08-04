@@ -2,12 +2,12 @@
 #include <assert.h>
 
 Box::Box() {
-    this->diffuse_coefficient = 0.0;
-    this->specular_coefficient = 0.0;
-    this->ambient_coefficient = 0.0;
-    this->reflection_coefficient = 0.0;
-    this->transmission_coefficient = 0.0;
-    this->roughness = 0.0;
+    this->diffuseCoefficient = 0.0;
+    this->specularCoefficient = 0.0;
+    this->ambientCoefficient = 0.0;
+    this->reflectionCoefficient = 0.0;
+    this->transmissionCoefficient = 0.0;
+    this->roughnessCoefficient = 0.0;
 }
 
 Box::Box(double kd, double ks, double ka, double kr, double kt, double roughness) {
@@ -18,10 +18,10 @@ Box::Box(double kd, double ks, double ka, double kr, double kt, double roughness
     assert(kt >= 0.0 && kt <= 1.0);
     assert(roughness > 0.0);
 
-    this->diffuse_coefficient = kd;
-    this->specular_coefficient = ks;
-    this->ambient_coefficient = ka;
-    this->reflection_coefficient = kr;
-    this->transmission_coefficient = kt;
-    this->roughness = roughness;
+    this->diffuseCoefficient = kd;
+    this->specularCoefficient = ks;
+    this->ambientCoefficient = ka;
+    this->reflectionCoefficient = kr;
+    this->transmissionCoefficient = kt;
+    this->roughnessCoefficient = roughness;
 }

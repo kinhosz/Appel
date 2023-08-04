@@ -5,12 +5,12 @@
 
 class Box {
 private:
-    double diffuse_coefficient;
-    double specular_coefficient;
-    double ambient_coefficient;
-    double reflection_coefficient;
-    double transmission_coefficient;
-    double roughness;
+    double diffuseCoefficient;
+    double specularCoefficient;
+    double ambientCoefficient;
+    double reflectionCoefficient;
+    double transmissionCoefficient;
+    double roughnessCoefficient;
 public:
     Box();
     Box(double kd, double ks, double ka, double kr, double kt, double roughness);
