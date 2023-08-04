@@ -2,20 +2,20 @@
 #define ENTITY_LIGHT_H
 
 #include <geometry/point.h>
-#include <graphic/color.h>
+#include <graphic/pixel.h>
 
 class Light {
 private:
     Point location;
-    Color intensity;
+    Pixel intensity;
 public:
-    Light(Point location, Color intensity);
+    Light(Point location, Pixel intensity);
 
     Point getLocation() const;
-    Color getIntensity() const;
+    Pixel getIntensity() const;
 
     void setLocation(Point location);
-    void setIntensity(Color intensity);
+    void setIntensity(Pixel intensity);
 };
 
 #endif
