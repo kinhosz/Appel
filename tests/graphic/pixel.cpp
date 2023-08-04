@@ -1,4 +1,5 @@
 #include <graphic/pixel.h>
+#include <graphic/color.h>
 #include <assert.h>
 using namespace std;
 
@@ -36,7 +37,7 @@ int main() {
     assert(p2.getRed() == 15);
     assert(p2.getGreen() == 20);
     assert(p2.getBlue() == 215);
-    
+
     assert(p3.getRed() == 200);
     assert(p3.getGreen() == 100);
     assert(p3.getBlue() == 50);
