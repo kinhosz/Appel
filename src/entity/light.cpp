@@ -21,3 +21,11 @@ void Light::setLocation(Point location) {
 void Light::setIntensity(Color intensity) {
     this->intensity = intensity;
 }
+
+bool Light::operator==(const Light& other) const {
+    return location == other.location && intensity == other.intensity;
+}
+
+bool Light::operator!=(const Light& other) const {
+    return !(*this == other);
+}
