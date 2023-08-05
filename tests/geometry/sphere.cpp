@@ -1,6 +1,8 @@
 #include <geometry/sphere.h>
 #include <geometry/point.h>
+#include <graphic/color.h>
 #include <assert.h>
+using namespace std;
 
 int main() {
     Sphere s1, s2(Point(1.55, -2.05, 3.00), 8.00, Color(0.23, 0.60, 0.98), 0.40, 0.92, 1.00, 0.11, 0.24, 0.31);
