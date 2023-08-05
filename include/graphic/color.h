@@ -2,21 +2,18 @@
 #define GRAPHIC_COLOR_H
 
 struct Color {
-    int red, green, blue;
-    
+    double red, green, blue;
+
     Color();
-    Color(int red, int green, int blue);
+    Color(double red, double green, double blue);
 
-    int getRed() const;
-    int getGreen() const;
-    int getBlue() const;
-    double getNormRed() const;
-    double getNormGreen() const;
-    double getNormBlue() const;
+    double getRed() const;
+    double getGreen() const;
+    double getBlue() const;
 
-    void setRed(int red);
-    void setGreen(int green);
-    void setBlue(int blue);
+    void setRed(double red);
+    void setGreen(double green);
+    void setBlue(double blue);
 };
 
 #endif
