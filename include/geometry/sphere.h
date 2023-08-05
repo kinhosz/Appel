@@ -3,6 +3,7 @@
 
 #include <geometry/box.h>
 #include <geometry/point.h>
+#include <graphic/color.h>
 
 class Sphere : public Box {
 private:
