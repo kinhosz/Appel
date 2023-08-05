@@ -1,4 +1,5 @@
 #include <graphic/color.h>
+#include <geometry/utils.h>
 #include <assert.h>
 
 Color::Color() {
@@ -45,4 +46,12 @@ void Color::setBlue(double blue) {
     assert(blue >= 0.0 && blue <= 1.0);
 
     this->blue = blue;
+}
+
+bool Color::operator==(const Color& other) const {
+    return cmp(red, other.red) == 0 && cmp(green, other.green) == 0 && cmp(blue, other.blue) == 0;
+}
+
+bool Color::operator!=(const Color& other) const {
+    return !(*this == other);
 }
