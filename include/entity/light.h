@@ -16,6 +16,9 @@ public:
 
     void setLocation(Point location);
     void setIntensity(Color intensity);
+
+    bool operator==(const Light& other) const;
+    bool operator!=(const Light& other) const;
 };
 
 #endif
