@@ -20,7 +20,7 @@ int main(){
             id /= 255;
             int blue = id%255;
 
-            frame.setPixel(i, j, Color(red, green, blue));
+            frame.setPixel(i, j, Pixel(red, green, blue));
         }
     }
 
@@ -34,11 +34,11 @@ int main(){
             id /= 255;
             int blue = id%255;
 
-            Color color = frame.getPixel(i, j);
+            Pixel pixel = frame.getPixel(i, j);
 
-            assert(color.red == red);
-            assert(color.green == green);
-            assert(color.blue == blue);
+            assert(pixel.red == red);
+            assert(pixel.green == green);
+            assert(pixel.blue == blue);
         }
     }
 }

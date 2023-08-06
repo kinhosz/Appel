@@ -13,18 +13,18 @@ Frame::Frame(int vResolution, int hResolution) {
     }
 }
 
-Color Frame::getPixel(int x, int y) const {
+Pixel Frame::getPixel(int x, int y) const {
     assert(x >= 0 && x < this->verticalResolution);
     assert(y >= 0 && y < this->horizontalResolution);
 
     return matrix[x][y];
 }
 
-void Frame::setPixel(int x, int y, Color color) {
+void Frame::setPixel(int x, int y, Pixel pixel) {
     assert(x >= 0 && x < this->verticalResolution);
     assert(y >= 0 && y < this->horizontalResolution);
 
-    this->matrix[x][y] = color;
+    this->matrix[x][y] = pixel;
 }
 
 int Frame::vertical() const {

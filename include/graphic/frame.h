@@ -2,19 +2,19 @@
 #define GRAPHIC_FRAME_H
 
 #include <vector>
-#include <graphic/color.h>
+#include <graphic/pixel.h>
 
 class Frame {
 private:
     int verticalResolution;
     int horizontalResolution;
-    std::vector<std::vector<Color>> matrix;
+    std::vector<std::vector<Pixel>> matrix;
 
 public:
     Frame();
     Frame(int vResolution, int hResolution);
-    Color getPixel(int x, int y) const;
-    void setPixel(int x, int y, Color color);
+    Pixel getPixel(int x, int y) const;
+    void setPixel(int x, int y, Pixel pixel);
     int vertical() const;
     int horizontal() const;
 };
