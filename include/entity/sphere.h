@@ -1,5 +1,5 @@
-#ifndef GEOMETRY_SPHERE_H
-#define GEOMETRY_SPHERE_H
+#ifndef ENTITY_SPHERE_H
+#define ENTITY_SPHERE_H
 
 #include <geometry/box.h>
 #include <geometry/point.h>

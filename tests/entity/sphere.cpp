@@ -1,4 +1,4 @@
-#include <geometry/sphere.h>
+#include <entity/sphere.h>
 #include <geometry/point.h>
 #include <graphic/color.h>
 #include <assert.h>

@@ -1,4 +1,4 @@
-#include <geometry/sphere.h>
+#include <entity/sphere.h>
 
 Sphere::Sphere() : Box(), center(Point()), radius(0.0), color(Color()) {}
 
