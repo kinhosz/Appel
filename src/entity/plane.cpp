@@ -1,4 +1,4 @@
-#include <geometry/plane.h>
+#include <entity/plane.h>
 
 Plane::Plane() : Box(), point(Point()), normalVector(Vetor()), color(Color()) {}
 

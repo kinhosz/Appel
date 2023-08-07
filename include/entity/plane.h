@@ -1,5 +1,5 @@
-#ifndef GEOMETRY_PLANE_H
-#define GEOMETRY_PLANE_H
+#ifndef ENTITY_PLANE_H
+#define ETNITY_PLANE_H
 
 #include <geometry/box.h>
 #include <geometry/point.h>

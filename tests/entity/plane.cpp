@@ -1,4 +1,4 @@
-#include <geometry/plane.h>
+#include <entity/plane.h>
 #include <geometry/point.h>
 #include <geometry/vetor.h>
 #include <graphic/color.h>
