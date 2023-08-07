@@ -9,7 +9,7 @@ Frame::Frame(int vResolution, int hResolution) {
 
     matrix.resize(vResolution);
     for(int i=0;i<vResolution;i++){
-        matrix[i].resize(hResolution, Color(0, 0, 0));
+        matrix[i].resize(hResolution, Pixel(0, 0, 0));
     }
 }
 
