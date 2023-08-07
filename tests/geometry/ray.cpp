@@ -1,6 +1,9 @@
 #include <geometry/ray.h>
+#include <geometry/point.h>
+#include <geometry/vetor.h>
 #include <geometry/utils.h>
 #include <assert.h>
+using namespace std;
 
 int main() {
     Point p(0, 0, 0);
