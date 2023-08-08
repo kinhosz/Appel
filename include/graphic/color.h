@@ -14,6 +14,9 @@ struct Color {
     void setRed(double red);
     void setGreen(double green);
     void setBlue(double blue);
+
+    bool operator==(const Color& other) const;
+    bool operator!=(const Color& other) const;
 };
 
 #endif
