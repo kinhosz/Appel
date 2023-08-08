@@ -1,6 +1,11 @@
 #include <entity/light.h>
 #include <assert.h>
 
+Light::Light() {
+    this->location = Point();
+    this->intensity = Color();
+}
+
 Light::Light(Point location, Color intensity) {
     this->location = location;
     this->intensity = intensity;

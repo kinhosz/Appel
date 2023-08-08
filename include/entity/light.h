@@ -9,6 +9,7 @@ private:
     Point location;
     Color intensity;
 public:
+    Light();
     Light(Point location, Color intensity);
 
     Point getLocation() const;
