@@ -3,7 +3,7 @@
 
 #include <map>
 #include <entity/light.h>
-#include <geometry/box.h>
+#include <entity/box.h>
 #include <graphic/color.h>
 
 class Scene {

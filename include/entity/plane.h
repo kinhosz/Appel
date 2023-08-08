@@ -1,7 +1,7 @@
 #ifndef ENTITY_PLANE_H
 #define ETNITY_PLANE_H
 
-#include <geometry/box.h>
+#include <entity/box.h>
 #include <geometry/point.h>
 #include <geometry/vetor.h>
 #include <graphic/color.h>

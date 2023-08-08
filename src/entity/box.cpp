@@ -1,5 +1,6 @@
-#include <geometry/box.h>
+#include <entity/box.h>
 #include <assert.h>
+#include <geometry/ray.h>
 
 Box::Box() {
     this->diffuseCoefficient = 0.0;
@@ -24,4 +25,8 @@ Box::Box(double kd, double ks, double ka, double kr, double kt, double roughness
     this->reflectionCoefficient = kr;
     this->transmissionCoefficient = kt;
     this->roughnessCoefficient = roughness;
+}
+
+SurfaceIntersection Box::intersect(Ray ray) const{
+    return SurfaceIntersection();
 }
