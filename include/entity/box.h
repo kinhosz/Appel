@@ -1,7 +1,9 @@
-#ifndef GEOMETRY_BOX_H
-#define GEOMETRY_BOX_H
+#ifndef ENTITY_BOX_H
+#define ENTITY_BOX_H
 
 #include <graphic/color.h>
+#include <geometry/surfaceIntersection.h>
+#include <geometry/ray.h>
 
 class Box {
 private:
@@ -14,6 +16,7 @@ private:
 public:
     Box();
     Box(double kd, double ks, double ka, double kr, double kt, double roughness);
+    SurfaceIntersection intersect(Ray ray) const;
 };
 
 #endif

@@ -1,7 +1,7 @@
 #ifndef ENTITY_SPHERE_H
 #define ENTITY_SPHERE_H
 
-#include <geometry/box.h>
+#include <entity/box.h>
 #include <geometry/point.h>
 #include <graphic/color.h>
 
