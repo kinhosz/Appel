@@ -1,27 +1,32 @@
 #ifndef ENTITY_SCENE_H
 #define ENTITY_SCENE_H
 
-#include <vector>
+#include <map>
 #include <entity/light.h>
+#include <geometry/box.h>
 #include <graphic/color.h>
 
 class Scene {
 private:
-    std::vector<Light> lights;
-    Color environmentColor; // QUESTION: Should this be a Color or a Pixel?
-    // TO DO: Add objects
+    std::map<int, Light> lights;
+    int lightsCurrentIndex;
+    Color environmentColor;
+    std::map<int, Box> objects;
+    int objectsCurrentIndex;
 public:
     Scene();
-    Scene(std::vector<Light> lights, Color environmentColor);
+    Scene(const Color& environmentColor);
+    Scene(const std::map<int, Light>& lights, const Color& environmentColor, const std::map<int, Box>& objects);
 
-    std::vector<Light> getLights() const;
+    std::map<int, Light> getLights() const;
     Color getEnvironmentColor() const;
+    std::map<int, Box> getObjects() const;
 
-    void setLights(std::vector<Light> lights);
-    void setEnvironmentColor(Color environmentColor);
-
-    //TO DO: Add objects getters and setters
-    //TO DO: Add intersection method
+    int addLight(const Light& light);
+    void removeLight(int index);
+    void setEnvironmentColor(const Color& environmentColor);
+    int addObject(const Box& object);
+    void removeObject(int index);
 };
 
 #endif
