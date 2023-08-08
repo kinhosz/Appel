@@ -16,7 +16,7 @@ int main(){
     Vetor normal(2, 0, 0);
 
     SurfaceIntersection sf2(color, distance, normal);
-    assert(sf.color == Color(1, 1, 1));
-    assert(cmp(sf.distance, 10) == 0);
-    assert(sf.normal == Vetor(1, 0, 0));
+    assert(sf2.color == Color(1, 1, 1));
+    assert(cmp(sf2.distance, 10) == 0);
+    assert(sf2.normal == Vetor(1, 0, 0));
 }
