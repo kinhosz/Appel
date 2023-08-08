@@ -3,26 +3,26 @@
 
 Scene::Scene() {
     this->lights = std::map<int, Light>();
-    this->lightsCurrentIndex = this->lights.size() - 1;
+    this->lightsCurrentIndex = this->lights.size();
     this->environmentColor = Color(0, 0, 0);
     this->objects = std::map<int, Box>();
-    this->objectsCurrentIndex = this->objects.size() - 1;
+    this->objectsCurrentIndex = this->objects.size();
 }
 
 Scene::Scene(const Color& environmentColor) {
     this->lights = std::map<int, Light>();
-    this->lightsCurrentIndex = this->lights.size() - 1;
+    this->lightsCurrentIndex = this->lights.size();
     this->environmentColor = environmentColor;
     this->objects = std::map<int, Box>();
-    this->objectsCurrentIndex = this->objects.size() - 1;
+    this->objectsCurrentIndex = this->objects.size();
 }
 
 Scene::Scene(const std::map<int, Light>& lights, const Color& environmentColor, const std::map<int, Box>& objects) {
     this->lights = lights;
-    this->lightsCurrentIndex = this->lights.size() - 1;
+    this->lightsCurrentIndex = this->lights.size();
     this->environmentColor = environmentColor;
     this->objects = objects;
-    this->objectsCurrentIndex = this->objects.size() - 1;
+    this->objectsCurrentIndex = this->objects.size();
 }
 
 std::map<int, Light> Scene::getLights() const {
@@ -38,9 +38,9 @@ std::map<int, Box> Scene::getObjects() const {
 }
 
 int Scene::addLight(const Light& light) {
-    this->lightsCurrentIndex++;
     this->lights[lightsCurrentIndex] = light;
-    return lightsCurrentIndex;
+    this->lightsCurrentIndex++;
+    return lightsCurrentIndex - 1;
 }
 
 void Scene::removeLight(int index) {
@@ -53,9 +53,9 @@ void Scene::setEnvironmentColor(const Color& environmentColor) {
 }
 
 int Scene::addObject(const Box& object) {
-    this->objectsCurrentIndex++;
     this->objects[objectsCurrentIndex] = object;
-    return objectsCurrentIndex;
+    this->objectsCurrentIndex++;
+    return objectsCurrentIndex - 1;
 }
 
 void Scene::removeObject(int index) {
