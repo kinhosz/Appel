@@ -1,38 +1,51 @@
 #include <entity/triangularMesh.h>
-#include <assert.h>
+#include <geometry/ray.h>
+#include <geometry/utils.h>
+#include <cassert>
+using namespace std;
 
-TriangularMesh::TriangularMesh() : Box() {
-    this->numberOfTriangles = 0;
-    this->numberOfVertices = 0;
-    this->vertices = std::vector<Point>();
-    this->triangles = std::vector<std::array<int, 3>>();
-    this->triangleNormals = std::vector<Vetor>();
-    this->vertexNormals = std::vector<Vetor>();
-    this->colors = std::vector<Color>();
-}
+int main() {
+    TriangularMesh mesh(
+        2,
+        4,
+        {
+            Point(0, 0, 0),
+            Point(1, 0, 0),
+            Point(0, 1, 0),
+            Point(1, 1, 0)
+        },
+        {
+            {0, 1, 2},
+            {1, 2, 3}
+        },
+        {
+            Vetor(0, 0, 1),
+            Vetor(0, 0, 1)
+        },
+        {
+            Vetor(0, 0, 1),
+            Vetor(0, 0, 1),
+            Vetor(0, 0, 1),
+            Vetor(0, 0, 1)
+        },
+        {
+            Color(0.1, 0.2, 0.3),
+            Color(0.4, 0.5, 0.6),
+            Color(0.7, 0.8, 0.9),
+            Color(1.0, 1.0, 1.0)
+        },
+        0.1, 0.2, 0.3, 0.4, 0.5, 0.6
+    );
 
-TriangularMesh::TriangularMesh(
-    std::vector<Point>::size_type numberOfTriangles,
-    std::vector<Point>::size_type numberOfVertices,
-    std::vector<Point> vertices,
-    std::vector<std::array<int, 3>> triangles,
-    std::vector<Vetor> triangleNormals,
-    std::vector<Vetor> vertexNormals,
-    std::vector<Color> colors,
-    double kd,
-    double ks,
-    double ka,
-    double kr,
-    double kt,
-    double roughness
-) : Box(kd, ks, ka, kr, kt, roughness) {
-    assert(numberOfTriangles == triangles.size());
-    assert(numberOfVertices == vertices.size());
-    this->numberOfTriangles = numberOfTriangles;
-    this->numberOfVertices = numberOfVertices;
-    this->vertices = vertices;
-    this->triangles = triangles;
-    this->triangleNormals = triangleNormals;
-    this->vertexNormals = vertexNormals;
-    this->colors = colors;
+    Vetor vector(1, 0, 0);
+    Point point(0, 0, 0);
+    Ray ray(point, vector);
+
+    SurfaceIntersection sf = mesh.intersect(ray);
+
+    assert(sf.color == Color(0.1, 0.2, 0.3));
+    assert(cmp(sf.distance, DOUBLE_INF) == 0);
+    assert(sf.normal == Vetor(0, 0, 1));
+
+    return 0;
 }
