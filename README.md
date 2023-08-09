@@ -36,3 +36,5 @@ make install
 
 Will Install:
 * [`SFML v2.6.0`](https://github.com/SFML/SFML): For image processing
+
+**BREAKING CHANGE**: Only Linux suport!
