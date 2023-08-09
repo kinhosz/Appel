@@ -10,10 +10,10 @@ struct Triangle {
     Triangle();
     Triangle(const Point& v1, const Point& v2, const Point& v3);
 
-    double area() const;  // area of the triangle
-    Point centroid() const;  // centroid of the triangle
-    Vetor normal() const;  // normal vector of the triangle
-    bool contains(const Point& p) const;  // check if the triangle contains a point
+    double area() const;
+    Point centroid() const;
+    Vetor normal() const;
+    bool contains(const Point& p) const; 
 
     bool operator==(const Triangle& other) const;
     bool operator!=(const Triangle& other) const;
