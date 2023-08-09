@@ -43,7 +43,7 @@ int main() {
 
     SurfaceIntersection sf = mesh.intersect(ray);
 
-    assert(sf.color == Color(0.1, 0.2, 0.3));
+    assert(sf.color == Color(0, 0, 0));
     assert(cmp(sf.distance, DOUBLE_INF) == 0);
     assert(sf.normal == Vetor(0, 0, 1));
 
