@@ -21,8 +21,8 @@ private:
 public:
     TriangularMesh();
     TriangularMesh(
-        int numberOfTriangles,
-        int numberOfVertices,
+        std::vector<Point>::size_type numberOfTriangles,
+        std::vector<Point>::size_type numberOfVertices,
         std::vector<Point> vertices,
         std::vector<std::array<int, 3>> triangles,
         std::vector<Vetor> triangleNormals,
