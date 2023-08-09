@@ -27,4 +27,7 @@ make tests
 make unit FNAME=tests/geometry/vetor.cpp
 ```
 Will compile & run the specific file.
- 
+
+### 3rd party Libraries
+
+* [`SFML v2.6.0`](https://github.com/SFML/SFML): For image processing (already included)
