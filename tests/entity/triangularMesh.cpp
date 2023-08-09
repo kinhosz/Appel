@@ -5,13 +5,37 @@
 using namespace std;
 
 int main() {
-    TriangularMesh mesh;
-    mesh.setDiffuseCoefficient(0.1);
-    mesh.setSpecularCoefficient(0.2);
-    mesh.setAmbientCoefficient(0.3);
-    mesh.setReflectionCoefficient(0.4);
-    mesh.setTransmissionCoefficient(0.5);
-    mesh.setRoughnessCoefficient(0.6);
+    TriangularMesh mesh(
+        2,
+        4,
+        {
+            Point(0, 0, 0),
+            Point(1, 0, 0),
+            Point(0, 1, 0),
+            Point(1, 1, 0)
+        },
+        {
+            {0, 1, 2},
+            {1, 2, 3}
+        },
+        {
+            Vetor(0, 0, 1),
+            Vetor(0, 0, 1)
+        },
+        {
+            Vetor(0, 0, 1),
+            Vetor(0, 0, 1),
+            Vetor(0, 0, 1),
+            Vetor(0, 0, 1)
+        },
+        {
+            Color(0.1, 0.2, 0.3),
+            Color(0.4, 0.5, 0.6),
+            Color(0.7, 0.8, 0.9),
+            Color(1.0, 1.0, 1.0)
+        },
+        0.1, 0.2, 0.3, 0.4, 0.5, 0.6
+    );
 
     Vetor vector(1, 0, 0);
     Point point(0, 0, 0);
@@ -19,11 +43,9 @@ int main() {
 
     SurfaceIntersection sf = mesh.intersect(ray);
 
-    assert(sf.color == Color(0, 0, 0));
+    assert(sf.color == Color(0.1, 0.2, 0.3));
     assert(cmp(sf.distance, DOUBLE_INF) == 0);
     assert(sf.normal == Vetor(0, 0, 1));
-
-    TriangularMesh defaultMesh;
 
     return 0;
 }
