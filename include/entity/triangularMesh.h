@@ -7,6 +7,7 @@
 #include <graphic/color.h>
 #include <geometry/point.h>
 #include <geometry/vetor.h>
+#include <cstddef>
 
 class TriangularMesh : public Box {
 private:

@@ -1,6 +1,7 @@
 #ifndef GEOMETRY_TRIANGLE_H
 #define GEOMETRY_TRIANGLE_H
 
+#include <cstddef>
 #include <geometry/point.h>
 #include <geometry/vetor.h>
 #include <assert.h> 
