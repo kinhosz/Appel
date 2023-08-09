@@ -36,7 +36,7 @@ public:
         double roughness
     );
 
-    std::vector<Point>::size_type getNumberOfTriangles() const {
+    size_t getNumberOfTriangles() const {
         return numberOfTriangles;
     }
 };
