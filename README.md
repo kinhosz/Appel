@@ -2,7 +2,7 @@
 Computer Vision with Ray Tracing
 
 <!-- Dont modify this line!!! -->
-**Current Version**: 0.7.0
+**Current Version**: 0.8.0
 
 > Project for the Graphics Processing discipline of Computer Science course @ CIn/UFPE.
 ## Contributing guide
@@ -27,4 +27,14 @@ make tests
 make unit FNAME=tests/geometry/vetor.cpp
 ```
 Will compile & run the specific file.
- 
+
+### Dependencies
+
+```make
+make install
+```
+
+Will Install:
+* [`SFML v2.6.0`](https://github.com/SFML/SFML): For image processing
+
+**BREAKING CHANGE**: Only Linux suport!
