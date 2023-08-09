@@ -1,6 +1,7 @@
 #ifndef ENTITY_TRIANGLEMESH_H
 #define ENTITY_TRIANGLEMESH_H
 
+#include <array>
 #include <vector>  
 #include <graphic/color.h>
 #include <geometry/surfaceIntersection.h>
