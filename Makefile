@@ -6,6 +6,7 @@ else ifeq ($(shell uname), Linux)
 	include scripts/linux.mk
 endif
 
+include scripts/install.mk
 include scripts/compile.mk
 include scripts/run.mk
 include scripts/tests.mk
