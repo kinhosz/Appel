@@ -35,6 +35,10 @@ public:
         double kt,
         double roughness
     );
+
+    std::vector<Point>::size_type getNumberOfTriangles() const {
+        return numberOfTriangles;
+    }
 };
 
 #endif

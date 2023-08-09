@@ -58,6 +58,11 @@ bool Triangle::contains(const Point& p) const {
     return (u >= 0) && (v >= 0) && (u + v < 1);
 }
 
+const Point& Triangle::getVertex(int index) const {
+    assert(index >= 0 && index < 3);
+    return vertices[index];
+}
+
 bool Triangle::operator==(const Triangle& other) const {
     return vertices[0] == other.vertices[0] &&
            vertices[1] == other.vertices[1] &&

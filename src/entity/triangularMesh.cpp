@@ -36,3 +36,7 @@ TriangularMesh::TriangularMesh(
     this->vertexNormals = vertexNormals;
     this->colors = colors;
 }
+
+std::vector<Point>::size_type TriangularMesh::getNumberOfTriangles() const {
+    return numberOfTriangles;
+}

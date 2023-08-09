@@ -15,6 +15,11 @@ struct Triangle {
     Vetor normal() const;
     bool contains(const Point& p) const; 
 
+    const Point& getVertex(int index) const {
+        assert(index >= 0 && index < 3);
+        return vertices[index];
+    }
+
     bool operator==(const Triangle& other) const;
     bool operator!=(const Triangle& other) const;
 };
