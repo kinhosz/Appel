@@ -18,6 +18,9 @@ The project consists of 8 main folders:
     ├── include
     │   │   # Header files
     │
+    ├── lib
+    │   │   # Shared objects (.so) for 3rd-party libraries
+    │
     ├── scripts
     │   │   # Collection of project-related scripts
     │

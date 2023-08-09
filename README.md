@@ -27,4 +27,14 @@ make tests
 make unit FNAME=tests/geometry/vetor.cpp
 ```
 Will compile & run the specific file.
- 
+
+### Dependencies
+
+```make
+make install
+```
+
+Will Install:
+* [`SFML v2.6.0`](https://github.com/SFML/SFML): For image processing
+
+**BREAKING CHANGE**: Only Linux suport!
