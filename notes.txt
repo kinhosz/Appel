@@ -1,6 +1,0 @@
-1. baixar arquivo: curl -LO https://github.com/SFML/SFML/releases/download/2.6.0/SFML-2.6.0-linux-gcc-64-bit.tar.gz
-2. decompactar: tar -xzf SFML-2.6.0-linux-gcc-64-bit.tar.gz
-3. movendo include: mkdir -p include/SFML-teste && mv SFML-2.6.0/include/SFML/* include/SFML-teste/
-4. movendo lib: mkdir -p lib/SFML-teste && mv SFML-2.6.0/lib/* lib/SFML-teste/
-5. rm -r SFML-2.6.0-linux-gcc-64-bit.tar.gz
-6. rm -r SFML-2.6.0
