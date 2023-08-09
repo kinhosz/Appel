@@ -13,7 +13,7 @@ private:
     int numberOfTriangles;
     int numberOfVertices;
     std::vector<Point> vertices;
-    std::vector<std::array<int, 3>> triangleIndices;
+    std::vector<std::array<int, 3>> triangles;
     std::vector<Vetor> triangleNormals;
     std::vector<Vetor> vertexNormals;
     std::vector<Color> colors; 
