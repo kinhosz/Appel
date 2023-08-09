@@ -45,10 +45,6 @@ bool Triangle::contains(const Point& p) const {
     Vetor edge1 = Vetor(vertices[2]) - Vetor(vertices[1]);
     Vetor edge2 = Vetor(vertices[0]) - Vetor(vertices[2]);
 
-    Vetor vp0 = Vetor(p) - Vetor(vertices[0]);
-    Vetor vp1 = Vetor(p) - Vetor(vertices[1]);
-    Vetor vp2 = Vetor(p) - Vetor(vertices[2]);
-
     double dot00 = edge0.dot(edge0);
     double dot01 = edge0.dot(edge1);
     double dot02 = edge0.dot(edge2);
