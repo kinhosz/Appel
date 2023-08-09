@@ -14,8 +14,8 @@ define sfml_unzip
 endef
 
 define sfml_clear_destin_dir
-	@rm -r $(INCLUDE_SFML)
-	@rm -r $(LIB_SFML)
+	@rm -rf $(INCLUDE_SFML)
+	@rm -rf $(LIB_SFML)
 endef
 
 define sfml_move_lib
