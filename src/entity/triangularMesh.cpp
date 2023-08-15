@@ -7,7 +7,7 @@ TriangularMesh::TriangularMesh() : Box() {
     this->triangles =  std::vector<Triangle>();
 }
 
-Triangle TriangularMesh::getTriangle(int index) {
+Triangle TriangularMesh::getTriangle(int index) const {
     return this->triangles[index];
 }
 
