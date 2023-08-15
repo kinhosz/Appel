@@ -1,6 +1,7 @@
 #include <geometry/triangle.h>
 #include <geometry/utils.h>
 #include <graphic/color.h>
+#include <geometry/vetor.h> 
 #include <math.h>
 
 Triangle::Triangle() {
@@ -8,13 +9,13 @@ Triangle::Triangle() {
     vertices[1] = Point();
     vertices[2] = Point();
     color = Color();
-    triangleNormal = Vector();
-    normals[0] = Vector();
-    normals[1] = Vector();
-    normals[2] = Vector();
+    triangleNormal = Vetor();
+    normals[0] = Vetor();
+    normals[1] = Vetor();
+    normals[2] = Vetor();
 }
 
-Triangle::Triangle(Point v1, Point v2, Point v3, Vector n1, Vector n2, Vector n3, Vector triangleNormal, Color triangleColor) {
+Triangle::Triangle(Point v1, Point v2, Point v3, Vetor n1, Vetor n2, Vetor n3, Vetor triangleNormal, Color triangleColor) {
     vertices[0] = v1;
     vertices[1] = v2;
     vertices[2] = v3;

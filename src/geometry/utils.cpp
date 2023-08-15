@@ -1,7 +1,7 @@
-#include <geometry/utils.h>
 #include <geometry/triangle.h>
 #include <geometry/point.h>
 #include <graphic/color.h>
+#include <geometry/vetor.h> 
 #include <geometry/utils.h>
 #include <cmath>
 
@@ -16,8 +16,8 @@ std::vector<Triangle> createTriangles(
     std::vector<Point>::size_type numberOfTriangles,
     std::vector<Point> vertices,
     std::vector<std::array<int, 3>> triangles,
-    std::vector<Vector> normals,  
-    std::vector<Vector> triangleNormals, 
+    std::vector<Vetor> normals,  
+    std::vector<Vetor> triangleNormals, 
     std::vector<Color> colors
 ) {
     std::vector<Triangle> triangleObjects;
