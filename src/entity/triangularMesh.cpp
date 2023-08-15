@@ -40,13 +40,13 @@ TriangularMesh::TriangularMesh(
 
     for (const Triangle& triangle : triangles) {
         for (int i = 0; i < 3; ++i) {
-            this->vertices.insert(triangle.getVertex(i));
+            this->vertices.insert(*triangle.getVertex(i));
         }
     }
 
     for (const Triangle& triangle : triangles) {
         for (int i = 0; i < 3; ++i) {
-            this->triangleNormals.insert(triangle.normal());
+            this->triangleNormals.insert(*triangle.normal());
         }
     }
 
