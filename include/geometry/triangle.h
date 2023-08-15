@@ -8,8 +8,8 @@
 
 struct Triangle {
     Point vertices[3];
-    Vector normals[3];
-    Vector triangleNormal;
+    Vetor normals[3];
+    Vetor triangleNormal;
     Color color;
 
     Triangle();
@@ -23,12 +23,12 @@ struct Triangle {
         return vertices[index];
     }
 
-    Vector getNormal(int index) const {
+    Vetor getNormal(int index) const {
         assert(index >= 0 && index < 3);
         return normals[index];
     }
 
-    Vector getTriangleNormal() const {
+    Vetor getTriangleNormal() const {
         return triangleNormal;
     }
 
