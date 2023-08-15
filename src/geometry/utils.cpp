@@ -16,7 +16,7 @@ std::vector<Triangle> createTriangles(
     std::vector<Point>::size_type numberOfTriangles,
     std::vector<Point> vertices,
     std::vector<std::array<int, 3>> triangles,
-    std::vector<Vetor> normals,  
+    std::vector<Vetor> vertexNormals,  
     std::vector<Vetor> triangleNormals, 
     std::vector<Color> colors
 ) {
