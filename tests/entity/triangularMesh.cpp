@@ -18,7 +18,7 @@ int main() {
         {1, 2, 3}
     };
 
-    std::vector<Vetor> vertexNormals = {
+    std::vector<Vetor> normals = {
         Vetor(0, 0, 1),  
         Vetor(0, 0, 1),  
         Vetor(0, 0, 1),  
@@ -39,7 +39,7 @@ int main() {
         triangles.size(),
         vertices,
         triangles,
-        vertexNormals,
+        normals,
         triangleNormals,
         colors
     );
