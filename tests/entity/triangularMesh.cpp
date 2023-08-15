@@ -5,35 +5,32 @@
 using namespace std;
 
 int main() {
+    std::vector<Point> vertices = {
+        Point(0, 0, 0),
+        Point(1, 0, 0),
+        Point(0, 1, 0),
+        Point(1, 1, 0)
+    };
+
+    std::vector<std::array<int, 3>> triangles = {
+        {0, 1, 2},
+        {1, 2, 3}
+    };
+
+    std::vector<Color> colors = {
+        Color(0.1, 0.2, 0.3),
+        Color(0.4, 0.5, 0.6)
+    };
+
+    std::vector<Triangle> createdTriangles = createTriangles(
+        triangles.size(),
+        vertices,
+        triangles,
+        colors
+    );
+
     TriangularMesh mesh(
-        2,
-        4,
-        {
-            Point(0, 0, 0),
-            Point(1, 0, 0),
-            Point(0, 1, 0),
-            Point(1, 1, 0)
-        },
-        {
-            {0, 1, 2},
-            {1, 2, 3}
-        },
-        {
-            Vetor(0, 0, 1),
-            Vetor(0, 0, 1)
-        },
-        {
-            Vetor(0, 0, 1),
-            Vetor(0, 0, 1),
-            Vetor(0, 0, 1),
-            Vetor(0, 0, 1)
-        },
-        {
-            Color(0.1, 0.2, 0.3),
-            Color(0.4, 0.5, 0.6),
-            Color(0.7, 0.8, 0.9),
-            Color(1.0, 1.0, 1.0)
-        },
+        createdTriangles,
         0.1, 0.2, 0.3, 0.4, 0.5, 0.6
     );
 
