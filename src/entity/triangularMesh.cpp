@@ -1,4 +1,5 @@
 #include <entity/triangularMesh.h>
+#include <geometry/triangle.h>
 #include <graphic/color.h>
 #include <assert.h>
 
@@ -6,7 +7,7 @@ TriangularMesh::TriangularMesh() : Box() {
     this->triangles =  std::vector<Triangle>();
 }
 
-TriangularMesh::getTriangle(int index) {
+Triangle TriangularMesh::getTriangle(int index) {
     return this->triangles[index];
 }
 

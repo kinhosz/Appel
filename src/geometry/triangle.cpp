@@ -44,9 +44,9 @@ Vetor Triangle::normal() const {
 }
 
 bool Triangle::operator==(const Triangle& other) const {
-    return cmp(vertices[0], other.vertices[0]) &&
-           cmp(vertices[1], other.vertices[1]) &&
-           cmp(vertices[2], other.vertices[2]);
+    return vertices[0] == other.vertices[0] &&
+           vertices[1] == other.vertices[1] &&
+           vertices[2] == other.vertices[2];
 }
 
 bool Triangle::operator!=(const Triangle& other) const {
