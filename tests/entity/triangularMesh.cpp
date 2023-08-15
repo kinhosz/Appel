@@ -2,7 +2,7 @@
 #include <geometry/ray.h>
 #include <geometry/utils.h>
 #include <cassert>
-#include <utils/triangularMeshUtils.h>
+#include <geometry/utils.h>
 using namespace std;
 
 int main() {

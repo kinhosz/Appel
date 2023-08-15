@@ -37,42 +37,16 @@ Point Triangle::centroid() const {
     return centroid;
 }
 
-Point Triangle::barycenter() const {
-    Point barycenter;
-    barycenter.x = (vertices[0].x + vertices[1].x + vertices[2].x) / 3.0;
-    barycenter.y = (vertices[0].y + vertices[1].y + vertices[2].y) / 3.0;
-    barycenter.z = (vertices[0].z + vertices[1].z + vertices[2].z) / 3.0;
-    return barycenter;
-}
-
 Vetor Triangle::normal() const {
     Vetor side1 = Vetor(vertices[1]) - Vetor(vertices[0]);
     Vetor side2 = Vetor(vertices[2]) - Vetor(vertices[0]);
     return side1.cross(side2).normalize();
 }
 
-bool Triangle::contains(const Point& p) const {
-    Vetor edge0 = Vetor(vertices[1]) - Vetor(vertices[0]);
-    Vetor edge1 = Vetor(vertices[2]) - Vetor(vertices[1]);
-    Vetor edge2 = Vetor(vertices[0]) - Vetor(vertices[2]);
-
-    double dot00 = edge0.dot(edge0);
-    double dot01 = edge0.dot(edge1);
-    double dot02 = edge0.dot(edge2);
-    double dot11 = edge1.dot(edge1);
-    double dot12 = edge1.dot(edge2);
-
-    double invDenom = 1.0 / (dot00 * dot11 - dot01 * dot01);
-    double u = (dot11 * dot02 - dot01 * dot12) * invDenom;
-    double v = (dot00 * dot12 - dot01 * dot02) * invDenom;
-
-    return (u >= 0) && (v >= 0) && (u + v < 1);
-}
-
 bool Triangle::operator==(const Triangle& other) const {
-    return vertices[0] == other.vertices[0] &&
-           vertices[1] == other.vertices[1] &&
-           vertices[2] == other.vertices[2];
+    return cmp(vertices[0], other.vertices[0]) &&
+           cmp(vertices[1], other.vertices[1]) &&
+           cmp(vertices[2], other.vertices[2]);
 }
 
 bool Triangle::operator!=(const Triangle& other) const {

@@ -1,10 +1,8 @@
 #ifndef ENTITY_TRIANGULARMESH_H
 #define ENTITY_TRIANGULARMESH_H
 
-#include <array>
 #include <vector>  
 #include <entity/box.h>
-#include <graphic/color.h>
 #include <geometry/point.h>
 #include <geometry/vetor.h>
 #include <geometry/triangle.h>
@@ -12,8 +10,6 @@
 class TriangularMesh : public Box {
 private:
     std::vector<Triangle> triangles;
-    std::vector<Point> vertices;
-    std::vector<Vetor> triangleNormals; 
 
 public:
     TriangularMesh();
@@ -28,13 +24,7 @@ public:
         double roughness
     );
 
-    size_t getNumberOfTriangles() const {
-        return triangles.size();
-    }
-
-    size_t getNumberOfVertices() const {
-        return vertices.size();
-    }
+    Triangle getTriangle(int index) const;
 };
 
 #endif
