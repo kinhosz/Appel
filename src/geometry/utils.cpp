@@ -16,6 +16,8 @@ std::vector<Triangle> createTriangles(
     std::vector<Point>::size_type numberOfTriangles,
     std::vector<Point> vertices,
     std::vector<std::array<int, 3>> triangles,
+    std::vector<Vector> normals,  
+    std::vector<Vector> triangleNormals, 
     std::vector<Color> colors
 ) {
     std::vector<Triangle> triangleObjects;
@@ -23,8 +25,12 @@ std::vector<Triangle> createTriangles(
         const std::array<int, 3>& indices = triangles[i];
         Triangle triangle(
             vertices[indices[0]],
-            vertices[indices[1]], 
+            vertices[indices[1]],
             vertices[indices[2]],
+            normals[indices[0]],  
+            normals[indices[1]],
+            normals[indices[2]],
+            triangleNormals[i], 
             colors[i]
         );
         triangleObjects.push_back(triangle);

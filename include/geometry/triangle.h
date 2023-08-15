@@ -7,7 +7,9 @@
 #include <assert.h> 
 
 struct Triangle {
-    Point vertices[3]; 
+    Point vertices[3];
+    Vector normals[3];
+    Vector triangleNormal;
     Color color;
 
     Triangle();
@@ -15,11 +17,19 @@ struct Triangle {
 
     double area() const;
     Point centroid() const;
-    Vetor normal() const;
 
     Point getVertex(int index) const {
         assert(index >= 0 && index < 3);
         return vertices[index];
+    }
+
+    Vector getNormal(int index) const {
+        assert(index >= 0 && index < 3);
+        return normals[index];
+    }
+
+    Vector getTriangleNormal() const {
+        return triangleNormal;
     }
 
     bool operator==(const Triangle& other) const;

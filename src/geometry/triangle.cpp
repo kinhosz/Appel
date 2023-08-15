@@ -7,14 +7,22 @@ Triangle::Triangle() {
     vertices[0] = Point();
     vertices[1] = Point();
     vertices[2] = Point();
+    color = Color();
+    triangleNormal = Vector();
+    normals[0] = Vector();
+    normals[1] = Vector();
+    normals[2] = Vector();
 }
 
-Triangle::Triangle(Point v1, Point v2, Point v3, Color triangleColor) {
+Triangle::Triangle(Point v1, Point v2, Point v3, Vector n1, Vector n2, Vector n3, Vector triangleNormal, Color triangleColor) {
     vertices[0] = v1;
     vertices[1] = v2;
     vertices[2] = v3;
-    
     color = triangleColor;
+    this->triangleNormal = triangleNormal;
+    normals[0] = n1;
+    normals[1] = n2;
+    normals[2] = n3;
 }
 
 double Triangle::area() const {
@@ -35,12 +43,6 @@ Point Triangle::centroid() const {
     centroid.y /= 3.0;
     centroid.z /= 3.0;
     return centroid;
-}
-
-Vetor Triangle::normal() const {
-    Vetor side1 = Vetor(vertices[1]) - Vetor(vertices[0]);
-    Vetor side2 = Vetor(vertices[2]) - Vetor(vertices[0]);
-    return side1.cross(side2).normalize();
 }
 
 bool Triangle::operator==(const Triangle& other) const {
