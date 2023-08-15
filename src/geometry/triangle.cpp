@@ -10,9 +10,9 @@ Triangle::Triangle() {
     vertices[2] = Point();
     color = Color();
     triangleNormal = Vetor();
-    normals[0] = Vetor();
-    normals[1] = Vetor();
-    normals[2] = Vetor();
+    vertexNormals[0] = Vetor();
+    vertexNormals[1] = Vetor();
+    vertexNormals[2] = Vetor();
 }
 
 Triangle::Triangle(Point v1, Point v2, Point v3, Vetor n1, Vetor n2, Vetor n3, Vetor triangleNormal, Color triangleColor) {
@@ -21,9 +21,9 @@ Triangle::Triangle(Point v1, Point v2, Point v3, Vetor n1, Vetor n2, Vetor n3, V
     vertices[2] = v3;
     color = triangleColor;
     this->triangleNormal = triangleNormal;
-    normals[0] = n1;
-    normals[1] = n2;
-    normals[2] = n3;
+    vertexNormals[0] = n1;
+    vertexNormals[1] = n2;
+    vertexNormals[2] = n3;
 }
 
 double Triangle::area() const {

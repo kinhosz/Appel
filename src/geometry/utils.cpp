@@ -27,9 +27,9 @@ std::vector<Triangle> createTriangles(
             vertices[indices[0]],
             vertices[indices[1]],
             vertices[indices[2]],
-            normals[indices[0]],  
-            normals[indices[1]],
-            normals[indices[2]],
+            vertexNormals[indices[0]],  
+            vertexNormals[indices[1]],
+            vertexNormals[indices[2]],
             triangleNormals[i], 
             colors[i]
         );
