@@ -12,7 +12,7 @@ struct Triangle {
     Color color;
 
     Triangle();
-    Triangle(const Point& v1, const Point& v2, const Point& v3, const Color& color);
+    Triangle(Point v1, Point v2, Point v3, Color color);
 
     double area() const;
     Point centroid() const;

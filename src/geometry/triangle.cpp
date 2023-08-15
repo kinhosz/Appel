@@ -9,7 +9,7 @@ Triangle::Triangle() {
     vertices[2] = Point();
 }
 
-Triangle::Triangle(const Point& v1, const Point& v2, const Point& v3, const Color& triangleColor) {
+Triangle::Triangle(Point v1, Point v2, Point v3, Color triangleColor) {
     vertices[0] = v1;
     vertices[1] = v2;
     vertices[2] = v3;
