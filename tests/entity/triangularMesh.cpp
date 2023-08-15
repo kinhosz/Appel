@@ -18,6 +18,18 @@ int main() {
         {1, 2, 3}
     };
 
+    std::vector<Vetor> vertexNormals = {
+        Vetor(0, 0, 1),  
+        Vetor(0, 0, 1),  
+        Vetor(0, 0, 1),  
+        Vetor(0, 0, 1)   
+    };
+
+    std::vector<Vetor> triangleNormals = {
+        Vetor(0, 0, 1),  
+        Vetor(0, 0, 1)
+    };
+
     std::vector<Color> colors = {
         Color(0.1, 0.2, 0.3),
         Color(0.4, 0.5, 0.6)
@@ -27,6 +39,8 @@ int main() {
         triangles.size(),
         vertices,
         triangles,
+        vertexNormals,
+        triangleNormals
         colors
     );
 
