@@ -8,27 +8,19 @@
 #include <geometry/point.h>
 #include <geometry/vetor.h>
 #include <cstddef>
+#include <geometry/triangle.h>
 
 class TriangularMesh : public Box {
 private:
-    std::vector<Point>::size_type numberOfTriangles;
-    std::vector<Point>::size_type numberOfVertices;
+    std::vector<Triangle> triangles;
     std::vector<Point> vertices;
-    std::vector<std::array<int, 3>> triangles;
-    std::vector<Vetor> triangleNormals;
-    std::vector<Vetor> vertexNormals;
-    std::vector<Color> colors; 
+    std::vector<Vetor> triangleNormals; 
 
 public:
     TriangularMesh();
+
     TriangularMesh(
-        std::vector<Point>::size_type numberOfTriangles,
-        std::vector<Point>::size_type numberOfVertices,
-        std::vector<Point> vertices,
-        std::vector<std::array<int, 3>> triangles,
-        std::vector<Vetor> triangleNormals,
-        std::vector<Vetor> vertexNormals,
-        std::vector<Color> colors,
+        const std::vector<Triangle>& triangles, 
         double kd,
         double ks,
         double ka,
@@ -38,7 +30,11 @@ public:
     );
 
     size_t getNumberOfTriangles() const {
-        return numberOfTriangles;
+        return triangles.size();
+    }
+
+    size_t getNumberOfVertices() const {
+        return vertices.size();
     }
 };
 

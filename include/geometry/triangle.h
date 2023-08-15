@@ -8,9 +8,10 @@
 
 struct Triangle {
     Point vertices[3]; 
+    Color color;
 
     Triangle();
-    Triangle(const Point& v1, const Point& v2, const Point& v3);
+    Triangle(const Point& v1, const Point& v2, const Point& v3, const Color& color);
 
     double area() const;
     Point centroid() const;
