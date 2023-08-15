@@ -1,6 +1,7 @@
 #include <triangularMeshUtils.h>
 #include <geometry/triangle.h>
 #include <geometry/point.h>
+#include <utils/triangularMeshUtils.h>
 #include <graphic/color.h>
 
 std::vector<Triangle> createTriangles(
