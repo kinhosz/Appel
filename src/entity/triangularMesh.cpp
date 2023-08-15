@@ -1,4 +1,5 @@
 #include <entity/triangularMesh.h>
+#include <graphic/color.h>
 #include <assert.h>
 
 std::vector<Triangle> createTriangles(
@@ -40,13 +41,13 @@ TriangularMesh::TriangularMesh(
 
     for (const Triangle& triangle : triangles) {
         for (int i = 0; i < 3; ++i) {
-            this->vertices.insert(&triangle.getVertex(i));
+            this->vertices.push_back(triangle.getVertex(i));
         }
     }
 
     for (const Triangle& triangle : triangles) {
         for (int i = 0; i < 3; ++i) {
-            this->triangleNormals.insert(&triangle.normal());
+            this->triangleNormals.push_back(triangle.normal());
         }
     }
 

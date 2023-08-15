@@ -1,5 +1,6 @@
 #include <geometry/triangle.h>
 #include <geometry/utils.h>
+#include <graphic/color.h>
 #include <math.h>
 
 Triangle::Triangle() {
