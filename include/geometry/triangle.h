@@ -16,6 +16,7 @@ struct Triangle {
 
     double area() const;
     Point centroid() const;
+    Point barycenter() const;
     Vetor normal() const;
     bool contains(const Point& p) const; 
 

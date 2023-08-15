@@ -37,6 +37,14 @@ Point Triangle::centroid() const {
     return centroid;
 }
 
+Point Triangle::barycenter() const {
+    Point barycenter;
+    barycenter.x = (vertices[0].x + vertices[1].x + vertices[2].x) / 3.0;
+    barycenter.y = (vertices[0].y + vertices[1].y + vertices[2].y) / 3.0;
+    barycenter.z = (vertices[0].z + vertices[1].z + vertices[2].z) / 3.0;
+    return barycenter;
+}
+
 Vetor Triangle::normal() const {
     Vetor side1 = Vetor(vertices[1]) - Vetor(vertices[0]);
     Vetor side2 = Vetor(vertices[2]) - Vetor(vertices[0]);
