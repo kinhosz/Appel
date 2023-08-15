@@ -3,12 +3,10 @@
 #include <assert.h>
 
 TriangularMesh::TriangularMesh() : Box() {
-    this->vertices = std::vector<Point>();
     this->triangles =  std::vector<Triangle>();
-    this->triangleNormals = std::vector<Vetor>();
 }
 
-TrianugularMesh::getTriangle(int index) {
+TriangularMesh::getTriangle(int index) {
     return this->triangles[index];
 }
 

@@ -4,6 +4,7 @@
 #include <geometry/point.h>
 #include <geometry/vetor.h>
 #include <graphic/color.h>
+#include <assert.h> 
 
 struct Triangle {
     Point vertices[3]; 
