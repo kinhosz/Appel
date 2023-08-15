@@ -40,7 +40,7 @@ int main() {
         vertices,
         triangles,
         vertexNormals,
-        triangleNormals
+        triangleNormals,
         colors
     );
 
