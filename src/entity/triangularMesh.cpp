@@ -14,7 +14,7 @@ std::vector<Triangle> createTriangles(
             vertices[indices[0]],
             vertices[indices[1]], 
             vertices[indices[2]],
-            color[i]
+            colors[i]
         );
         triangleObjects.push_back(triangle);
     }

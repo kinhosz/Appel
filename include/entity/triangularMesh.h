@@ -20,7 +20,7 @@ public:
     TriangularMesh();
 
     TriangularMesh(
-        const std::vector<Triangle>& triangles, 
+        const std::vector<Triangle> triangles, 
         double kd,
         double ks,
         double ka,
