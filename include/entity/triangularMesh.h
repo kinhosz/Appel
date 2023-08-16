@@ -3,8 +3,6 @@
 
 #include <vector>  
 #include <entity/box.h>
-#include <geometry/point.h>
-#include <geometry/vetor.h>
 #include <geometry/triangle.h>
 
 class TriangularMesh : public Box {
