@@ -23,6 +23,8 @@ public:
     );
 
     Triangle getTriangle(int index) const;
+
+    SurfaceIntersection intersect(Ray ray) const override;
 };
 
 #endif
