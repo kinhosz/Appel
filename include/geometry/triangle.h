@@ -3,6 +3,8 @@
 
 #include <geometry/point.h>
 #include <geometry/vetor.h>
+#include <geometry/surfaceIntersection.h>
+#include <geometry/ray.h>
 #include <graphic/color.h>
 #include <assert.h> 
 
@@ -34,6 +36,10 @@ struct Triangle {
 
     bool operator==(const Triangle& other) const;
     bool operator!=(const Triangle& other) const;
+
+    bool isInside(const Point &p) const;
+
+    SurfaceIntersection intersect(Ray ray) const;
 };
 
 #endif

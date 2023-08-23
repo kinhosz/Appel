@@ -86,3 +86,11 @@ bool Vetor::operator==(const Vetor &other) const {
 bool Vetor::operator!=(const Vetor &other) const {
     return !(*this == other);
 }
+
+bool Vetor::isOrthogonal(const Vetor &other) const {
+    return cmp(angle(other), PI/2.0) == 0;
+}
+
+bool Vetor::isParallel(const Vetor &other) const {
+    return cmp(angle(other), 0.0) == 0;
+}

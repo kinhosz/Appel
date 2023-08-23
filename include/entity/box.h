@@ -16,7 +16,7 @@ private:
 public:
     Box();
     Box(double kd, double ks, double ka, double kr, double kt, double roughness);
-    SurfaceIntersection intersect(Ray ray) const;
+    virtual SurfaceIntersection intersect(Ray ray) const;
 };
 
 #endif

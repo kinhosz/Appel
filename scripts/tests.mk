@@ -1,5 +1,5 @@
 # get all *.cpp inside tests/
-TESTS := $(wildcard $(TEST)/**/*.cpp)
+TESTS := $(shell find $(TEST) -name '*.cpp')
 BINS := $(patsubst $(TEST)/%.cpp, $(BIN)/%, $(TESTS))
 
 # make tests
