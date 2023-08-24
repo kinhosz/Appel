@@ -62,3 +62,17 @@ void Scene::removeObject(int index) {
     assert(this->objects.find(index) != this->objects.end());
     this->objects.erase(index);
 }
+
+SurfaceIntersection Scene::castRay(const Ray &ray) const {
+    SurfaceIntersection nearSurface;
+
+    for(const std::pair<int, Box> tmp: objects) {
+        const Box box = tmp.second;
+
+        SurfaceIntersection current = box.intersect(ray);
+
+        if(current.distance < nearSurface.distance) std::swap(current, nearSurface);
+    }
+
+    return nearSurface;
+}
