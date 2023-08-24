@@ -1,6 +1,5 @@
 #include <graphic/color.h>
 #include <geometry/utils.h>
-#include <assert.h>
 
 Color::Color() {
     red = 0.0;
@@ -9,13 +8,20 @@ Color::Color() {
 }
 
 Color::Color(double red, double green, double blue) {
-    assert(red >= 0.0 && red <= 1.0);
-    assert(green >= 0.0 && green <= 1.0);
-    assert(blue >= 0.0 && blue <= 1.0);
+    red = truncate(red);
+    green = truncate(green);
+    blue = truncate(blue);
 
     this->red = red;
     this->green = green;
     this->blue = blue;
+}
+
+double Color::truncate(double c) const {
+    c = std::min(c, 1.0);
+    c = std::max(c, 0.0);
+
+    return c;
 }
 
 double Color::getRed() const {
@@ -54,4 +60,12 @@ bool Color::operator==(const Color& other) const {
 
 bool Color::operator!=(const Color& other) const {
     return !(*this == other);
+}
+
+Color Color::operator*(const Color &other) const {
+    return Color(red * other.red, green * other.green, blue * other.blue);
+}
+
+Color Color::operator+(const Color &other) const {
+    return Color(red + other.red, green + other.green, blue + other.blue);
 }

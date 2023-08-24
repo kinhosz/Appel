@@ -1,0 +1,48 @@
+#include <entity/triangularMesh.h>
+#include <entity/scene.h>
+#include <graphic/camera.h>
+#include <graphic/utils.h>
+#include <geometry/utils.h>
+using namespace std;
+
+#define WIDTH 800
+#define HEIGHT 600
+
+TriangularMesh buildMesh() {
+    Color red(1, 0, 0), green(0, 1, 0), blue(0, 0, 1), white(1, 1, 1);
+    
+    Point p0(100, 0, 0), p1(0, 100, 0), p2(-100, 0, 0), p3(0, -100, 0), p4(0, 0, 100);
+    
+    Vetor n1 = (Vetor(p1) - Vetor(p0)).cross(Vetor(p4) - Vetor(p0)).normalize();
+    Vetor n2 = (Vetor(p2) - Vetor(p1)).cross(Vetor(p4) - Vetor(p1)).normalize();
+    Vetor n3 = (Vetor(p3) - Vetor(p2)).cross(Vetor(p4) - Vetor(p2)).normalize();
+    Vetor n4 = (Vetor(p0) - Vetor(p3)).cross(Vetor(p4) - Vetor(p3)).normalize();
+
+    Vetor aux(0, 0, 1);
+
+    Triangle t1(p0, p1, p4, aux, aux, aux, n1, red);
+    Triangle t2(p1, p2, p4, aux, aux, aux, n2, green);
+    Triangle t3(p2, p3, p4, aux, aux, aux, n3, blue);
+    Triangle t4(p3, p0, p4, aux, aux, aux, n4, white);
+
+    vector<Triangle> triangles;
+    triangles.push_back(t1);
+    triangles.push_back(t2);
+    triangles.push_back(t3);
+    triangles.push_back(t4);
+
+    TriangularMesh tMesh(triangles, 0, 0, 0, 0, 0, 1.0);
+
+    return tMesh;
+}
+
+int main() {
+    Scene scene;
+    scene.addObject(buildMesh());
+
+    Camera camera(Point(-200, -200, 50), Point(0, 0, 50), HEIGHT, WIDTH);
+
+    Frame frame = camera.take(scene);
+
+    assert(saveAsPng(frame, "assets/outputs/version_00/image_00.png"));
+}

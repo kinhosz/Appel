@@ -68,7 +68,7 @@ bool Triangle::isInside(const Point &p) const {
 
     std::vector<double> baricenter = gaussElimination(matrix);
 
-    assert(baricenter.size() == 3);
+    if(baricenter.size() != 3) return false;
     assert(cmp(baricenter[0] + baricenter[1] + baricenter[2], 1.0) == 0);
 
     bool isInside = true;

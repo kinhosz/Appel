@@ -5,7 +5,7 @@
 #include <geometry/utils.h>
 #include <cmath>
 
-const double EPSILON = 1e-12;
+const double EPSILON = 1e-10;
 
 int cmp(double a, double b){
     if(std::abs(a - b) < EPSILON) return 0;

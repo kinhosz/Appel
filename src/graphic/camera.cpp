@@ -1,10 +1,7 @@
 #include <graphic/camera.h>
 
-Camera::Camera(Point loc, Point focus, int vPixels, int hPixels) {
-    double dist = (double) (hPixels - 1) / 2.0;
-
-    Camera(loc, focus, vPixels, hPixels, dist);
-}
+Camera::Camera(Point loc, Point focus, int vPixels, int hPixels): 
+    Camera(loc, focus, vPixels, hPixels, (double) (hPixels - 1) / 2.0) {}
 
 Camera::Camera(Point loc, Point focus, int vPixels, int hPixels, double dist) {
     this->location = loc;
@@ -35,4 +32,33 @@ void Camera::move(Point p) {
     location.x += p.x;
     location.y += p.y;
     location.z += p.z;
+}
+
+Ray Camera::createRay(int x, int y) const {
+    double hPivot = hPixels/2;
+    double vPivot = vPixels/2;
+
+    Vetor pixelUp = vUp * (y - vPivot);
+    Vetor pixelRight = vRight * (x - hPivot);
+
+    Vetor pixelFront = vFront * distance;
+
+    Vetor pixelVector = (pixelFront + pixelRight + pixelUp).normalize();
+
+    return Ray(location, pixelVector);
+}
+
+Frame Camera::take(const Scene &scene) const {
+    Frame frame(vPixels, hPixels);
+
+    for(int x=0; x<hPixels; x++) {
+        for(int y=0; y<vPixels; y++) {
+            Ray ray = createRay(x, y);
+            Color color = scene.traceRay(ray);
+
+            frame.setPixel(x, y, Pixel(color));
+        }
+    }
+
+    return frame;
 }
