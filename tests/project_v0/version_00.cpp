@@ -36,13 +36,43 @@ TriangularMesh buildMesh() {
     return tMesh;
 }
 
+void image00(const Scene &scene) {
+    Camera camera(Point(-200, -200, 50), Point(0, 0, 50), HEIGHT, WIDTH);
+    Frame frame = camera.take(scene);
+    assert(saveAsPng(frame, "assets/outputs/version_00/image_00.png"));
+}
+
+void image01(const Scene &scene){
+    Camera camera(Point(-200, -200, 200), Point(0, 0, 50), HEIGHT, WIDTH);
+    Frame frame = camera.take(scene);
+    assert(saveAsPng(frame, "assets/outputs/version_00/image_01.png"));
+}
+
+void image02(const Scene &scene){
+    Camera camera(Point(-200, -200, 0), Point(0, 0, 50), HEIGHT, WIDTH);
+    Frame frame = camera.take(scene);
+    assert(saveAsPng(frame, "assets/outputs/version_00/image_02.png"));
+}
+
+void image03(const Scene &scene){
+    Camera camera(Point(-200, -200, -100), Point(0, 0, 50), HEIGHT, WIDTH);
+    Frame frame = camera.take(scene);
+    assert(saveAsPng(frame, "assets/outputs/version_00/image_03.png"));
+}
+
+void image04(const Scene &scene){
+    Camera camera(Point(-200, 0, 50), Point(0, 0, 50), HEIGHT, WIDTH);
+    Frame frame = camera.take(scene);
+    assert(saveAsPng(frame, "assets/outputs/version_00/image_04.png"));
+}
+
 int main() {
     Scene scene;
     scene.addObject(buildMesh());
 
-    Camera camera(Point(-200, -200, 50), Point(0, 0, 50), HEIGHT, WIDTH);
-
-    Frame frame = camera.take(scene);
-
-    assert(saveAsPng(frame, "assets/outputs/version_00/image_00.png"));
+    image00(scene);
+    image01(scene);
+    image02(scene);
+    image03(scene);
+    image04(scene);
 }

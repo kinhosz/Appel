@@ -56,7 +56,7 @@ Frame Camera::take(const Scene &scene) const {
             Ray ray = createRay(x, y);
             Color color = scene.traceRay(ray);
 
-            frame.setPixel(x, y, Pixel(color));
+            frame.setPixel(x, (vPixels - y - 1), Pixel(color));
         }
     }
 
