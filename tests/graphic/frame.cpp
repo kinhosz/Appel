@@ -10,8 +10,8 @@ int main(){
     assert(vRes == frame.vertical());
     assert(hRes == frame.horizontal());
 
-    for(int i=0;i<vRes;i++){
-        for(int j=0;j<hRes;j++){
+    for(int i=0;i<hRes;i++){
+        for(int j=0;j<vRes;j++){
             int id = i * vRes + j;
 
             int red = id%255;
@@ -24,8 +24,8 @@ int main(){
         }
     }
 
-    for(int i=0;i<vRes;i++){
-        for(int j=0;j<hRes;j++){
+    for(int i=0;i<hRes;i++){
+        for(int j=0;j<vRes;j++){
             int id = i * vRes + j;
 
             int red = id%255;

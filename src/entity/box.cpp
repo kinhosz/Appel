@@ -27,6 +27,6 @@ Box::Box(double kd, double ks, double ka, double kr, double kt, double roughness
     this->roughnessCoefficient = roughness;
 }
 
-SurfaceIntersection Box::intersect(Ray ray) const{
+SurfaceIntersection Box::intersect(Ray ray) const {
     return SurfaceIntersection();
 }
