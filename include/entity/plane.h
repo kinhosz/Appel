@@ -22,6 +22,8 @@ public:
     void setPoint(Point point);
     void setNormalVector(Vetor normalVector);
     void setColor(Color color);
+
+    SurfaceIntersection intersect(const Ray &ray) const;
 };
 
 #endif
