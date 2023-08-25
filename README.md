@@ -2,7 +2,7 @@
 Computer Vision with Ray Tracing
 
 <!-- Dont modify this line!!! -->
-**Current Version**: 0.15.1
+**Current Version**: 0.15.0
 
 > Project for the Graphics Processing discipline of Computer Science course @ CIn/UFPE.
 ## Contributing guide
@@ -41,26 +41,28 @@ Will Install:
 
 ### Project Showcase
 
-- Scenes generated without `Light`s:
+- Scenes generated without **Phong shading**:
+    - Scenes with only a `TriangularMesh` object
+    ![img](/assets/outputs/project_v0/version_00/image_04.png)
+    ![img](/assets/outputs/project_v0/version_00/image_03.png)
+    
+    - Scenes with a `Plane` and `TriangularMesh` objects
+    ![img](/assets/outputs/project_v0/version_01/image_05.png)
+    ![img](/assets/outputs/project_v0/version_01/image_03.png)
 
->Scenes with only a `TriangularMesh` object:
-![img](/assets/outputs/project_v0/version_00/image_04.png)
-![img](/assets/outputs/project_v0/version_00/image_03.png)
+    - Scenes with a `Plane`, `TriangularMesh` and `Sphere` objects
+    ![img](/assets/outputs/project_v0/version_02/image_02.png)
+    ![img](/assets/outputs/project_v0/version_02/image_01.png)
 
->Scenes with a `Plane` and `TriangularMesh` objects:
-![img](/assets/outputs/project_v0/version_01/image_05.png)
-![img](/assets/outputs/project_v0/version_01/image_03.png)
+- Scenes generated with **Phong shading**:
+    - Scenes with one `Light` and three objects (`Plane`, `TriangularMesh` and `Sphere`)
+    ![img](/assets/outputs/project_v1/version_01/image_01.png)
+    ![img](/assets/outputs/project_v1/version_01/image_03.png)
 
->Scenes with a `Plane`, `TriangularMesh` and `Sphere` objects:
-![img](/assets/outputs/project_v0/version_02/image_02.png)
-![img](/assets/outputs/project_v0/version_02/image_01.png)
+    - Scenes with two `Light`s and three objects (`Plane`, `TriangularMesh` and `Sphere`)
+    ![img](/assets/outputs/project_v1/version_02/image_02.png)
+    ![img](/assets/outputs/project_v1/version_02/image_04.png)
 
-- Scenes generated with `Light`s:
-
->Scenes with one `Light` and three objects (`Plane`, `TriangularMesh` and `Sphere`):
-![img](/assets/outputs/project_v1/version_03/image_03.png)
-![img](/assets/outputs/project_v1/version_03/image_05.png)
-
->Scenes with two `Light`s and three objects (`Plane`, `TriangularMesh` and `Sphere`):
-![img](/assets/outputs/project_v1/version_02/image_02.png)
-![img](/assets/outputs/project_v1/version_02/image_04.png)
+    - Scenes with three `Light`s and three objects (`Plane`, `TriangularMesh` and `Sphere`)
+    ![img](/assets/outputs/project_v1/version_03/image_03.png)
+    ![img](/assets/outputs/project_v1/version_03/image_05.png)
