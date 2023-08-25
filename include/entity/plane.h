@@ -4,6 +4,7 @@
 #include <entity/box.h>
 #include <geometry/point.h>
 #include <geometry/vetor.h>
+#include <geometry/ray.h>
 #include <graphic/color.h>
 
 class Plane : public Box {
