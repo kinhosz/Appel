@@ -4,42 +4,34 @@
 Plane::Plane() : Box(), point(Point()), normalVector(Vetor()), color(Color()) {}
 
 Plane::Plane(Point point, Vetor normalVector, Color color, double kd, double ks, double ka, double kr, double kt, double roughness)
-    : Box(kd, ks, ka, kr, kt, roughness), point(point), normalVector(normalVector), color(color)
-{
+    : Box(kd, ks, ka, kr, kt, roughness), point(point), normalVector(normalVector), color(color) {     
 }
 
-Point Plane::getPoint() const
-{
+Point Plane::getPoint() const {
     return this->point;
 }
 
-Vetor Plane::getNormalVector() const
-{
+Vetor Plane::getNormalVector() const {
     return this->normalVector;
 }
 
-Color Plane::getColor() const
-{
+Color Plane::getColor() const {
     return this->color;
 }
 
-void Plane::setPoint(Point point)
-{
+void Plane::setPoint(Point point) {
     this->point = point;
 }
 
-void Plane::setNormalVector(Vetor normalVector)
-{
+void Plane::setNormalVector(Vetor normalVector) {
     this->normalVector = normalVector;
 }
 
-void Plane::setColor(Color color)
-{
+void Plane::setColor(Color color) {
     this->color = color;
 }
 
-SurfaceIntersection Plane::intersect(const Ray &ray) const
-{
+SurfaceIntersection Plane::intersect(const Ray &ray) const {
     Vetor normal = normalVector.normalize();
 
     if (normal.isOrthogonal(ray.direction))
