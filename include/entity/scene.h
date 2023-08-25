@@ -27,6 +27,8 @@ public:
     void setEnvironmentColor(const Color& environmentColor);
     int addObject(const Box& object);
     void removeObject(int index);
+
+    SurfaceIntersection castRay(const Ray &ray) const;
 };
 
 #endif

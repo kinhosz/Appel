@@ -26,6 +26,9 @@ struct Vetor{
     Vetor operator/(double p) const;
     bool operator==(const Vetor &other) const;
     bool operator!=(const Vetor &other) const;
+
+    bool isOrthogonal(const Vetor &other) const;
+    bool isParallel(const Vetor &other) const;
 };
 
 #endif

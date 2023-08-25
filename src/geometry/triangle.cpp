@@ -2,6 +2,8 @@
 #include <geometry/utils.h>
 #include <graphic/color.h>
 #include <geometry/vetor.h> 
+#include <geometry/surfaceIntersection.h>
+#include <geometry/ray.h>
 #include <math.h>
 
 Triangle::Triangle() {
@@ -54,4 +56,48 @@ bool Triangle::operator==(const Triangle& other) const {
 
 bool Triangle::operator!=(const Triangle& other) const {
     return !(*this == other);
+}
+
+bool Triangle::isInside(const Point &p) const {
+    std::vector<std::vector<double>> matrix = {
+        {vertices[0].x, vertices[1].x, vertices[2].x, p.x},
+        {vertices[0].y, vertices[1].y, vertices[2].y, p.y},
+        {vertices[0].z, vertices[1].z, vertices[2].z, p.z},
+        {1.0, 1.0, 1.0, 1.0}
+    };
+
+    std::vector<double> baricenter = gaussElimination(matrix);
+
+    assert(baricenter.size() == 3);
+    assert(cmp(baricenter[0] + baricenter[1] + baricenter[2], 1.0) == 0);
+
+    bool isInside = true;
+
+    for(int i=0;i<3;i++){
+        if(cmp(baricenter[i], 0) == -1 || cmp(baricenter[i], 1) == 1) isInside = false;
+    }
+
+    return isInside;
+}
+
+SurfaceIntersection Triangle::intersect(Ray ray) const {
+    Vetor normal = triangleNormal.normalize();
+
+    if(normal.isOrthogonal(ray.direction) || normal.isParallel(ray.direction)) return SurfaceIntersection();
+
+    double D = -normal.x * vertices[0].x - normal.y * vertices[0].y - normal.z * vertices[0].z;
+    double A = normal.x, B = normal.y, C = normal.z;
+
+    double c1 = (A * ray.location.x + B * ray.location.y + C * ray.location.z + D);
+    double c2 = (A * ray.direction.x + B * ray.direction.y + C * ray.direction.z);
+
+    double t = -c1/c2;
+
+    if(cmp(t, 0) == -1) return SurfaceIntersection();
+
+    Point matchedPoint = ray.pointAt(t);
+
+    if(!isInside(matchedPoint)) return SurfaceIntersection();
+
+    return SurfaceIntersection(color, t, normal);
 }
