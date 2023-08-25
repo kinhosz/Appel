@@ -115,7 +115,6 @@ Color Scene::brightness(const Ray& ray, SurfaceIntersection surface, const Box& 
     if(cmp(opaqueSurface.first.distance, toLight.norm()) != 1) return Color(0, 0, 0);
     Color color = light.getIntensity();
 
-    // todo: analysing observer pov
     double diffuse = box.getDiffuseCoefficient() * (lightRay.direction.dot(surface.normal));
     double specular = box.getSpecularCoefficient() * std::pow(lightRay.direction.dot(surface.normal), box.getRoughnessCoefficient());
 

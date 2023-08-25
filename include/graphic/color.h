@@ -20,7 +20,6 @@ struct Color {
     
     Color operator*(const Color& other) const;
     Color operator+(const Color& other) const;
-
     Color operator*(double k) const;
 
     double truncate(double c) const;
