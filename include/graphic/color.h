@@ -17,6 +17,11 @@ struct Color {
 
     bool operator==(const Color& other) const;
     bool operator!=(const Color& other) const;
+    
+    Color operator*(const Color& other) const;
+    Color operator+(const Color& other) const;
+
+    double truncate(double c) const;
 };
 
 #endif
