@@ -83,7 +83,7 @@ bool Triangle::isInside(const Point &p) const {
 SurfaceIntersection Triangle::intersect(Ray ray) const {
     Vetor normal = triangleNormal.normalize();
 
-    if(normal.isOrthogonal(ray.direction) || normal.isParallel(ray.direction)) return SurfaceIntersection();
+    if(normal.isOrthogonal(ray.direction)) return SurfaceIntersection();
 
     double D = -normal.x * vertices[0].x - normal.y * vertices[0].y - normal.z * vertices[0].z;
     double A = normal.x, B = normal.y, C = normal.z;
