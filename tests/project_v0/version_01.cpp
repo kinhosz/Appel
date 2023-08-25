@@ -8,8 +8,7 @@ using namespace std;
 #define WIDTH 800
 #define HEIGHT 600
 
-TriangularMesh buildMesh()
-{
+TriangularMesh buildMesh() {
     Color red(1, 0, 0), green(0, 1, 0), blue(0, 0, 1), white(1, 1, 1);
 
     Point p0(100, 0, 0), p1(0, 100, 0), p2(-100, 0, 0), p3(0, -100, 0), p4(0, 0, 100);
@@ -37,8 +36,7 @@ TriangularMesh buildMesh()
     return tMesh;
 }
 
-Plane buildPlane()
-{
+Plane buildPlane() {
     Color purple(0.5, 0, 0.5);
 
     Point p0(100, 0, 0), p1(0, 100, 0), p2(-100, 0, 0), p3(0, -100, 0);
@@ -50,50 +48,43 @@ Plane buildPlane()
     return plane;
 }
 
-void image00(const Scene &scene)
-{
+void image00(const Scene &scene) {
     Camera camera(Point(-200, -200, 50), Point(0, 0, 50), HEIGHT, WIDTH);
     Frame frame = camera.take(scene);
     assert(saveAsPng(frame, "assets/outputs/version_01/image_00.png"));
 }
 
-void image01(const Scene &scene)
-{
+void image01(const Scene &scene) {
     Camera camera(Point(-200, -200, 200), Point(0, 0, 50), HEIGHT, WIDTH);
     Frame frame = camera.take(scene);
     assert(saveAsPng(frame, "assets/outputs/version_01/image_01.png"));
 }
 
-void image02(const Scene &scene)
-{
+void image02(const Scene &scene) {
     Camera camera(Point(-200, -200, 0), Point(0, 0, 50), HEIGHT, WIDTH);
     Frame frame = camera.take(scene);
     assert(saveAsPng(frame, "assets/outputs/version_01/image_02.png"));
 }
 
-void image03(const Scene &scene)
-{
+void image03(const Scene &scene) {
     Camera camera(Point(0, 200, 100), Point(0, 0, 0), HEIGHT, WIDTH);
     Frame frame = camera.take(scene);
     assert(saveAsPng(frame, "assets/outputs/version_01/image_03.png"));
 }
 
-void image04(const Scene &scene)
-{
+void image04(const Scene &scene) {
     Camera camera(Point(-200, 0, 50), Point(0, 0, 50), HEIGHT, WIDTH);
     Frame frame = camera.take(scene);
     assert(saveAsPng(frame, "assets/outputs/version_01/image_04.png"));
 }
 
-void image05(const Scene &scene)
-{
+void image05(const Scene &scene) {
     Camera camera(Point(200, 200, 300), Point(0, 0, 0), HEIGHT, WIDTH);
     Frame frame = camera.take(scene);
     assert(saveAsPng(frame, "assets/outputs/version_01/image_05.png"));
 }
 
-int main()
-{
+int main() {
     Scene scene;
     scene.addObject(buildMesh());
     scene.addObject(buildPlane());
