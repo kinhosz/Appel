@@ -104,7 +104,7 @@ Color Scene::brightness(const Ray& ray, SurfaceIntersection surface, const Box& 
 
     Ray temp(matched, dir);
 
-    double delta = 1.0;
+    double delta = 0.01;
 
     Ray lightRay(temp.pointAt(delta), dir);
 
@@ -114,6 +114,8 @@ Color Scene::brightness(const Ray& ray, SurfaceIntersection surface, const Box& 
 
     if(cmp(opaqueSurface.first.distance, toLight.norm()) != 1) return Color(0, 0, 0);
     Color color = light.getIntensity();
+
+    if(cmp(lightRay.direction.angle(surface.normal), PI/2.0) != -1) return Color(0, 0, 0);
 
     double diffuse = box.getDiffuseCoefficient() * (lightRay.direction.dot(surface.normal));
     double specular = box.getSpecularCoefficient() * std::pow(lightRay.direction.dot(surface.normal), box.getRoughnessCoefficient());

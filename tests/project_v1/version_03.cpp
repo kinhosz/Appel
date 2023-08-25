@@ -103,7 +103,7 @@ int main() {
     
     Light l1(Point(10, 100, 100), Color(0.2, 0.2, 0.2));
     Light l2(Point(100, 10, 100), Color(0.5, 0.5, 0.5));
-    Light l3(Point(500, 0, 200), Color(0.7, 0.7, 0.7));
+    Light l3(Point(500, 0, 200), Color(0.8, 0.8, 0.8));
 
     scene.addLight(l1);
     scene.addLight(l2);
