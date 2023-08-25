@@ -69,3 +69,7 @@ Color Color::operator*(const Color &other) const {
 Color Color::operator+(const Color &other) const {
     return Color(red + other.red, green + other.green, blue + other.blue);
 }
+
+Color Color::operator*(double k) const {
+    return Color(red * k, green * k, blue * k);
+}

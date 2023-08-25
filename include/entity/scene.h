@@ -20,7 +20,8 @@ private:
     std::map<int, Sphere> spheres;
     std::map<int, TriangularMesh> meshes;
 
-    Color brightness(const Ray &ray, const SurfaceIntersection &surface) const;
+    Color brightness(const Ray& ray, SurfaceIntersection surface, const Box& box, const Light& light) const;
+    Color phong(const Ray &ray, const SurfaceIntersection &surface, int index) const;
 
 public:
     Scene();
@@ -38,7 +39,9 @@ public:
     int addObject(Sphere object);
     int addObject(TriangularMesh object);
 
-    SurfaceIntersection castRay(const Ray &ray) const;
+    Box getObject(int index) const;
+
+    std::pair<SurfaceIntersection, int> castRay(const Ray &ray) const;
     Color traceRay(const Ray &ray) const;
 };
 

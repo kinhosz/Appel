@@ -30,3 +30,27 @@ Box::Box(double kd, double ks, double ka, double kr, double kt, double roughness
 SurfaceIntersection Box::intersect(Ray ray) const {
     return SurfaceIntersection();
 }
+
+double Box::getDiffuseCoefficient() const {
+    return this->diffuseCoefficient;
+}
+
+double Box::getSpecularCoefficient() const {
+    return this->specularCoefficient;
+}
+
+double Box::getAmbientCoefficient() const {
+    return this->ambientCoefficient;
+}
+
+double Box::getReflectionCoefficient() const {
+    return this->reflectionCoefficient;
+}
+
+double Box::getTransmissionCoefficient() const {
+    return this->transmissionCoefficient;
+}
+
+double Box::getRoughnessCoefficient() const {
+    return this->roughnessCoefficient;
+}

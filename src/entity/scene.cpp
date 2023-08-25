@@ -1,13 +1,13 @@
 #include <entity/scene.h>
 #include <geometry/utils.h>
+#include <memory>
+#include <math.h>
 
 Scene::Scene() {
     this->lights = std::map<int, Light>();
     this->lightsCurrentIndex = this->lights.size();
     this->environmentColor = Color(0, 0, 0);
     this->objectsCurrentIndex = 0;
-
-    this->planes = std::map<int, Plane>();
 }
 
 Scene::Scene(const Color& environmentColor) {
@@ -59,41 +59,91 @@ int Scene::addObject(TriangularMesh object) {
 }
 
 void Scene::removeObject(int index) {
-    if(planes.find(index) != this->planes.end()) this->planes.erase(index);
-    if(spheres.find(index) != this->spheres.end()) this->spheres.erase(index);
-    if(meshes.find(index) != this->meshes.end()) this->meshes.erase(index);
+    if(planes.find(index) != planes.end()) this->planes.erase(index);
+    if(spheres.find(index) != spheres.end()) this->spheres.erase(index);
+    if(meshes.find(index) != meshes.end()) this->meshes.erase(index);
 }
 
-SurfaceIntersection Scene::castRay(const Ray &ray) const {
+Box Scene::getObject(int index) const {
+    if(planes.find(index) != planes.end()) return planes.at(index);
+    if(spheres.find(index) != this->spheres.end()) return spheres.at(index);
+    if(meshes.find(index) != this->meshes.end()) return meshes.at(index);
+    assert(false);
+}
+
+std::pair<SurfaceIntersection, int> Scene::castRay(const Ray &ray) const {
     SurfaceIntersection nearSurface;
+    int index = -1;
 
     for(const std::pair<int, Plane> tmp: planes) {
         const Plane plane = tmp.second;
         SurfaceIntersection current = plane.intersect(ray);
-        if(current.distance < nearSurface.distance) std::swap(current, nearSurface);
+        if(current.distance < nearSurface.distance) std::swap(current, nearSurface), index = tmp.first;
     }
 
     for(const std::pair<int, Sphere> tmp: spheres) {
         const Sphere sphere = tmp.second;
         SurfaceIntersection current = sphere.intersect(ray);
-        if(current.distance < nearSurface.distance) std::swap(current, nearSurface);
+        if(current.distance < nearSurface.distance) std::swap(current, nearSurface), index = tmp.first;
     }
 
     for(const std::pair<int, TriangularMesh> tmp: meshes) {
         const TriangularMesh mesh = tmp.second;
         SurfaceIntersection current = mesh.intersect(ray);
-        if(current.distance < nearSurface.distance) std::swap(current, nearSurface);
+        if(current.distance < nearSurface.distance) std::swap(current, nearSurface), index = tmp.first;
     }
 
-    return nearSurface;
+    return std::make_pair(nearSurface, index);
 }
 
-Color Scene::brightness(const Ray &ray, const SurfaceIntersection &surface) const {
-    return Color(1, 1, 1);
+Color Scene::brightness(const Ray& ray, SurfaceIntersection surface, const Box& box, const Light& light) const {
+    if(cmp(ray.direction.angle(surface.normal * -1.0), PI/2.0) == 1) surface.normal = surface.normal * -1.0;
+
+    Point matched = ray.pointAt(surface.distance);
+    Vetor dir = (Vetor(light.getLocation()) - Vetor(matched)).normalize();
+
+    Ray temp(matched, dir);
+
+    double delta = 1.0;
+
+    Ray lightRay(temp.pointAt(delta), dir);
+
+    std::pair<SurfaceIntersection, int> opaqueSurface = castRay(lightRay);
+
+    Vetor toLight = Vetor(Vetor(light.getLocation()) -Vetor(lightRay.location));
+
+    if(cmp(opaqueSurface.first.distance, toLight.norm()) != 1) return Color(0, 0, 0);
+    Color color = light.getIntensity();
+
+    double diffuse = box.getDiffuseCoefficient() * (lightRay.direction.dot(surface.normal));
+    double specular = box.getSpecularCoefficient() * std::pow(lightRay.direction.dot(surface.normal), box.getRoughnessCoefficient());
+
+    color = color * (diffuse + specular);
+
+    return color;
+}
+
+Color Scene::phong(const Ray &ray, const SurfaceIntersection &surface, int index) const {
+    if(index == -1) return Color(1, 1, 1);
+
+    const Box box = getObject(index);
+
+    Color color(0, 0, 0);
+    color = color + (environmentColor * box.getAmbientCoefficient());
+
+    for(std::pair<int, Light> tmp: lights) {
+        const Light light = tmp.second;
+
+        color = color + brightness(ray, surface, box, light);
+    }
+
+    return color;
 }
 
 Color Scene::traceRay(const Ray &ray) const {
-    SurfaceIntersection surface = castRay(ray);
+    std::pair<SurfaceIntersection, int> match = castRay(ray);
+    SurfaceIntersection surface = match.first;
+    int index = match.second;
 
-    return surface.color * brightness(ray, surface);
+    return surface.color * phong(ray, surface, index);
 }

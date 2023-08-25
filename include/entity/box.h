@@ -17,6 +17,13 @@ public:
     Box();
     Box(double kd, double ks, double ka, double kr, double kt, double roughness);
     virtual SurfaceIntersection intersect(Ray ray) const;
+
+    double getDiffuseCoefficient() const;
+    double getSpecularCoefficient() const;
+    double getAmbientCoefficient() const;
+    double getReflectionCoefficient() const;
+    double getTransmissionCoefficient() const;
+    double getRoughnessCoefficient() const;
 };
 
 #endif
