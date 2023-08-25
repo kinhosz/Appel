@@ -101,11 +101,18 @@ Color Scene::brightness(const Ray& ray, SurfaceIntersection surface, const Box& 
 
     Point matched = ray.pointAt(surface.distance);
     Vetor dir = (Vetor(light.getLocation()) - Vetor(matched)).normalize();
-    Ray lightRay(matched, dir);
+
+    Ray temp(matched, dir);
+
+    double delta = 1.0;
+
+    Ray lightRay(temp.pointAt(delta), dir);
 
     std::pair<SurfaceIntersection, int> opaqueSurface = castRay(lightRay);
-    if(cmp(opaqueSurface.first.distance, surface.distance) != 1) return Color(0, 0, 0);
 
+    Vetor toLight = Vetor(Vetor(light.getLocation()) -Vetor(lightRay.location));
+
+    if(cmp(opaqueSurface.first.distance, toLight.norm()) != 1) return Color(0, 0, 0);
     Color color = light.getIntensity();
 
     // todo: analysing observer pov
