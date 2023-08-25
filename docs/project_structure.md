@@ -7,7 +7,7 @@ The project consists of 8 main folders:
     │   │   # GitHub templates and workflows files
     │
     ├── assets
-    │   │   # Necessary data as input for the project
+    │   │   # Necessary data as input for the project and also outputs generated
     │
     ├── bin
     │   │   # Compiled or executable files (hidden by .gitignore)
@@ -19,7 +19,7 @@ The project consists of 8 main folders:
     │   │   # Header files
     │
     ├── lib
-    │   │   # Shared objects (.so) for 3rd-party libraries
+    │   │   # Shared objects (.so) for 3rd-party libraries (hidden by .gitignore)
     │
     ├── scripts
     │   │   # Collection of project-related scripts
