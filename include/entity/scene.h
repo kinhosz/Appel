@@ -2,7 +2,6 @@
 #define ENTITY_SCENE_H
 
 #include <map>
-#include <memory>
 #include <entity/light.h>
 #include <entity/plane.h>
 #include <entity/sphere.h>
