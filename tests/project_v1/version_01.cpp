@@ -5,8 +5,8 @@
 #include <geometry/utils.h>
 using namespace std;
 
-#define WIDTH 800
-#define HEIGHT 600
+#define WIDTH 1920
+#define HEIGHT 1080
 
 TriangularMesh buildMesh() {
     Color red(1, 0, 0), green(0, 1, 0), blue(0, 0, 1), white(1, 1, 1);
