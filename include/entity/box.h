@@ -13,6 +13,7 @@ private:
     double reflectionCoefficient;
     double transmissionCoefficient;
     double roughnessCoefficient;
+    double refractionIndex;
 public:
     Box();
     Box(double kd, double ks, double ka, double kr, double kt, double roughness);
@@ -24,6 +25,7 @@ public:
     double getReflectionCoefficient() const;
     double getTransmissionCoefficient() const;
     double getRoughnessCoefficient() const;
+    double getRefractionIndex() const;
 };
 
 #endif

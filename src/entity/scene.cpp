@@ -112,21 +112,24 @@ Color Scene::brightness(const Ray& ray, SurfaceIntersection surface, const Box& 
 
     Vetor toLight = Vetor(Vetor(light.getLocation()) -Vetor(lightRay.location));
 
-    if(cmp(opaqueSurface.first.distance, toLight.norm()) != 1) return Color(0, 0, 0);
+    if(cmp(opaqueSurface.first.distance, toLight.norm()) == -1) return Color(0, 0, 0);
     Color color = light.getIntensity();
 
     if(cmp(lightRay.direction.angle(surface.normal), PI/2.0) != -1) return Color(0, 0, 0);
 
+    Vetor lightReflex = surface.getReflection(lightRay.direction);
+
     double diffuse = box.getDiffuseCoefficient() * (lightRay.direction.dot(surface.normal));
-    double specular = box.getSpecularCoefficient() * std::pow(lightRay.direction.dot(surface.normal), box.getRoughnessCoefficient());
+    double specular = box.getSpecularCoefficient() * std::pow(lightReflex.dot(ray.direction * -1.0), box.getRoughnessCoefficient());
 
     color = color * (diffuse + specular);
 
     return color;
 }
 
-Color Scene::phong(const Ray &ray, const SurfaceIntersection &surface, int index) const {
-    if(index == -1) return Color(1, 1, 1);
+Color Scene::phong(const Ray &ray, const SurfaceIntersection &surface, int index, int layer) const {
+    if(index == -1) return Color(0, 0, 0);
+    if(layer >= 5) return Color(0, 0, 0);
 
     const Box box = getObject(index);
 
@@ -139,13 +142,23 @@ Color Scene::phong(const Ray &ray, const SurfaceIntersection &surface, int index
         color = color + brightness(ray, surface, box, light);
     }
 
+    color = color + (
+        traceRay(Ray(ray.pointAt(surface.distance - 0.01), surface.getReflection(ray.direction * -1.0)), layer+1)
+        * box.getReflectionCoefficient()
+    );
+
+    /*color = color + (
+        traceRay(Ray(ray.pointAt(surface.distance), surface.getRefraction(ray.direction, box.getRefractionIndex())))
+        * box.getTransmissionCoefficient()
+    );*/
+
     return color;
 }
 
-Color Scene::traceRay(const Ray &ray) const {
+Color Scene::traceRay(const Ray &ray, int layer) const {
     std::pair<SurfaceIntersection, int> match = castRay(ray);
     SurfaceIntersection surface = match.first;
     int index = match.second;
 
-    return surface.color * phong(ray, surface, index);
+    return surface.color * phong(ray, surface, index, layer);
 }

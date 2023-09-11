@@ -14,3 +14,14 @@ SurfaceIntersection::SurfaceIntersection(
     this->distance = distance;
     this->normal = normal.normalize();
 }
+
+Vetor SurfaceIntersection::getReflection(const Vetor &direction) const {
+    Vetor tNormal = normal.normalize();
+    Vetor tDirection = normal.normalize();
+
+    return (Vetor(tNormal * (2.0 * tNormal.dot(tDirection))) - tDirection).normalize();   
+}
+
+//Vetor SurfaceIntersection::getRefraction(Vetor direction, double refractionIndex) const {
+
+//}

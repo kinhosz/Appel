@@ -11,6 +11,9 @@ struct SurfaceIntersection {
 
     SurfaceIntersection();
     SurfaceIntersection(Color color, double distance, Vetor normal);
+
+    Vetor getReflection(const Vetor &direction) const;
+    Vetor getRefraction(Vetor direction, double refractionIndex) const;
 };
 
 #endif

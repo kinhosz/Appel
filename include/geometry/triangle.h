@@ -15,6 +15,7 @@ struct Triangle {
     Color color;
 
     Triangle();
+    Triangle(Point v1, Point v2, Point v3, Color triangleColor);
     Triangle(Point v1, Point v2, Point v3, Vetor n1, Vetor n2, Vetor n3, Vetor triangleNormal, Color color);
 
     double area() const;
