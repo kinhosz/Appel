@@ -17,6 +17,16 @@ Triangle::Triangle() {
     vertexNormals[2] = Vetor();
 }
 
+Triangle::Triangle(Point v1, Point v2, Point v3, Color triangleColor) {
+    vertices[0] = v1;
+    vertices[1] = v2;
+    vertices[2] = v3;
+    color = triangleColor;
+    
+    this->triangleNormal = (Vetor(v2) - Vetor(v1)).cross(Vetor(v3) - Vetor(v1)).normalize();
+    vertexNormals[0] = vertexNormals[1] = vertexNormals[2] = Vetor(0, 0, 1);
+}
+
 Triangle::Triangle(Point v1, Point v2, Point v3, Vetor n1, Vetor n2, Vetor n3, Vetor triangleNormal, Color triangleColor) {
     vertices[0] = v1;
     vertices[1] = v2;
@@ -69,7 +79,7 @@ bool Triangle::isInside(const Point &p) const {
     std::vector<double> baricenter = gaussElimination(matrix);
 
     if(baricenter.size() != 3) return false;
-    assert(cmp(baricenter[0] + baricenter[1] + baricenter[2], 1.0) == 0);
+    if(cmp(baricenter[0] + baricenter[1] + baricenter[2], 1.0) != 0) return false;
 
     bool isInside = true;
 

@@ -9,6 +9,7 @@ Box::Box() {
     this->reflectionCoefficient = 0.0;
     this->transmissionCoefficient = 0.0;
     this->roughnessCoefficient = 0.0;
+    this->refractionIndex = 1.0;
 }
 
 Box::Box(double kd, double ks, double ka, double kr, double kt, double roughness) {
@@ -25,6 +26,7 @@ Box::Box(double kd, double ks, double ka, double kr, double kt, double roughness
     this->reflectionCoefficient = kr;
     this->transmissionCoefficient = kt;
     this->roughnessCoefficient = roughness;
+    this->refractionIndex = 1.0;
 }
 
 SurfaceIntersection Box::intersect(Ray ray) const {
@@ -53,4 +55,12 @@ double Box::getTransmissionCoefficient() const {
 
 double Box::getRoughnessCoefficient() const {
     return this->roughnessCoefficient;
+}
+
+double Box::getRefractionIndex() const {
+    return this->refractionIndex;
+}
+
+void Box::setRefractionIndex(double refractionIndex) {
+    this->refractionIndex = refractionIndex;
 }
