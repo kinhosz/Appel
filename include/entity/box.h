@@ -26,6 +26,7 @@ public:
     double getTransmissionCoefficient() const;
     double getRoughnessCoefficient() const;
     double getRefractionIndex() const;
+    void setRefractionIndex(double refractionIndex);
 };
 
 #endif

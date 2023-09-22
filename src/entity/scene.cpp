@@ -147,10 +147,10 @@ Color Scene::phong(const Ray &ray, const SurfaceIntersection &surface, int index
         * box.getReflectionCoefficient()
     );
 
-    /*color = color + (
-        traceRay(Ray(ray.pointAt(surface.distance), surface.getRefraction(ray.direction, box.getRefractionIndex())))
+    color = color + (
+        traceRay(Ray(ray.pointAt(surface.distance + 0.01), surface.getRefraction(ray.direction * -1.0, box.getRefractionIndex())), layer+1)
         * box.getTransmissionCoefficient()
-    );*/
+    );
 
     return color;
 }
