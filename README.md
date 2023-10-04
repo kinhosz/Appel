@@ -73,7 +73,10 @@ Will Install:
     ![img](/assets/outputs/project_v1/version_03/image_05.png)
 
 - Scene with reflex and refraction:
-    ![img](/assets/outputs/project_v2/version_03/image_00.png)
 
-- Extra: A Human Face:
-    ![img](/assets/outputs/view/humanFace.png)
+![img](/assets/outputs/project_v2/version_03/image_00.png)
+
+
+- A Human Face:
+
+![img](/assets/outputs/view/humanFace.png)
