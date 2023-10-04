@@ -29,6 +29,11 @@ make unit FNAME=tests/geometry/vetor.cpp
 Will compile & run the specific file.
 
 ### Dependencies
+Cuda toolkit
+```
+https://linuxhint.com/install-cuda-on-ubuntu-22-04-lts/
+https://developer.nvidia.com/cuda-downloads
+```
 
 ```make
 make install
@@ -66,3 +71,12 @@ Will Install:
     - Scenes with three `Light`s and three objects (`Plane`, `TriangularMesh` and `Sphere`)
     ![img](/assets/outputs/project_v1/version_03/image_03.png)
     ![img](/assets/outputs/project_v1/version_03/image_05.png)
+
+- Scene with reflex and refraction:
+
+![img](/assets/outputs/project_v2/version_03/image_00.png)
+
+
+- A Human Face:
+
+![img](/assets/outputs/view/humanFace.png)
