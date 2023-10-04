@@ -3,6 +3,8 @@
 #include <graphic/camera.h>
 #include <graphic/utils.h>
 #include <geometry/utils.h>
+#include <time.h>
+#include <iostream>
 using namespace std;
 
 #define WIDTH 1920
@@ -168,7 +170,11 @@ Sphere buildSphere3() {
 
 void image00(const Scene &scene) {
     Camera camera(Point(500, 250, 125), Point(0, 250, 125), HEIGHT, WIDTH);
+    clock_t t;
+    t = clock();
     Frame frame = camera.take(scene);
+    t = clock() - t;
+    std::cerr << "clock_per_sec: " << t/CLOCKS_PER_SEC << "\n";
     assert(saveAsPng(frame, "assets/outputs/project_v2/version_03/image_00.png"));
 }
 
