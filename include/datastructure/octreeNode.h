@@ -2,6 +2,8 @@
 #define OCTREENODE_DATASTRUCTURE_H
 
 #include <vector>
+#include <geometry/point.h>
+#include <geometry/ray.h>
 
 class OctreeNode {
     double xL, xR;

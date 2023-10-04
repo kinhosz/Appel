@@ -8,6 +8,13 @@ Scene::Scene() {
     this->lightsCurrentIndex = this->lights.size();
     this->environmentColor = Color(0, 0, 0);
     this->objectsCurrentIndex = 0;
+    this->triangleIndex = std::vector<std::pair<int, int>>();
+    this->triangles = std::vector<Triangle>();
+
+    double MIN_BORDER = -100000;
+    double MAX_BORDER = 100000;
+
+    this->octree = Octree(MIN_BORDER, MAX_BORDER, MIN_BORDER, MAX_BORDER, MIN_BORDER, MAX_BORDER);
 }
 
 Scene::Scene(const Color& environmentColor) {
@@ -15,6 +22,14 @@ Scene::Scene(const Color& environmentColor) {
     this->lightsCurrentIndex = this->lights.size();
     this->environmentColor = environmentColor;
     this->objectsCurrentIndex = 0;
+
+    this->triangleIndex = std::vector<std::pair<int, int>>();
+    this->triangles = std::vector<Triangle>();
+
+    double MIN_BORDER = -100000;
+    double MAX_BORDER = 100000;
+
+    this->octree = Octree(MIN_BORDER, MAX_BORDER, MIN_BORDER, MAX_BORDER, MIN_BORDER, MAX_BORDER);
 }
 
 std::map<int, Light> Scene::getLights() const {
@@ -55,6 +70,17 @@ int Scene::addObject(Sphere object) {
 int Scene::addObject(TriangularMesh object) {
     this->meshes[objectsCurrentIndex] = object;
     this->objectsCurrentIndex++;
+
+    const std::vector<Triangle> meshTriangles = object.getTriangles();
+
+    for(Triangle triangle: meshTriangles) {
+        int node = octree.add(triangle, triangles.size());
+        assert(node != -1);
+        triangleIndex.push_back(std::make_pair(objectsCurrentIndex-1, triangles.size()));
+
+        triangles.push_back(triangle);
+    }
+
     return objectsCurrentIndex - 1;
 }
 
@@ -87,10 +113,21 @@ std::pair<SurfaceIntersection, int> Scene::castRay(const Ray &ray) const {
         if(current.distance < nearSurface.distance) std::swap(current, nearSurface), index = tmp.first;
     }
 
-    for(const std::pair<int, TriangularMesh> tmp: meshes) {
+    /*for(const std::pair<int, TriangularMesh> tmp: meshes) {
         const TriangularMesh mesh = tmp.second;
         SurfaceIntersection current = mesh.intersect(ray);
         if(current.distance < nearSurface.distance) std::swap(current, nearSurface), index = tmp.first;
+    }*/
+
+    const std::vector<int> indexes = octree.find(ray);
+    for(int idx: indexes) {
+        int object_id = triangleIndex[idx].first;
+        int triangle_id = triangleIndex[idx].second;
+
+        const Triangle triangle = triangles[triangle_id];
+
+        SurfaceIntersection current = triangle.intersect(ray);
+        if(current.distance < nearSurface.distance) std::swap(current, nearSurface), index = object_id;
     }
 
     return std::make_pair(nearSurface, index);
@@ -129,7 +166,7 @@ Color Scene::brightness(const Ray& ray, SurfaceIntersection surface, const Box& 
 
 Color Scene::phong(const Ray &ray, const SurfaceIntersection &surface, int index, int layer) const {
     if(index == -1) return Color(0, 0, 0);
-    if(layer >= 5) return Color(0, 0, 0);
+    if(layer >= 1) return Color(0, 0, 0);
 
     const Box box = getObject(index);
 

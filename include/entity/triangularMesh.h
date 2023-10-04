@@ -23,7 +23,7 @@ public:
     );
 
     Triangle getTriangle(int index) const;
-
+    std::vector<Triangle> getTriangles() const;
     SurfaceIntersection intersect(Ray ray) const override;
 };
 

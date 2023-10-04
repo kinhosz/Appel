@@ -1,4 +1,7 @@
 #include <datastructure/octree.h>
+#include <iostream>
+
+Octree::Octree() {}
 
 Octree::Octree(double min_x, double max_x, double min_y, double max_y, double min_z, double max_z) {
     nodes.push_back(OctreeNode(min_x, max_x, min_y, max_y, min_z, max_z));
@@ -19,7 +22,7 @@ OctreeNode Octree::createNode(int current_node, int child_index) const {
     return OctreeNode(xl, xr, yl, yr, zl, zr);
 }
 
-int Octree::add(const Triangle &triangle, int t_index, int current_node) {
+int Octree::add(const Triangle &triangle, int t_index, int current_node, int level) {
     bool addHere = false;
     int child_index = 0;
 
@@ -30,9 +33,9 @@ int Octree::add(const Triangle &triangle, int t_index, int current_node) {
     double my = nodes[current_node].getMY();
     double mz = nodes[current_node].getMZ();
 
-    if(cmp(minT.x, mx) == -1 && cmp(maxT.x, mx) == 1 ||
-        cmp(minT.y, my) == -1 && cmp(maxT.y, my) == 1 ||
-        cmp(minT.z, mz) == -1 && cmp(maxT.z, mz) == 1) {
+    if((cmp(minT.x, mx) <= 0 && cmp(maxT.x, mx) >= 0) ||
+        (cmp(minT.y, my) <= 0 && cmp(maxT.y, my) >= 0) ||
+        (cmp(minT.z, mz) <= 0 && cmp(maxT.z, mz) >= 0)) {
             addHere = true;
     }
 
@@ -41,9 +44,9 @@ int Octree::add(const Triangle &triangle, int t_index, int current_node) {
         return current_node;
     }
 
-    if(cmp(minT.x, mx) >= 0) child_index += 1;
-    if(cmp(minT.y, my) >= 0) child_index += 2;
-    if(cmp(minT.z, mz) >= 0) child_index += 4;
+    if(cmp(minT.x, mx) == 1) child_index += 1;
+    if(cmp(minT.y, my) == 1) child_index += 2;
+    if(cmp(minT.z, mz) == 1) child_index += 4;
 
     int next_node = nodes[current_node].getChild(child_index);
 
@@ -54,12 +57,12 @@ int Octree::add(const Triangle &triangle, int t_index, int current_node) {
         nodes[current_node].setChild(child_index, next_node);
     }
 
-    return add(triangle, t_index, next_node);
+    return add(triangle, t_index, next_node, level+1);
 }
 
 void Octree::find(const Ray &ray, double &current_t, int current_node, std::vector<int> &candidates) const {
     const std::vector<int> tmp = nodes[current_node].getSurfaces();
-    for(int i=0;i<tmp.size();i++) candidates.push_back(tmp[i]);
+    for(int idx: tmp) candidates.push_back(idx);
 
     double mx = nodes[current_node].getMX();
     double my = nodes[current_node].getMY();
@@ -75,7 +78,11 @@ void Octree::find(const Ray &ray, double &current_t, int current_node, std::vect
         if(cmp(current_point.z, mz) == 1) child_index += 4;
 
         int next_node = nodes[current_node].getChild(child_index);
-        if(next_node != -1) find(ray, current_t, next_node, candidates);
+        if(next_node != -1) {
+            find(ray, current_t, next_node, candidates);
+            current_point = ray.pointAt(current_t);
+            continue;
+        }
 
         double delta = nodes[current_node].moveToNext(ray, current_t);
         current_t += delta;
@@ -84,7 +91,7 @@ void Octree::find(const Ray &ray, double &current_t, int current_node, std::vect
 }
 
 int Octree::add(const Triangle &triangle, int t_index) {
-    return add(triangle, t_index, 0);
+    return add(triangle, t_index, 0, 0);
 }
 
 std::vector<int> Octree::find(const Ray &ray) const {

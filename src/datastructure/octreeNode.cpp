@@ -103,5 +103,5 @@ double OctreeNode::moveToNext(const Ray &ray, double t) const {
         if(cmp(tmp, 0) != -1) delta = std::min(delta, tmp);
     }
 
-    return delta + EPSILON;
+    return delta + 2.0 * EPSILON;
 }
