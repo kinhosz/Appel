@@ -21,19 +21,12 @@ struct Triangle {
     double area() const;
     Point centroid() const;
 
-    Point getVertex(int index) const {
-        assert(index >= 0 && index < 3);
-        return vertices[index];
-    }
+    Point getVertex(int index) const;
+    Vetor getVertexNormal(int index) const;
+    Vetor getTriangleNormal() const;
 
-    Vetor getVertexNormal(int index) const {
-        assert(index >= 0 && index < 3);
-        return vertexNormals[index];
-    }
-
-    Vetor getTriangleNormal() const {
-        return triangleNormal;
-    }
+    Point getMin() const;
+    Point getMax() const;
 
     bool operator==(const Triangle& other) const;
     bool operator!=(const Triangle& other) const;
