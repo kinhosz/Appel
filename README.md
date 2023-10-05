@@ -29,7 +29,7 @@ make unit FNAME=tests/geometry/vetor.cpp
 Will compile & run the specific file.
 
 ### Dependencies
-Cuda toolkit
+Cuda toolkit(optional)
 ```
 https://linuxhint.com/install-cuda-on-ubuntu-22-04-lts/
 https://developer.nvidia.com/cuda-downloads

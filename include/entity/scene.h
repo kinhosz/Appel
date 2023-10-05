@@ -8,6 +8,7 @@
 #include <entity/triangularMesh.h>
 #include <entity/box.h>
 #include <graphic/color.h>
+#include <datastructure/octree.h>
 
 class Scene {
 private:
@@ -16,9 +17,14 @@ private:
     Color environmentColor;
     int objectsCurrentIndex;
 
+    Octree octree;
+
     std::map<int, Plane> planes;
     std::map<int, Sphere> spheres;
     std::map<int, TriangularMesh> meshes;
+
+    std::vector<std::pair<int, int>> triangleIndex;
+    std::vector<Triangle> triangles;
 
     Color brightness(const Ray& ray, SurfaceIntersection surface, const Box& box, const Light& light) const;
     Color phong(const Ray &ray, const SurfaceIntersection &surface, int index, int layer) const;

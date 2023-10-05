@@ -58,6 +58,36 @@ Point Triangle::centroid() const {
     return centroid;
 }
 
+Point Triangle::getVertex(int index) const {
+    assert(index >= 0 && index < 3);
+    return vertices[index];
+}
+
+Vetor Triangle::getVertexNormal(int index) const {
+    assert(index >= 0 && index < 3);
+    return vertexNormals[index];
+}
+
+Vetor Triangle::getTriangleNormal() const {
+    return triangleNormal;
+}
+
+Point Triangle::getMin() const {
+    return Point(
+        std::min(vertices[0].x, std::min(vertices[1].x, vertices[2].x)),
+        std::min(vertices[0].y, std::min(vertices[1].y, vertices[2].y)),
+        std::min(vertices[0].z, std::min(vertices[1].z, vertices[2].z))
+    );
+}
+
+Point Triangle::getMax() const {
+    return Point(
+        std::max(vertices[0].x, std::max(vertices[1].x, vertices[2].x)),
+        std::max(vertices[0].y, std::max(vertices[1].y, vertices[2].y)),
+        std::max(vertices[0].z, std::max(vertices[1].z, vertices[2].z))
+    );
+}
+
 bool Triangle::operator==(const Triangle& other) const {
     return vertices[0] == other.vertices[0] &&
            vertices[1] == other.vertices[1] &&

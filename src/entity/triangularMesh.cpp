@@ -21,6 +21,10 @@ TriangularMesh::TriangularMesh(
     this->triangles = triangles;
 }
 
+std::vector<Triangle> TriangularMesh::getTriangles() const {
+    return triangles;
+}
+
 SurfaceIntersection TriangularMesh::intersect(Ray ray) const {
     SurfaceIntersection nearSurface;
 
