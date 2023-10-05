@@ -160,7 +160,7 @@ Color Scene::brightness(const Ray& ray, SurfaceIntersection surface, const Box& 
 
 Color Scene::phong(const Ray &ray, const SurfaceIntersection &surface, int index, int layer) const {
     if(index == -1) return Color(0, 0, 0);
-    if(layer >= 1) return Color(0, 0, 0);
+    if(layer >= 5) return Color(0, 0, 0);
 
     const Box box = getObject(index);
 
