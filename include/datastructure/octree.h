@@ -11,7 +11,8 @@ class Octree {
 
     OctreeNode createNode(int current_node, int child_index) const;
     int add(const Triangle &triangle, int t_index, int current_node, int level);
-    void find(const Ray &ray, double &current_t, int current_node, std::vector<int> &candidates) const;
+    void find(const Ray &ray, int current_node, std::vector<int> &candidates) const;
+    bool isInside(const Ray &ray, int current_node) const;
 
 public:
     Octree();

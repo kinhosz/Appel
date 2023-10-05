@@ -30,8 +30,6 @@ public:
     void setChild(int child_index, int node_index);
 
     std::vector<int> getSurfaces() const;
-    bool isInside(Point p) const;
-    double moveToNext(const Ray &ray, double t) const;
 };
 
 #endif

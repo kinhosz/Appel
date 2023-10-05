@@ -1,5 +1,4 @@
 #include <graphic/camera.h>
-#include <iostream>
 
 Camera::Camera(Point loc, Point focus, int vPixels, int hPixels): 
     Camera(loc, focus, vPixels, hPixels, (double) (hPixels - 1) / 2.0) {}
@@ -58,13 +57,6 @@ Frame Camera::take(const Scene &scene) const {
             Color color = scene.traceRay(ray, 0);
 
             frame.setPixel(x, (vPixels - y - 1), Pixel(color));
-
-            double perc = (double)(x * vPixels + y) / (hPixels * vPixels);
-            perc *= 100;
-
-            if((x * hPixels + y)% 1000 == 0) {
-                std::cerr << "perc = " << perc << "\n";
-            }
         }
     }
 

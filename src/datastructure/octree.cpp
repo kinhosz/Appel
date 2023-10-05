@@ -1,5 +1,5 @@
 #include <datastructure/octree.h>
-#include <iostream>
+#include <math.h>
 
 Octree::Octree() {}
 
@@ -60,34 +60,48 @@ int Octree::add(const Triangle &triangle, int t_index, int current_node, int lev
     return add(triangle, t_index, next_node, level+1);
 }
 
-void Octree::find(const Ray &ray, double &current_t, int current_node, std::vector<int> &candidates) const {
+bool Octree::isInside(const Ray &ray, int current_node) const {
+    Point mid = Point(nodes[current_node].getMX(),
+        nodes[current_node].getMY(),
+        nodes[current_node].getMZ());
+    
+    Point border = Point(nodes[current_node].getXL(),
+        nodes[current_node].getYL(),
+        nodes[current_node].getZL());
+
+    Vetor v = (Vetor(border) - Vetor(mid));
+
+    double r = v.norm();
+
+    double gamma = (ray.location.x - mid.x) * (ray.location.x - mid.x) +
+        (ray.location.y - mid.y) * (ray.location.y - mid.y) +
+        (ray.location.z - mid.z) * (ray.location.z - mid.z) - (r * r);
+    
+    double beta = 2.0 * ((ray.location.x - mid.x) * ray.direction.x
+        + (ray.location.y - mid.y) * ray.direction.y + (ray.location.z - mid.z) * ray.direction.z);
+    
+    double alpha = (ray.direction.x * ray.direction.x) + (ray.direction.y * ray.direction.y) + (ray.direction.z * ray.direction.z);
+
+    double delta = beta*beta - 4.0 * alpha * gamma;
+
+    if(cmp(delta, 0) == -1) return false;
+    if(cmp(alpha, 0) == 0) return false;
+
+    double t1 = (-beta + sqrt(delta))/(2.0 * alpha);
+    double t2 = (-beta - sqrt(delta))/(2.0 * alpha);
+
+    if(cmp(t1, 0) == 1 || cmp(t2, 0) == 1) return true;
+    return false;
+}
+
+void Octree::find(const Ray &ray, int current_node, std::vector<int> &candidates) const {
+    if(current_node == -1) return;
+    if(!isInside(ray, current_node)) return;
+
     const std::vector<int> tmp = nodes[current_node].getSurfaces();
     for(int idx: tmp) candidates.push_back(idx);
 
-    double mx = nodes[current_node].getMX();
-    double my = nodes[current_node].getMY();
-    double mz = nodes[current_node].getMZ();
-
-    Point current_point = ray.pointAt(current_t);
-
-    while(nodes[current_node].isInside(current_point)) {
-        int child_index = 0;
-
-        if(cmp(current_point.x, mx) == 1) child_index += 1;
-        if(cmp(current_point.y, my) == 1) child_index += 2;
-        if(cmp(current_point.z, mz) == 1) child_index += 4;
-
-        int next_node = nodes[current_node].getChild(child_index);
-        if(next_node != -1) {
-            find(ray, current_t, next_node, candidates);
-            current_point = ray.pointAt(current_t);
-            continue;
-        }
-
-        double delta = nodes[current_node].moveToNext(ray, current_t);
-        current_t += delta;
-        current_point = ray.pointAt(current_t);
-    }
+    for(int i=0;i<8;i++) find(ray, nodes[current_node].getChild(i), candidates);
 }
 
 int Octree::add(const Triangle &triangle, int t_index) {
@@ -96,7 +110,6 @@ int Octree::add(const Triangle &triangle, int t_index) {
 
 std::vector<int> Octree::find(const Ray &ray) const {
     std::vector<int> candidates;
-    double t = 0.0;
-    find(ray, t, 0, candidates);
+    find(ray, 0, candidates);
     return candidates;
 }

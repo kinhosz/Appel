@@ -113,12 +113,6 @@ std::pair<SurfaceIntersection, int> Scene::castRay(const Ray &ray) const {
         if(current.distance < nearSurface.distance) std::swap(current, nearSurface), index = tmp.first;
     }
 
-    /*for(const std::pair<int, TriangularMesh> tmp: meshes) {
-        const TriangularMesh mesh = tmp.second;
-        SurfaceIntersection current = mesh.intersect(ray);
-        if(current.distance < nearSurface.distance) std::swap(current, nearSurface), index = tmp.first;
-    }*/
-
     const std::vector<int> indexes = octree.find(ray);
     for(int idx: indexes) {
         int object_id = triangleIndex[idx].first;
