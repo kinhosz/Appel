@@ -1,5 +1,6 @@
 #include <gpu/manager.h>
 #include <gpu/types/ray.h>
+#include <gpu/kernel.h>
 
 Manager::Manager() {
     calls_counter = 0;
@@ -7,13 +8,25 @@ Manager::Manager() {
     tableFrequency = std::set<std::pair<int, int>>();
     hostToDeviceID = std::map<int, int>();
 
-    cudaMalloc(&cache, cache_limit);
+    cudaMalloc(&cache, cache_limit * sizeof(GTriangle));
 
     for(int i=0;i<cache_limit;i++) {
         GTriangle gt;
         gt.host_id = -1;
         cudaMemcpy(&cache[i], &gt, 1, cudaMemcpyHostToDevice);
     }
+
+    int threadsperblock = 1024;
+    int blockspergrid = (cache_limit + threadsperblock - 1) / threadsperblock;
+
+    int *block_idx = (int*)malloc(sizeof(int) * blockspergrid);
+    float *block_dist = (float*)malloc(sizeof(float) * blockspergrid);
+
+    int *dvc_block_idx;
+    float *dvc_block_dist;
+
+    cudaMalloc(&block_idx, blockspergrid * sizeof(int));
+    cudaMalloc(&block_dist, blockspergrid * sizeof(float));
 }
 
 void Manager::transfer(int host_id, const Triangle &triangle) {
@@ -93,20 +106,25 @@ int Manager::run(const Ray &ray) {
     gr.dz = ray.direction.z;
 
     GRay *dvc_gr;
-    cudaMalloc(&dvc_gr, 1);
+    cudaMalloc(&dvc_gr, sizeof(GRay));
     cudaMemcpy(&dvc_gr, &gr, 1, cudaMemcpyHostToDevice);
 
+    castRay<<<blockspergrid, threadsperblock>>>(cache, &gr, dvc_block_dist, dvc_block_idx, cache_limit);
+    cudaDeviceSynchronize();
+
+    cudaMemcpy(dvc_block_dist, block_dist, sizeof(float) * blockspergrid, cudaMemcpyDeviceToHost);
+    cudaMemcpy(dvc_block_idx, block_idx, sizeof(int) * blockspergrid, cudaMemcpyDeviceToHost);
+    cudaDeviceSynchronize();
+
+    float minT = MAXFLOAT;
     int idx = -1;
-    float dist = 0.0;
 
-    int *dvc_idx;
-    float *dvc_dist;
+    for(int i=0;i<blockspergrid;i++){
+        if(block_dist[i] > 0.0 && block_dist[i] < minT) {
+            minT = block_dist[i];
+            idx = block_idx[i];
+        }
+    }
 
-    cudaMalloc(&dvc_idx, 1);
-    cudaMemcpy(&dvc_idx, &idx, 1, cudaMemcpyHostToDevice);
-
-    cudaMalloc(&dvc_dist, 1);
-    cudaMemcpy(&dvc_dist, &dist, 1, cudaMemcpyHostToDevice);
-
-    // call here the kernel
+    return idx;
 }

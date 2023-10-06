@@ -15,6 +15,15 @@ class Manager {
     std::vector<std::pair<int, GTriangle>> lazy;
     GTriangle *cache;
 
+    int *block_idx;
+    float *block_dist;
+
+    int *dvc_block_idx;
+    float *dvc_block_dist;
+
+    int threadsperblock;
+    int blockspergrid;
+
     bool isOnCache(int host_id);
     int getFreeDeviceId();
     void pendingTransfer();
