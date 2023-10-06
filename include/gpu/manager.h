@@ -32,6 +32,8 @@ public:
     Manager();
     void transfer(int host_id, const Triangle &triangle);
     int run(const Ray &ray);
+
+    ~Manager();
 };
 
 #endif

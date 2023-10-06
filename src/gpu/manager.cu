@@ -29,6 +29,15 @@ Manager::Manager() {
     cudaMalloc(&block_dist, blockspergrid * sizeof(float));
 }
 
+Manager::~Manager() {
+    cudaFree(cache);
+    cudaFree(dvc_block_idx);
+    cudaFree(dvc_block_dist);
+
+    free(block_idx);
+    free(block_dist);
+}
+
 void Manager::transfer(int host_id, const Triangle &triangle) {
     if(isOnCache(host_id)) return;
 
@@ -107,9 +116,9 @@ int Manager::run(const Ray &ray) {
 
     GRay *dvc_gr;
     cudaMalloc(&dvc_gr, sizeof(GRay));
-    cudaMemcpy(&dvc_gr, &gr, 1, cudaMemcpyHostToDevice);
+    cudaMemcpy(&dvc_gr, &gr, sizeof(GRay), cudaMemcpyHostToDevice);
 
-    castRay<<<blockspergrid, threadsperblock>>>(cache, &gr, dvc_block_dist, dvc_block_idx, cache_limit);
+    castRay<<<blockspergrid, threadsperblock>>>(cache, dvc_gr, dvc_block_dist, dvc_block_idx, cache_limit);
     cudaDeviceSynchronize();
 
     cudaMemcpy(dvc_block_dist, block_dist, sizeof(float) * blockspergrid, cudaMemcpyDeviceToHost);
@@ -125,6 +134,8 @@ int Manager::run(const Ray &ray) {
             idx = block_idx[i];
         }
     }
+
+    cudaFree(dvc_gr);
 
     return idx;
 }
