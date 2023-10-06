@@ -3,19 +3,7 @@
 #include <memory>
 #include <math.h>
 
-Scene::Scene() {
-    this->lights = std::map<int, Light>();
-    this->lightsCurrentIndex = this->lights.size();
-    this->environmentColor = Color(0, 0, 0);
-    this->objectsCurrentIndex = 0;
-    this->triangleIndex = std::vector<std::pair<int, int>>();
-    this->triangles = std::vector<Triangle>();
-
-    double MIN_BORDER = -100000;
-    double MAX_BORDER = 100000;
-
-    this->octree = Octree(MIN_BORDER, MAX_BORDER, MIN_BORDER, MAX_BORDER, MIN_BORDER, MAX_BORDER);
-}
+Scene::Scene() : Scene(Color()) {}
 
 Scene::Scene(const Color& environmentColor) {
     this->lights = std::map<int, Light>();
@@ -25,6 +13,8 @@ Scene::Scene(const Color& environmentColor) {
 
     this->triangleIndex = std::vector<std::pair<int, int>>();
     this->triangles = std::vector<Triangle>();
+    this->gpu = false;
+    this->manager = Manager();
 
     double MIN_BORDER = -100000;
     double MAX_BORDER = 100000;
@@ -97,7 +87,7 @@ Box Scene::getObject(int index) const {
     assert(false);
 }
 
-std::pair<SurfaceIntersection, int> Scene::castRay(const Ray &ray) const {
+std::pair<SurfaceIntersection, int> Scene::castRay(const Ray &ray) {
     SurfaceIntersection nearSurface;
     int index = -1;
 
@@ -114,20 +104,36 @@ std::pair<SurfaceIntersection, int> Scene::castRay(const Ray &ray) const {
     }
 
     const std::vector<int> indexes = octree.find(ray);
-    for(int idx: indexes) {
-        int object_id = triangleIndex[idx].first;
-        int triangle_id = triangleIndex[idx].second;
+    if(!this->gpu) {
+        for(int idx: indexes) {
+            int object_id = triangleIndex[idx].first;
+            int triangle_id = triangleIndex[idx].second;
 
-        const Triangle triangle = triangles[triangle_id];
+            const Triangle triangle = triangles[triangle_id];
 
-        SurfaceIntersection current = triangle.intersect(ray);
-        if(current.distance < nearSurface.distance) std::swap(current, nearSurface), index = object_id;
+            SurfaceIntersection current = triangle.intersect(ray);
+            if(current.distance < nearSurface.distance) std::swap(current, nearSurface), index = object_id;
+        }
+    }
+    else {
+        int idx = trianglesIntersectGPU(indexes, ray);
+        SurfaceIntersection current;
+
+        if(idx != -1) {
+            int object_id = triangleIndex[idx].first;
+            int triangle_id = triangleIndex[idx].second;
+
+            const Triangle triangle = triangles[triangle_id];
+            current = triangle.intersect(ray);
+
+            if(current.distance < nearSurface.distance) std::swap(current, nearSurface), index = object_id;
+        }
     }
 
     return std::make_pair(nearSurface, index);
 }
 
-Color Scene::brightness(const Ray& ray, SurfaceIntersection surface, const Box& box, const Light& light) const {
+Color Scene::brightness(const Ray& ray, SurfaceIntersection surface, const Box& box, const Light& light) {
     if(cmp(ray.direction.angle(surface.normal * -1.0), PI/2.0) == 1) surface.normal = surface.normal * -1.0;
 
     Point matched = ray.pointAt(surface.distance);
@@ -158,7 +164,7 @@ Color Scene::brightness(const Ray& ray, SurfaceIntersection surface, const Box& 
     return color;
 }
 
-Color Scene::phong(const Ray &ray, const SurfaceIntersection &surface, int index, int layer) const {
+Color Scene::phong(const Ray &ray, const SurfaceIntersection &surface, int index, int layer) {
     if(index == -1) return Color(0, 0, 0);
     if(layer >= 5) return Color(0, 0, 0);
 
@@ -186,10 +192,23 @@ Color Scene::phong(const Ray &ray, const SurfaceIntersection &surface, int index
     return color;
 }
 
-Color Scene::traceRay(const Ray &ray, int layer) const {
+Color Scene::traceRay(const Ray &ray, int layer) {
     std::pair<SurfaceIntersection, int> match = castRay(ray);
     SurfaceIntersection surface = match.first;
     int index = match.second;
 
     return surface.color * phong(ray, surface, index, layer);
+}
+
+void Scene::useGPU() {
+    this->gpu = true;
+}
+
+int Scene::trianglesIntersectGPU(const std::vector<int> &indexes, const Ray &ray) {
+    for(int idx: indexes) {
+        int t_idx = triangleIndex[idx].second;
+        manager.transfer(idx, triangles[t_idx]);
+    }
+
+    return manager.run(ray);
 }

@@ -9,6 +9,7 @@
 #include <entity/box.h>
 #include <graphic/color.h>
 #include <datastructure/octree.h>
+#include <gpu/manager.h>
 
 class Scene {
 private:
@@ -18,6 +19,7 @@ private:
     int objectsCurrentIndex;
 
     Octree octree;
+    Manager manager;
 
     std::map<int, Plane> planes;
     std::map<int, Sphere> spheres;
@@ -26,8 +28,10 @@ private:
     std::vector<std::pair<int, int>> triangleIndex;
     std::vector<Triangle> triangles;
 
-    Color brightness(const Ray& ray, SurfaceIntersection surface, const Box& box, const Light& light) const;
-    Color phong(const Ray &ray, const SurfaceIntersection &surface, int index, int layer) const;
+    bool gpu;
+
+    Color brightness(const Ray& ray, SurfaceIntersection surface, const Box& box, const Light& light);
+    Color phong(const Ray &ray, const SurfaceIntersection &surface, int index, int layer);
 
 public:
     Scene();
@@ -47,8 +51,11 @@ public:
 
     Box getObject(int index) const;
 
-    std::pair<SurfaceIntersection, int> castRay(const Ray &ray) const;
-    Color traceRay(const Ray &ray, int layer) const;
+    std::pair<SurfaceIntersection, int> castRay(const Ray &ray);
+    Color traceRay(const Ray &ray, int layer);
+
+    void useGPU();
+    int trianglesIntersectGPU(const std::vector<int> &indexes, const Ray &ray);
 };
 
 #endif
