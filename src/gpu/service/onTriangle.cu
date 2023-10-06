@@ -49,7 +49,7 @@ __device__ bool hasValidBaricenter(float matrix[][4]) {
     return true;
 }
 
-__device__ bool onTriangle(GTriangle gt, GRay ray, float t) {
+__device__ int onTriangle(GTriangle gt, GRay ray, float t) {
     float px = ray.lx + ray.dx * t;
     float py = ray.ly + ray.dy * t;
     float pz = ray.lz + ray.dz * t;

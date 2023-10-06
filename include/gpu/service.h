@@ -4,7 +4,7 @@
 #include <gpu/types/ray.h>
 #include <gpu/types/triangle.h>
 
-float planeIntersect(GRay ray, GTriangle gt);
-bool onTriangle(GTriangle gt, GRay ray, float t);
+__device__ float planeIntersect(GRay ray, GTriangle gt);
+__device__ int onTriangle(GTriangle gt, GRay ray, float t);
 
 #endif

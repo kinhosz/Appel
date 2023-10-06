@@ -1,7 +1,8 @@
-CC := g++
-CFLAGS := -Wall -Werror -O2 -std=c++17
+CC := nvcc
+CFLAGS := -Xcompiler -Wall -Xcompiler -Werror -Xcompiler -O2 -std=c++17
 INCLUDE := include
 LIB_CPP := $(wildcard src/**/*.cpp)
+LIB_CU := $(wildcard src/**/*.cu)
 LIB_SO := -Llib/SFML
 LIBS_SO := -lsfml-audio -lsfml-graphics -lsfml-network -lsfml-system -lsfml-window
 

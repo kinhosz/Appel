@@ -25,8 +25,8 @@ Manager::Manager() {
     int *dvc_block_idx;
     float *dvc_block_dist;
 
-    cudaMalloc(&block_idx, blockspergrid * sizeof(int));
-    cudaMalloc(&block_dist, blockspergrid * sizeof(float));
+    cudaMalloc(&dvc_block_idx, blockspergrid * sizeof(int));
+    cudaMalloc(&dvc_block_dist, blockspergrid * sizeof(float));
 }
 
 Manager::~Manager() {
@@ -73,7 +73,7 @@ bool Manager::isOnCache(int host_id) {
 }
 
 int Manager::getFreeDeviceId() {
-    if(tableFrequency.size() < cache_limit) return tableFrequency.size();
+    if((int)tableFrequency.size() < cache_limit) return tableFrequency.size();
 
     auto it = tableFrequency.begin();
     int host_id = (*it).first;
@@ -88,14 +88,14 @@ int Manager::getFreeDeviceId() {
 void Manager::pendingTransfer() {
     cudaStream_t streams[lazy.size()];
 
-    for(int i=0;i<lazy.size();i++) {
+    for(int i=0;i<(int)lazy.size();i++) {
         int dvc_id = lazy[i].first;
         GTriangle gt = lazy[i].second;
 
         cudaMemcpyAsync(&cache[dvc_id], &gt, 1, cudaMemcpyHostToDevice, streams[i]);
     }
 
-    for(int i=0;i<lazy.size();i++) {
+    for(int i=0;i<(int)lazy.size();i++) {
         cudaStreamSynchronize(streams[i]);
         cudaStreamDestroy(streams[i]);
     }

@@ -4,6 +4,6 @@
 #include <gpu/types/ray.h>
 #include <gpu/types/triangle.h>
 
-void castRay(GTriangle *cache, GRay *ray, float *block_dist, int *block_idx, int N);
+__global__ void castRay(GTriangle *cache, GRay *ray, float *block_dist, int *block_idx, int N);
 
 #endif
