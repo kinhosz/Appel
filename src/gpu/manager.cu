@@ -22,8 +22,8 @@ Manager::Manager() {
     int *block_idx = (int*)malloc(sizeof(int) * blockspergrid);
     float *block_dist = (float*)malloc(sizeof(float) * blockspergrid);
 
-    int *dvc_block_idx;
-    float *dvc_block_dist;
+    int *dvc_block_idx = nullptr;
+    float *dvc_block_dist = nullptr;
 
     cudaMalloc(&dvc_block_idx, blockspergrid * sizeof(int));
     cudaMalloc(&dvc_block_dist, blockspergrid * sizeof(float));
@@ -33,9 +33,6 @@ Manager::~Manager() {
     cudaFree(cache);
     cudaFree(dvc_block_idx);
     cudaFree(dvc_block_dist);
-
-    free(block_idx);
-    free(block_dist);
 }
 
 void Manager::transfer(int host_id, const Triangle &triangle) {
@@ -92,7 +89,7 @@ void Manager::pendingTransfer() {
         int dvc_id = lazy[i].first;
         GTriangle gt = lazy[i].second;
 
-        cudaMemcpyAsync(&cache[dvc_id], &gt, 1, cudaMemcpyHostToDevice, streams[i]);
+        cudaMemcpyAsync(&cache[dvc_id], &gt, sizeof(GTriangle), cudaMemcpyHostToDevice, streams[i]);
     }
 
     for(int i=0;i<(int)lazy.size();i++) {
@@ -121,8 +118,8 @@ int Manager::run(const Ray &ray) {
     castRay<<<blockspergrid, threadsperblock>>>(cache, dvc_gr, dvc_block_dist, dvc_block_idx, cache_limit);
     cudaDeviceSynchronize();
 
-    cudaMemcpy(dvc_block_dist, block_dist, sizeof(float) * blockspergrid, cudaMemcpyDeviceToHost);
-    cudaMemcpy(dvc_block_idx, block_idx, sizeof(int) * blockspergrid, cudaMemcpyDeviceToHost);
+    cudaMemcpy(block_dist, dvc_block_dist, sizeof(float) * blockspergrid, cudaMemcpyDeviceToHost);
+    cudaMemcpy(block_idx, dvc_block_idx, sizeof(int) * blockspergrid, cudaMemcpyDeviceToHost);
     cudaDeviceSynchronize();
 
     float minT = MAXFLOAT;
