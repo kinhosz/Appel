@@ -15,8 +15,6 @@ endef
 # $< will be replaced by the dependecy
 # compile & run code
 $(BIN)/%: $(TEST)/%.cpp
-	@$(CPP_COMPILER) -c -I $(INCLUDE) $< -o $(BIN)/tmp.o $(CPP_FLAGS)
-	@$(CUDA_COMPILER) $(LIB_SO) $(BIN)/tmp.o $(shell find $(OBJ) -name '*.o') \
-		 -o $(BIN)/$(subst /,_,$@).exe $(LIBS_SO)
+	$(call compile,$<,$@)
 	$(call print_message,$(subst /,_,$@))
 	$(call run,$(subst /,_,$@).exe)

@@ -1,3 +1,5 @@
+EGPU := 1
+
 CPP_COMPILER := g++
 CPP_FLAGS := -Wall -Werror -O2 -std=c++17
 
