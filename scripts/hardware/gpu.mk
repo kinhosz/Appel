@@ -3,7 +3,7 @@ CUDA_SRCS := $(shell find $(SRC) -name '*.cu')
 CUDA_OBJS := $(patsubst $(SRC)/%.cu, $(OBJ)/%, $(CUDA_SRCS))
 
 compile_cuda: build_bin $(CUDA_OBJS)
-	@echo "gpu ok"
+	@echo "GPU ENABLED"
 
 # build .o files from .cu
 $(OBJ)/%: $(SRC)/%.cu

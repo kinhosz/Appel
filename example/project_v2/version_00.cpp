@@ -92,25 +92,25 @@ Sphere buildSphere3() {
     return sphere;
 }
 
-void image00(const Scene &scene) {
+void image00(Scene &scene) {
     Camera camera(Point(200, -200, 100), Point(0, 0, 50), HEIGHT, WIDTH);
     Frame frame = camera.take(scene);
     assert(saveAsPng(frame, "assets/outputs/project_v2/version_00/image_00.png"));
 }
 
-void image01(const Scene &scene) {
+void image01(Scene &scene) {
     Camera camera(Point(-200, -200, 100), Point(0, 0, 50), HEIGHT, WIDTH);
     Frame frame = camera.take(scene);
     assert(saveAsPng(frame, "assets/outputs/project_v2/version_00/image_01.png"));
 }
 
-void image02(const Scene &scene) {
+void image02(Scene &scene) {
     Camera camera(Point(-200, 200, 100), Point(0, 0, 50), HEIGHT, WIDTH);
     Frame frame = camera.take(scene);
     assert(saveAsPng(frame, "assets/outputs/project_v2/version_00/image_02.png"));
 }
 
-void image03(const Scene &scene) {
+void image03(Scene &scene) {
     Camera camera(Point(200, 200, 100), Point(0, 0, 0), HEIGHT, WIDTH);
     Frame frame = camera.take(scene);
     assert(saveAsPng(frame, "assets/outputs/project_v2/version_00/image_03.png"));

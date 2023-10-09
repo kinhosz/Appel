@@ -59,37 +59,37 @@ Sphere buildSphere() {
     return sphere;
 }
 
-void image00(const Scene &scene) {
+void image00(Scene &scene) {
     Camera camera(Point(-200, -200, 50), Point(0, 0, 50), HEIGHT, WIDTH);
     Frame frame = camera.take(scene);
     assert(saveAsPng(frame, "assets/outputs/project_v1/version_02/image_00.png"));
 }
 
-void image01(const Scene &scene) {
+void image01(Scene &scene) {
     Camera camera(Point(-200, -200, 200), Point(0, 0, 50), HEIGHT, WIDTH);
     Frame frame = camera.take(scene);
     assert(saveAsPng(frame, "assets/outputs/project_v1/version_02/image_01.png"));
 }
 
-void image02(const Scene &scene) {
+void image02(Scene &scene) {
     Camera camera(Point(-130, -200, 50), Point(0, 0, 100), HEIGHT, WIDTH);
     Frame frame = camera.take(scene);
     assert(saveAsPng(frame, "assets/outputs/project_v1/version_02/image_02.png"));
 }
 
-void image03(const Scene &scene) {
+void image03(Scene &scene) {
     Camera camera(Point(-100, 200, 100), Point(0, 0, 0), HEIGHT, WIDTH);
     Frame frame = camera.take(scene);
     assert(saveAsPng(frame, "assets/outputs/project_v1/version_02/image_03.png"));
 }
 
-void image04(const Scene &scene) {
+void image04(Scene &scene) {
     Camera camera(Point(300, 100, 300), Point(0, 0, 45), HEIGHT, WIDTH);
     Frame frame = camera.take(scene);
     assert(saveAsPng(frame, "assets/outputs/project_v1/version_02/image_04.png"));
 }
 
-void image05(const Scene &scene) {
+void image05(Scene &scene) {
     Camera camera(Point(200, 200, 300), Point(0, 0, 0), HEIGHT, WIDTH);
     Frame frame = camera.take(scene);
     assert(saveAsPng(frame, "assets/outputs/project_v1/version_02/image_05.png"));
