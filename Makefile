@@ -18,6 +18,7 @@ include scripts/runner/run.mk
 include scripts/runner/tests.mk
 include scripts/runner/unitTest.mk
 include scripts/runner/build.mk
+include scripts/runner/clear.mk
 
 include scripts/versioning/changelog.mk
 include scripts/versioning/semVer.mk

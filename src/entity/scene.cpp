@@ -13,7 +13,6 @@ Scene::Scene(const Color& environmentColor) {
 
     this->triangleIndex = std::vector<std::pair<int, int>>();
     this->triangles = std::vector<Triangle>();
-    this->gpu = false;
     this->manager = Manager();
 
     double MIN_BORDER = -100000;
@@ -104,7 +103,7 @@ std::pair<SurfaceIntersection, int> Scene::castRay(const Ray &ray) {
     }
 
     const std::vector<int> indexes = octree.find(ray);
-    if(!this->gpu) {
+    if(!ENABLE_GPU) {
         for(int idx: indexes) {
             int object_id = triangleIndex[idx].first;
             int triangle_id = triangleIndex[idx].second;
@@ -198,10 +197,6 @@ Color Scene::traceRay(const Ray &ray, int layer) {
     int index = match.second;
 
     return surface.color * phong(ray, surface, index, layer);
-}
-
-void Scene::useGPU() {
-    this->gpu = true;
 }
 
 int Scene::trianglesIntersectGPU(const std::vector<int> &indexes, const Ray &ray) {

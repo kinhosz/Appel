@@ -9,7 +9,14 @@
 #include <entity/box.h>
 #include <graphic/color.h>
 #include <datastructure/octree.h>
+
+#ifdef APPEL_GPU_DISABLED
+#include <cpu/manager.h>
+#define ENABLE_GPU false
+#else
 #include <gpu/manager.h>
+#define ENABLE_GPU true
+#endif
 
 class Scene {
 private:
@@ -27,8 +34,6 @@ private:
 
     std::vector<std::pair<int, int>> triangleIndex;
     std::vector<Triangle> triangles;
-
-    bool gpu;
 
     Color brightness(const Ray& ray, SurfaceIntersection surface, const Box& box, const Light& light);
     Color phong(const Ray &ray, const SurfaceIntersection &surface, int index, int layer);
@@ -54,7 +59,6 @@ public:
     std::pair<SurfaceIntersection, int> castRay(const Ray &ray);
     Color traceRay(const Ray &ray, int layer);
 
-    void useGPU();
     int trianglesIntersectGPU(const std::vector<int> &indexes, const Ray &ray);
 };
 
