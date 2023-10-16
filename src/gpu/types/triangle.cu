@@ -1,7 +1,7 @@
 #include <gpu/types/triangle.h>
 #include <geometry/triangle.h>
 
-GTriangle::GTriangle() {
+__host__ __device__ GTriangle::GTriangle() {
     this->host_id = -1;
 }
 

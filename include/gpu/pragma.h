@@ -4,11 +4,13 @@
 #include <iostream>
 
 #define CUDA_STATUS(XXX) \
-    if(XXX != cudaSuccess) {\
-        std::cerr << "cuda error: " << cudaGetErrorString(XXX); \
-        std::cerr << ". File: " << __FILE__; \
-        std::cerr << " at line: " << __LINE__ << "\n"; \ 
-        assert(false); \
-    }
+    do { \
+        if (XXX != cudaSuccess) { \
+            std::cerr << "cuda error: " << cudaGetErrorString(XXX); \
+            std::cerr << ". File: " << __FILE__; \
+            std::cerr << " at line: " << __LINE__ << "\n"; \
+            assert(false); \
+        } \
+    } while (0)
 
 #endif

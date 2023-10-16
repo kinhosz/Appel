@@ -18,6 +18,7 @@ Scene::Scene(const Color& environmentColor) {
     double MAX_BORDER = 100000;
 
     this->octree = Octree(MIN_BORDER, MAX_BORDER, MIN_BORDER, MAX_BORDER, MIN_BORDER, MAX_BORDER);
+    this->manager = Manager(100000, 360, 640, 5, 3);
 }
 
 std::map<int, Light> Scene::getLights() const {
@@ -31,6 +32,9 @@ Color Scene::getEnvironmentColor() const {
 int Scene::addLight(const Light& light) {
     this->lights[lightsCurrentIndex] = light;
     this->lightsCurrentIndex++;
+
+    manager.addLight(light.getLocation());
+
     return lightsCurrentIndex - 1;
 }
 
@@ -66,6 +70,8 @@ int Scene::addObject(TriangularMesh object) {
         assert(node != -1);
         triangleIndex.push_back(std::make_pair(objectsCurrentIndex-1, triangles.size()));
 
+        manager.addTriangle(triangle, triangles.size());
+
         triangles.push_back(triangle);
     }
 
@@ -85,9 +91,23 @@ Box Scene::getObject(int index) const {
     assert(false);
 }
 
-std::pair<SurfaceIntersection, int> Scene::castRay(const Ray &ray) {
+std::pair<SurfaceIntersection, int> Scene::castRay(const Ray &ray, int cacheId) {
     SurfaceIntersection nearSurface;
     int index = -1;
+
+    if(ENABLE_GPU) {
+        int surfId = manager.getResult(cacheId);
+        if(surfId != -1) {
+            int object_id = triangleIndex[surfId].first;
+            int triangle_id = triangleIndex[surfId].second;
+
+            const Triangle triangle = triangles[triangle_id];
+            nearSurface = triangle.intersect(ray);
+            index = object_id;
+        }
+
+        return std::make_pair(nearSurface, index);
+    }
 
     for(const std::pair<int, Plane> tmp: planes) {
         const Plane plane = tmp.second;
@@ -115,7 +135,7 @@ std::pair<SurfaceIntersection, int> Scene::castRay(const Ray &ray) {
     return std::make_pair(nearSurface, index);
 }
 
-Color Scene::brightness(const Ray& ray, SurfaceIntersection surface, const Box& box, const Light& light) {
+Color Scene::brightness(const Ray& ray, SurfaceIntersection surface, const Box& box, const Light& light, int cacheId) {
     if(cmp(ray.direction.angle(surface.normal * -1.0), PI/2.0) == 1) surface.normal = surface.normal * -1.0;
 
     Point matched = ray.pointAt(surface.distance);
@@ -127,7 +147,7 @@ Color Scene::brightness(const Ray& ray, SurfaceIntersection surface, const Box& 
 
     Ray lightRay(temp.pointAt(delta), dir);
 
-    std::pair<SurfaceIntersection, int> opaqueSurface = castRay(lightRay);
+    std::pair<SurfaceIntersection, int> opaqueSurface = castRay(lightRay, cacheId);
 
     Vetor toLight = Vetor(Vetor(light.getLocation()) -Vetor(lightRay.location));
 
@@ -146,7 +166,8 @@ Color Scene::brightness(const Ray& ray, SurfaceIntersection surface, const Box& 
     return color;
 }
 
-Color Scene::phong(const Ray &ray, const SurfaceIntersection &surface, int index, int layer) {
+Color Scene::phong(const Ray &ray, const SurfaceIntersection &surface, int index, int layer,
+    int offset, int node) {
     if(index == -1) return Color(0, 0, 0);
     if(layer >= 5) return Color(0, 0, 0);
 
@@ -155,29 +176,36 @@ Color Scene::phong(const Ray &ray, const SurfaceIntersection &surface, int index
     Color color(0, 0, 0);
     color = color + (environmentColor * box.getAmbientCoefficient());
 
+    int current_offset = offset + (node * (1 + manager.getLights())) + 1;
     for(std::pair<int, Light> tmp: lights) {
         const Light light = tmp.second;
 
-        color = color + brightness(ray, surface, box, light);
+        color = color + brightness(ray, surface, box, light, current_offset++);
     }
 
     color = color + (
-        traceRay(Ray(ray.pointAt(surface.distance - 0.01), surface.getReflection(ray.direction * -1.0)), layer+1)
-        * box.getReflectionCoefficient()
+        traceRay(Ray(ray.pointAt(surface.distance - 0.01), surface.getReflection(ray.direction * -1.0)), 
+            layer+1, offset, (node * 2) + 1) * box.getReflectionCoefficient()
     );
 
     color = color + (
-        traceRay(Ray(ray.pointAt(surface.distance + 0.01), surface.getRefraction(ray.direction * -1.0, box.getRefractionIndex())), layer+1)
-        * box.getTransmissionCoefficient()
+        traceRay(Ray(ray.pointAt(surface.distance + 0.01), surface.getRefraction(ray.direction * -1.0, box.getRefractionIndex())),
+            layer+1, offset, (node * 2) + 2) * box.getTransmissionCoefficient()
     );
 
     return color;
 }
 
-Color Scene::traceRay(const Ray &ray, int layer) {
-    std::pair<SurfaceIntersection, int> match = castRay(ray);
+Color Scene::traceRay(const Ray &ray, int layer, int offset, int node) {
+    int current_offset = offset + (node * (1 + manager.getLights()));
+
+    std::pair<SurfaceIntersection, int> match = castRay(ray, current_offset);
     SurfaceIntersection surface = match.first;
     int index = match.second;
 
-    return surface.color * phong(ray, surface, index, layer);
+    return surface.color * phong(ray, surface, index, layer, offset, node);
+}
+
+Manager& Scene::getManager() {
+    return manager;
 }

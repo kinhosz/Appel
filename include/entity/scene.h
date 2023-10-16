@@ -34,8 +34,8 @@ private:
     std::vector<std::pair<int, int>> triangleIndex;
     std::vector<Triangle> triangles;
 
-    Color brightness(const Ray& ray, SurfaceIntersection surface, const Box& box, const Light& light);
-    Color phong(const Ray &ray, const SurfaceIntersection &surface, int index, int layer);
+    Color brightness(const Ray& ray, SurfaceIntersection surface, const Box& box, const Light& light, int cacheId);
+    Color phong(const Ray &ray, const SurfaceIntersection &surface, int index, int layer, int offset, int node);
 
 public:
     Scene();
@@ -55,8 +55,9 @@ public:
 
     Box getObject(int index) const;
 
-    std::pair<SurfaceIntersection, int> castRay(const Ray &ray);
-    Color traceRay(const Ray &ray, int layer);
+    std::pair<SurfaceIntersection, int> castRay(const Ray &ray, int cacheId);
+    Color traceRay(const Ray &ray, int layer, int offset, int node);
+    Manager& getManager();
 };
 
 #endif

@@ -3,11 +3,12 @@
 
 #include <geometry/point.h>
 #include <geometry/vetor.h>
+#include <cuda_runtime.h>
 
 struct GPoint {
     float x, y, z;
 
-    GPoint();
+    __host__ __device__ GPoint();
     GPoint(const Point &p);
     GPoint(const Vetor &v);
 };

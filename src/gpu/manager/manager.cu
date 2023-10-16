@@ -5,9 +5,14 @@
 #include <gpu/types/triangle.h>
 #include <gpu/kernel.h>
 
+Manager::Manager() {
+    this->hasAllocate = false;
+}
+
 Manager::Manager(unsigned int maxTriangles, int height, int width,
     int depth, int maxLights) {
 
+    this->hasAllocate = true;
     this->height = height;
     this->width = width;
     this->depth = depth;
@@ -31,23 +36,25 @@ Manager::Manager(unsigned int maxTriangles, int height, int width,
     size = maxLights * sizeof(GPoint);
     CUDA_STATUS(cudaMalloc((void**)&cache_light, size));
 
-    for(int i=0;i<triangles;i++) {
+    for(int i=0;i<(int)triangles;i++) {
         GTriangle t;
         t.host_id = -1;
         updateCacheTriangle<<<1,1>>>(i, t, cache_triangle);
     }
-    for(int i=0;i<triangles-1;i++) free_pos.push(i);
+    for(int i=0;i<(int)triangles-1;i++) free_pos.push(i);
 
     CUDA_STATUS(cudaDeviceSynchronize());
 }
 
 Manager::~Manager() {
-    CUDA_STATUS(cudaFree(cache_triangle));
-    CUDA_STATUS(cudaFree(device_buffer));
-    free(host_buffer);
+    if(this->hasAllocate) {
+        CUDA_STATUS(cudaFree(cache_triangle));
+        CUDA_STATUS(cudaFree(device_buffer));
+        free(host_buffer);
 
-    CUDA_STATUS(cudaFree(tmp_ray));
-    CUDA_STATUS(cudaFree(cache_light));
+        CUDA_STATUS(cudaFree(tmp_ray));
+        CUDA_STATUS(cudaFree(cache_light));
+    }
 }
 
 #endif

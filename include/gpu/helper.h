@@ -48,6 +48,8 @@ __device__ GPoint getNormal(GTriangle triangle);
 
 __device__ float getDistance(GRay ray, GTriangle triangle);
 
+__device__ int isInside(GPoint point, GTriangle triangle);
+
 /* float operations */
 __device__ int f_cmp(float a, float b);
 

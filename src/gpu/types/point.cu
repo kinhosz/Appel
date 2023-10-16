@@ -1,6 +1,6 @@
 #include <gpu/types/point.h>
 
-GPoint::GPoint() {}
+__host__ __device__ GPoint::GPoint() {}
 
 GPoint::GPoint(const Point &p) {
     this->x = p.x;

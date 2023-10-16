@@ -3,12 +3,13 @@
 
 #include <gpu/types/point.h>
 #include <geometry/ray.h>
+#include <cuda_runtime.h>
 
 struct GRay {
     GPoint location;
     GPoint direction;
 
-    GRay();
+    __host__ __device__ GRay();
     GRay(const Ray &ray); 
 };
 

@@ -24,16 +24,21 @@ class Manager {
     int maxLights;
 
     std::queue<int> free_pos;
+    bool hasAllocate;
 public:
+    Manager();
     Manager(unsigned int maxTriangles, int height, int width, 
         int depth, int maxLights);
     ~Manager();
 
     int addTriangle(const Triangle &triangle, int host_id);
-    int addLight(const Point &p);
+    void addLight(const Point &p);
     void run(const Vetor &up, const Vetor &right, 
         const Vetor &front, const Vetor &location, double dist);
     int getResult(int id) const;
+
+    int getLights() const;
+    int getDepth() const;
 };
 
 #endif

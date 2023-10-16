@@ -13,6 +13,7 @@ int Manager::addTriangle(const Triangle &triangle, int host_id) {
     free_pos.pop();
 
     updateCacheTriangle<<<1,1>>>(dvc_id, GTriangle(triangle, host_id), cache_triangle);
+    return dvc_id;
 }
 
 #endif

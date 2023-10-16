@@ -7,7 +7,7 @@ __device__ GRay createRay(const GPoint up, const GPoint right,
     float vPivot = (float)height/2.0;
     float hPivot = (float)width/2.0;
 
-    int x = i/width;
+    int x = i/height;
     int y = i%height;
 
     GPoint pixel_up = multByScalar(up, (float)y - vPivot);
