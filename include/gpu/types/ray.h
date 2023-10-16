@@ -1,9 +1,15 @@
-#ifndef RAY_TYPES_GPU_H
-#define RAY_TYPES_GPU_H
+#ifndef GRAY_TYPES_GPU_H
+#define GRAY_TYPES_GPU_H
+
+#include <gpu/types/point.h>
+#include <geometry/ray.h>
 
 struct GRay {
-    float lx, ly, lz;
-    float dx, dy, dz;
+    GPoint location;
+    GPoint direction;
+
+    GRay();
+    GRay(const Ray &ray); 
 };
 
 #endif

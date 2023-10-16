@@ -71,7 +71,6 @@ int main() {
 
     scene.addObject(humanFace);
     scene.addLight(Light(Point(0, 0, 10000), Color(1.0, 1.0, 1.0)));
-    scene.useGPU();
 
     Camera camera(Point(0, -200, 1000), Point(0, 0, 0), HEIGHT, WIDTH);
 

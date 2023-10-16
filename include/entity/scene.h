@@ -9,12 +9,11 @@
 #include <entity/box.h>
 #include <graphic/color.h>
 #include <datastructure/octree.h>
+#include <gpu/manager.h>
 
 #ifdef APPEL_GPU_DISABLED
-#include <cpu/manager.h>
 #define ENABLE_GPU false
 #else
-#include <gpu/manager.h>
 #define ENABLE_GPU true
 #endif
 
@@ -58,8 +57,6 @@ public:
 
     std::pair<SurfaceIntersection, int> castRay(const Ray &ray);
     Color traceRay(const Ray &ray, int layer);
-
-    int trianglesIntersectGPU(const std::vector<int> &indexes, const Ray &ray);
 };
 
 #endif

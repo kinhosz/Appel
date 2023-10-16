@@ -13,7 +13,6 @@ Scene::Scene(const Color& environmentColor) {
 
     this->triangleIndex = std::vector<std::pair<int, int>>();
     this->triangles = std::vector<Triangle>();
-    this->manager = Manager();
 
     double MIN_BORDER = -100000;
     double MAX_BORDER = 100000;
@@ -103,30 +102,14 @@ std::pair<SurfaceIntersection, int> Scene::castRay(const Ray &ray) {
     }
 
     const std::vector<int> indexes = octree.find(ray);
-    if(!ENABLE_GPU) {
-        for(int idx: indexes) {
-            int object_id = triangleIndex[idx].first;
-            int triangle_id = triangleIndex[idx].second;
+    for(int idx: indexes) {
+        int object_id = triangleIndex[idx].first;
+        int triangle_id = triangleIndex[idx].second;
 
-            const Triangle triangle = triangles[triangle_id];
+        const Triangle triangle = triangles[triangle_id];
 
-            SurfaceIntersection current = triangle.intersect(ray);
-            if(current.distance < nearSurface.distance) std::swap(current, nearSurface), index = object_id;
-        }
-    }
-    else {
-        int idx = trianglesIntersectGPU(indexes, ray);
-        SurfaceIntersection current;
-
-        if(idx != -1) {
-            int object_id = triangleIndex[idx].first;
-            int triangle_id = triangleIndex[idx].second;
-
-            const Triangle triangle = triangles[triangle_id];
-            current = triangle.intersect(ray);
-
-            if(current.distance < nearSurface.distance) std::swap(current, nearSurface), index = object_id;
-        }
+        SurfaceIntersection current = triangle.intersect(ray);
+        if(current.distance < nearSurface.distance) std::swap(current, nearSurface), index = object_id;
     }
 
     return std::make_pair(nearSurface, index);
@@ -197,13 +180,4 @@ Color Scene::traceRay(const Ray &ray, int layer) {
     int index = match.second;
 
     return surface.color * phong(ray, surface, index, layer);
-}
-
-int Scene::trianglesIntersectGPU(const std::vector<int> &indexes, const Ray &ray) {
-    for(int idx: indexes) {
-        int t_idx = triangleIndex[idx].second;
-        manager.transfer(idx, triangles[t_idx]);
-    }
-
-    return manager.run(ray);
 }

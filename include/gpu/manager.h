@@ -1,39 +1,38 @@
 #ifndef MANAGER_GPU_H
 #define MANAGER_GPU_H
 
-#include <set>
-#include <map>
-#include <vector>
+#include <queue>
 #include <gpu/types/triangle.h>
+#include <gpu/types/ray.h>
 #include <geometry/triangle.h>
+#include <geometry/vetor.h>
 
 class Manager {
-    int calls_counter;
-    int cache_limit;
-    std::set<std::pair<int, int>> tableFrequency;
-    std::map<int, int> hostToDeviceID;
-    std::vector<std::pair<int, GTriangle>> lazy;
-    GTriangle *cache;
+    GTriangle* cache_triangle;
+    GPoint* cache_light;
+    int* device_buffer;
+    int* host_buffer;
 
-    int *block_idx;
-    float *block_dist;
+    GRay* tmp_ray;
 
-    int *dvc_block_idx;
-    float *dvc_block_dist;
+    unsigned int triangles;
+    unsigned int buffer_size;
 
-    int threadsperblock;
-    int blockspergrid;
+    int height, width;
+    int depth;
+    int free_light_pos;
+    int maxLights;
 
-    bool isOnCache(int host_id);
-    int getFreeDeviceId();
-    void pendingTransfer();
-
+    std::queue<int> free_pos;
 public:
-    Manager();
-    void transfer(int host_id, const Triangle &triangle);
-    int run(const Ray &ray);
-
+    Manager(unsigned int maxTriangles, int height, int width, 
+        int depth, int maxLights);
     ~Manager();
+
+    int addTriangle(const Triangle &triangle, int host_id);
+    int addLight(const Point &p);
+    void run(const Vetor &up, const Vetor &right, 
+        const Vetor &front, const Vetor &location, double dist);
 };
 
 #endif

@@ -1,11 +1,14 @@
-#ifndef TRIANGLE_TYPES_GPU_H
-#define TRIANGLE_TYPES_GPU_H
+#ifndef GTRIANGLE_TYPES_GPU_H
+#define GTRIANGLE_TYPES_GPU_H
+
+#include <gpu/types/point.h>
 
 struct GTriangle {
-    float p0x, p0y, p0z;
-    float p1x, p1y, p1z;
-    float p2x, p2y, p2z;
+    GPoint point[3];
     int host_id;
+
+    GTriangle();
+    GTriangle(const Triangle &t, int host_id);
 };
 
 #endif
