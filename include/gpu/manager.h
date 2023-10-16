@@ -33,6 +33,7 @@ public:
     int addLight(const Point &p);
     void run(const Vetor &up, const Vetor &right, 
         const Vetor &front, const Vetor &location, double dist);
+    int getResult(int id) const;
 };
 
 #endif

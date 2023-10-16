@@ -36,7 +36,7 @@ Manager::Manager(unsigned int maxTriangles, int height, int width,
         t.host_id = -1;
         updateCacheTriangle<<<1,1>>>(i, t, cache_triangle);
     }
-    for(int i=0;i<triangles;i++) free_pos.push(i);
+    for(int i=0;i<triangles-1;i++) free_pos.push(i);
 
     CUDA_STATUS(cudaDeviceSynchronize());
 }

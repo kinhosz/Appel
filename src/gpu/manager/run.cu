@@ -19,6 +19,9 @@ void Manager::run(const Vetor &up, const Vetor &right,
         this->free_light_pos, device_buffer);
     
     CUDA_STATUS(cudaDeviceSynchronize());
+
+    size_t size = this->buffer_size * sizeof(int);
+    CUDA_STATUS(cudaMemcpy(host_buffer, device_buffer, size, cudaMemcpyDeviceToHost));
 }
 
 #endif
