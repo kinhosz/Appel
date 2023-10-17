@@ -9,14 +9,7 @@
 #include <gpu/types/triangle.h>
 
 /* ray tracing */
-__device__ GRay createRay(const GPoint up, const GPoint right, 
-    const GPoint front, const GPoint loc, const float dist,
-    const int height, const int width, const int i);
-
 __device__ int castRay(GRay ray, GTriangle* cache_triangle);
-
-__device__ void brightnessCastRay(int pos, GTriangle surface, int lightId,
-    GRay ray, GTriangle* cache_triangle, GPoint* cache_light, int* buffer);
 
 /* vector operations */
 __device__ GPoint multByScalar(GPoint p, float s);
@@ -47,6 +40,8 @@ __device__ GPoint getNormal(GTriangle triangle);
 __device__ float getDistance(GRay ray, GTriangle triangle);
 
 __device__ int isInside(GPoint point, GTriangle triangle);
+
+__device__ float triangleIntersect(GRay ray, GTriangle triangle);
 
 /* float operations */
 __device__ int f_cmp(float a, float b);
