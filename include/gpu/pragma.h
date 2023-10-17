@@ -1,6 +1,8 @@
 #ifndef PRAGMA_GPU_H
 #define PRAGMA_GPU_H
 
+#ifndef APPEL_GPU_DISABLED
+
 #include <iostream>
 
 #define CUDA_STATUS(XXX) \
@@ -13,4 +15,5 @@
         } \
     } while (0)
 
+#endif
 #endif

@@ -1,6 +1,8 @@
 #ifndef GTRIANGLE_TYPES_GPU_H
 #define GTRIANGLE_TYPES_GPU_H
 
+#ifndef APPEL_GPU_DISABLED
+
 #include <gpu/types/point.h>
 #include <geometry/triangle.h>
 #include <cuda_runtime.h>
@@ -13,4 +15,5 @@ struct GTriangle {
     GTriangle(const Triangle &t, int host_id);
 };
 
+#endif
 #endif

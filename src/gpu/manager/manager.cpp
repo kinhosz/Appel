@@ -2,25 +2,15 @@
 
 #include <gpu/manager.h>
 
-Manager::Manager() {
-    this->hasAllocate = false;
-}
-
-Manager::Manager(unsigned int maxTriangles, int height, int width,
-    int depth, int maxLights) {
-
-    this->hasAllocate = false;
-    this->height = height;
-    this->width = width;
-    this->depth = depth;
-    this->maxLights = maxLights;
-
-    this->free_light_pos = 0;
-
-    this->triangles = maxTriangles;
-    this->buffer_size = 0;
-}
-
+Manager::Manager(unsigned int maxTriangles) {}
 Manager::~Manager() {}
+
+int Manager::add(const Triangle& t, int host_id) {
+    return -1;
+}
+
+int Manager::run(const Ray& ray) {
+    return -1;
+}
 
 #endif

@@ -26,6 +26,6 @@ __device__ void brightnessCastRay(int pos, GTriangle surface, int lightId,
         buffer[pos] = -1;
     }
     else {
-        buffer[pos] = cache_triangle[pos].host_id;
+        buffer[pos] = cache_triangle[device_id].host_id;
     }
 }

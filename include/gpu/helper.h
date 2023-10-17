@@ -1,6 +1,8 @@
 #ifndef HELPER_GPU_H
 #define HELPER_GPU_H
 
+#ifndef APPEL_GPU_DISABLED
+
 #include <cuda_runtime.h>
 #include <gpu/types/point.h>
 #include <gpu/types/ray.h>
@@ -10,10 +12,6 @@
 __device__ GRay createRay(const GPoint up, const GPoint right, 
     const GPoint front, const GPoint loc, const float dist,
     const int height, const int width, const int i);
-
-__device__ void traceRay(const int offset, int node, int level,
-    GRay ray, GTriangle* cache_triangle, GPoint* cache_light,
-    const int depth, const int lights, int* buffer);
 
 __device__ int castRay(GRay ray, GTriangle* cache_triangle);
 
@@ -53,4 +51,5 @@ __device__ int isInside(GPoint point, GTriangle triangle);
 /* float operations */
 __device__ int f_cmp(float a, float b);
 
+#endif
 #endif

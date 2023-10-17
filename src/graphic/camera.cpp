@@ -51,19 +51,10 @@ Ray Camera::createRay(int x, int y) const {
 Frame Camera::take(Scene &scene) const {
     Frame frame(vPixels, hPixels);
 
-    Manager manager = scene.getManager();
-
-    if(ENABLE_GPU) {
-        manager.run(vUp, vRight, vFront, location, distance);
-    }
-
-    int base = (1<<manager.getDepth()) * (1 + manager.getLights());
-
     for(int x=0; x<hPixels; x++) {
         for(int y=0; y<vPixels; y++) {
             Ray ray = createRay(x, y);
-            int offset = base * (x * vPixels + y);
-            Color color = scene.traceRay(ray, 0, offset, 0);
+            Color color = scene.traceRay(ray, 0);
 
             frame.setPixel(x, (vPixels - y - 1), Pixel(color));
         }

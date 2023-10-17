@@ -3,42 +3,21 @@
 
 #include <queue>
 #include <gpu/types/triangle.h>
-#include <gpu/types/ray.h>
 #include <geometry/triangle.h>
-#include <geometry/vetor.h>
+#include <geometry/ray.h>
 
 class Manager {
-    GTriangle* cache_triangle;
-    GPoint* cache_light;
-    int* device_buffer;
-    int* host_buffer;
-
-    GRay* tmp_ray;
-
-    unsigned int triangles;
-    unsigned int buffer_size;
-
-    int height, width;
-    int depth;
-    int free_light_pos;
-    int maxLights;
-
     std::queue<int> free_pos;
-    bool hasAllocate;
+    unsigned int maxTriangles;
+
+    GTriangle* cache;
+    int* buffer;
 public:
-    Manager();
-    Manager(unsigned int maxTriangles, int height, int width, 
-        int depth, int maxLights);
+    Manager(unsigned int maxTriangles);
     ~Manager();
 
-    int addTriangle(const Triangle &triangle, int host_id);
-    void addLight(const Point &p);
-    void run(const Vetor &up, const Vetor &right, 
-        const Vetor &front, const Vetor &location, double dist);
-    int getResult(int id) const;
-
-    int getLights() const;
-    int getDepth() const;
+    int add(const Triangle& t, int host_id);
+    int run(const Ray& ray);
 };
 
 #endif

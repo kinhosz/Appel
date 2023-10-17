@@ -23,9 +23,10 @@ private:
     int lightsCurrentIndex;
     Color environmentColor;
     int objectsCurrentIndex;
+    int depth;
 
     Octree octree;
-    Manager manager;
+    Manager* manager;
 
     std::map<int, Plane> planes;
     std::map<int, Sphere> spheres;
@@ -34,8 +35,8 @@ private:
     std::vector<std::pair<int, int>> triangleIndex;
     std::vector<Triangle> triangles;
 
-    Color brightness(const Ray& ray, SurfaceIntersection surface, const Box& box, const Light& light, int cacheId);
-    Color phong(const Ray &ray, const SurfaceIntersection &surface, int index, int layer, int offset, int node);
+    Color brightness(const Ray& ray, SurfaceIntersection surface, const Box& box, const Light& light);
+    Color phong(const Ray &ray, const SurfaceIntersection &surface, int index, int layer);
 
 public:
     Scene();
@@ -55,9 +56,8 @@ public:
 
     Box getObject(int index) const;
 
-    std::pair<SurfaceIntersection, int> castRay(const Ray &ray, int cacheId);
-    Color traceRay(const Ray &ray, int layer, int offset, int node);
-    Manager& getManager();
+    std::pair<SurfaceIntersection, int> castRay(const Ray &ray);
+    Color traceRay(const Ray &ray, int layer);
 };
 
 #endif
