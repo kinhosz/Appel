@@ -107,8 +107,8 @@ std::pair<SurfaceIntersection, int> Scene::castRay(const Ray &ray) {
         if(current.distance < nearSurface.distance) std::swap(current, nearSurface), index = tmp.first;
     }
 
-    const std::vector<int> indexes = octree.find(ray);
-    for(int idx: indexes) {
+    if(ENABLE_GPU) {
+        int idx = manager->run(ray);
         int object_id = triangleIndex[idx].first;
         int triangle_id = triangleIndex[idx].second;
 
@@ -116,6 +116,18 @@ std::pair<SurfaceIntersection, int> Scene::castRay(const Ray &ray) {
 
         SurfaceIntersection current = triangle.intersect(ray);
         if(current.distance < nearSurface.distance) std::swap(current, nearSurface), index = object_id;
+    }
+    else {
+        const std::vector<int> indexes = octree.find(ray);
+        for(int idx: indexes) {
+            int object_id = triangleIndex[idx].first;
+            int triangle_id = triangleIndex[idx].second;
+
+            const Triangle triangle = triangles[triangle_id];
+
+            SurfaceIntersection current = triangle.intersect(ray);
+            if(current.distance < nearSurface.distance) std::swap(current, nearSurface), index = object_id;
+        }
     }
 
     return std::make_pair(nearSurface, index);
