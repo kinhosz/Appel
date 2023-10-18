@@ -12,11 +12,12 @@ __global__ void castRay(GRay ray, int* buffer, GTriangle* cache, int N) {
 
     int curr_id = tid;
     while(curr_id < N) {
-        float d = triangleIntersect(ray, cache[tid]);
-        if(d < 0.0) continue;
-        if(idx[tid] == -1 || dist[tid] > d) {
-            idx[tid] = cache[curr_id].host_id;
-            dist[tid] = d;
+        float d = triangleIntersect(ray, cache[curr_id]);
+        if(d > 0.0) {
+            if(idx[tid] == -1 || dist[tid] > d) {
+                idx[tid] = cache[curr_id].host_id;
+                dist[tid] = d;
+            }
         }
 
         curr_id += blockDim.x;

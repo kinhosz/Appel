@@ -10,6 +10,7 @@ int Manager::run(const Ray& ray) {
 
     int threadsperblock = 1024;
 
+    CUDA_STATUS(cudaDeviceSynchronize());
     castRay<<<1,threadsperblock>>>(gr, buffer, cache, (int)maxTriangles);
     CUDA_STATUS(cudaDeviceSynchronize());
 

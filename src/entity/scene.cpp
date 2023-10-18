@@ -68,9 +68,8 @@ int Scene::addObject(TriangularMesh object) {
     for(Triangle triangle: meshTriangles) {
         int node = octree.add(triangle, triangles.size());
         assert(node != -1);
+        manager->add(triangle, triangleIndex.size());
         triangleIndex.push_back(std::make_pair(objectsCurrentIndex-1, triangles.size()));
-
-        manager->add(triangle, triangles.size());
 
         triangles.push_back(triangle);
     }
@@ -109,13 +108,16 @@ std::pair<SurfaceIntersection, int> Scene::castRay(const Ray &ray) {
 
     if(ENABLE_GPU) {
         int idx = manager->run(ray);
-        int object_id = triangleIndex[idx].first;
-        int triangle_id = triangleIndex[idx].second;
 
-        const Triangle triangle = triangles[triangle_id];
+        if(idx != -1) {
+            int object_id = triangleIndex[idx].first;
+            int triangle_id = triangleIndex[idx].second;
 
-        SurfaceIntersection current = triangle.intersect(ray);
-        if(current.distance < nearSurface.distance) std::swap(current, nearSurface), index = object_id;
+            const Triangle triangle = triangles[triangle_id];
+
+            SurfaceIntersection current = triangle.getSurface(ray);
+            if(current.distance < nearSurface.distance) std::swap(current, nearSurface), index = object_id;
+        }
     }
     else {
         const std::vector<int> indexes = octree.find(ray);

@@ -34,6 +34,7 @@ struct Triangle {
     bool isInside(const Point &p) const;
 
     SurfaceIntersection intersect(Ray ray) const;
+    SurfaceIntersection getSurface(Ray ray) const ;
 };
 
 #endif

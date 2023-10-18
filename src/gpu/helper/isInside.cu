@@ -28,7 +28,7 @@ __device__ int isInside(GPoint point, GTriangle triangle) {
         }
         if(pivot == -1) break;
 
-        double f = matrix[pivot][k];
+        float f = matrix[pivot][k];
 
         for(int j=0;j<m;j++) matrix[pivot][j] /= f;
 

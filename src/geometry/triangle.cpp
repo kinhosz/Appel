@@ -141,3 +141,21 @@ SurfaceIntersection Triangle::intersect(Ray ray) const {
 
     return SurfaceIntersection(color, t, normal);
 }
+
+SurfaceIntersection Triangle::getSurface(Ray ray) const {
+    Vetor normal = triangleNormal.normalize();
+
+    if(normal.isOrthogonal(ray.direction)) return SurfaceIntersection();
+
+    double D = -normal.x * vertices[0].x - normal.y * vertices[0].y - normal.z * vertices[0].z;
+    double A = normal.x, B = normal.y, C = normal.z;
+
+    double c1 = (A * ray.location.x + B * ray.location.y + C * ray.location.z + D);
+    double c2 = (A * ray.direction.x + B * ray.direction.y + C * ray.direction.z);
+
+    double t = -c1/c2;
+
+    if(cmp(t, 0) == -1) return SurfaceIntersection();
+
+    return SurfaceIntersection(color, t, normal);
+}
