@@ -2,6 +2,7 @@
 #define MANAGER_GPU_H
 
 #include <queue>
+#include <gpu/types/ray.h>
 #include <gpu/types/triangle.h>
 #include <geometry/triangle.h>
 #include <geometry/ray.h>
