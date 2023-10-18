@@ -4,22 +4,22 @@
 #include <gpu/types/ray.h>
 #include <gpu/kernel.h>
 #include <gpu/pragma.h>
+#include <gpu/reducer.h>
 
 int Manager::run(const Ray& ray) {
     GRay gr(ray);
 
-    int threadsperblock = 1024;
-
     CUDA_STATUS(cudaDeviceSynchronize());
-
     *dvc_ray = gr;
 
+    castRay<<<blocksPerGrid, threadsPerBlock>>>(dvc_ray, buffer_dist, buffer_idx, cache, dvc_N);
     CUDA_STATUS(cudaDeviceSynchronize());
-    castRay<<<1,threadsperblock>>>(dvc_ray, buffer, cache, dvc_N);
+
+    getMin<<<1,1>>>(buffer_dist, buffer_idx, dvc_BLOCK, result);
     CUDA_STATUS(cudaDeviceSynchronize());
 
     int host_id = -2;
-    host_id = *buffer;
+    host_id = *result;
 
     return host_id;
 }

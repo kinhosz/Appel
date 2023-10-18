@@ -12,10 +12,16 @@ class Manager {
     unsigned int maxTriangles;
 
     GTriangle* cache;
-    int* buffer;
+    int* buffer_idx;
+    float* buffer_dist;
+    int* result;
 
     GRay* dvc_ray;
     int* dvc_N;
+    int* dvc_BLOCK;
+
+    int threadsPerBlock;
+    int blocksPerGrid;
 public:
     Manager(unsigned int maxTriangles);
     ~Manager();

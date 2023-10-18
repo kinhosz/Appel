@@ -1,35 +1,34 @@
 #include <gpu/kernel.h>
 #include <gpu/helper.h>
 
-__global__ void castRay(GRay* ray, int* buffer, GTriangle* cache, int* N) {
+__global__ void castRay(GRay* ray, float* buffer_dist, int* buffer_idx, GTriangle* cache, int* N) {
     __shared__ float dist[1200];
     __shared__ int idx[1200];
 
     int tid = threadIdx.x;
+    int pointer = threadIdx.x + blockDim.x * blockIdx.x;
 
     dist[tid] = -1.0;
     idx[tid] = -1;
 
-    int curr_id = tid;
-    while(curr_id < (*N)) {
-        float d = triangleIntersect(*ray, cache[curr_id]);
-        if(d > 0.0) {
-            if(idx[tid] == -1 || dist[tid] > d) {
-                idx[tid] = cache[curr_id].host_id;
-                dist[tid] = d;
-            }
-        }
+    if(tid == 0) {
+        buffer_dist[blockIdx.x] = -1.0;
+        buffer_idx[blockIdx.x] = -1;
+    }
 
-        curr_id += blockDim.x;
+    if(pointer >= (*N)) return;
+
+    float d = triangleIntersect(*ray, cache[pointer]);
+    if(d > 0.0) {
+        idx[tid] = cache[pointer].host_id;
+        dist[tid] = d;
     }
 
     __syncthreads();
 
     if(tid != 0) return;
 
-    int sz = min((*N), blockDim.x);
-
-    for(int i=1;i<sz;i++) {
+    for(int i=1;i<blockDim.x;i++) {
         if(idx[i] == -1) continue;
         if(idx[0] == -1 || dist[0] > dist[i]) {
             idx[0] = idx[i];
@@ -37,5 +36,6 @@ __global__ void castRay(GRay* ray, int* buffer, GTriangle* cache, int* N) {
         }
     }
 
-    *buffer = idx[0];
+    buffer_idx[blockIdx.x] = idx[0];
+    buffer_dist[blockIdx.x] = dist[0];
 }
