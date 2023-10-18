@@ -1,5 +1,6 @@
 #include <datastructure/octree.h>
 #include <math.h>
+#include <geometry/utils.h>
 
 Octree::Octree() {}
 
@@ -61,37 +62,39 @@ int Octree::add(const Triangle &triangle, int t_index, int current_node, int lev
 }
 
 bool Octree::isInside(const Ray &ray, int current_node) const {
-    Point mid = Point(nodes[current_node].getMX(),
-        nodes[current_node].getMY(),
-        nodes[current_node].getMZ());
-    
-    Point border = Point(nodes[current_node].getXL(),
-        nodes[current_node].getYL(),
-        nodes[current_node].getZL());
+    double t0 = 0.0;
+    double tf = DOUBLE_INF;
 
-    Vetor v = (Vetor(border) - Vetor(mid));
+    double tl, tr;
 
-    double r = v.norm();
+    if(cmp(ray.direction.x, 0) != 0){
+        tl = (nodes[current_node].getXL() - ray.location.x) / ray.direction.x;
+        tr = (nodes[current_node].getXR() - ray.location.x) / ray.direction.x;
+        if(cmp(tl, tr) == 1) std::swap(tl, tr);
 
-    double gamma = (ray.location.x - mid.x) * (ray.location.x - mid.x) +
-        (ray.location.y - mid.y) * (ray.location.y - mid.y) +
-        (ray.location.z - mid.z) * (ray.location.z - mid.z) - (r * r);
-    
-    double beta = 2.0 * ((ray.location.x - mid.x) * ray.direction.x
-        + (ray.location.y - mid.y) * ray.direction.y + (ray.location.z - mid.z) * ray.direction.z);
-    
-    double alpha = (ray.direction.x * ray.direction.x) + (ray.direction.y * ray.direction.y) + (ray.direction.z * ray.direction.z);
+        t0 = std::max(t0, tl);
+        tf = std::min(tf, tr);
+    }
 
-    double delta = beta*beta - 4.0 * alpha * gamma;
+    if(cmp(ray.direction.y, 0) != 0){
+        tl = (nodes[current_node].getYL() - ray.location.y) / ray.direction.y;
+        tr = (nodes[current_node].getYR() - ray.location.y) / ray.direction.y;
+        if(cmp(tl, tr) == 1) std::swap(tl, tr);
 
-    if(cmp(delta, 0) == -1) return false;
-    if(cmp(alpha, 0) == 0) return false;
+        t0 = std::max(t0, tl);
+        tf = std::min(tf, tr);
+    }
 
-    double t1 = (-beta + sqrt(delta))/(2.0 * alpha);
-    double t2 = (-beta - sqrt(delta))/(2.0 * alpha);
+    if(cmp(ray.direction.z, 0) != 0){
+        tl = (nodes[current_node].getZL() - ray.location.z) / ray.direction.z;
+        tr = (nodes[current_node].getZR() - ray.location.z) / ray.direction.z;
+        if(cmp(tl, tr) == 1) std::swap(tl, tr);
 
-    if(cmp(t1, 0) == 1 || cmp(t2, 0) == 1) return true;
-    return false;
+        t0 = std::max(t0, tl);
+        tf = std::min(tf, tr);
+    }
+
+    return cmp(t0, tf) == -1;
 }
 
 void Octree::find(const Ray &ray, int current_node, std::vector<int> &candidates) const {
