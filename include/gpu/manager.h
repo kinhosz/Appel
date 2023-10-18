@@ -12,6 +12,9 @@ class Manager {
 
     GTriangle* cache;
     int* buffer;
+
+    GRay* dvc_ray;
+    int* dvc_N;
 public:
     Manager(unsigned int maxTriangles);
     ~Manager();
