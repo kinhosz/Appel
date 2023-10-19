@@ -69,7 +69,7 @@ Sphere buildSphere0() {
     Point center(100, 100, 100);
     double radius = 100;
 
-    Sphere sphere(center, radius, color, 0.30, 0.30, 0.20, 0.80, 0.00, 0.5);
+    Sphere sphere(center, radius, color, 0.30, 0.30, 0.20, 0.80, 0.00, 1.0);
 
     return sphere;
 }
@@ -102,7 +102,7 @@ Sphere buildSphere3() {
     Point center(400, 400, 100);
     double radius = 100;
 
-    Sphere sphere(center, radius, color, 0.60, 0.30, 0.20, 0.80, 0.00, 0.20);
+    Sphere sphere(center, radius, color, 0.60, 0.30, 0.20, 0.80, 0.00, 1.0);
 
     return sphere;
 }

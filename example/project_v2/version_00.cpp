@@ -43,7 +43,7 @@ Plane buildPlane() {
 
     Vetor n1 = (Vetor(p1) - Vetor(p0)).cross(Vetor(p2) - Vetor(p0)).normalize();
 
-    Plane plane(p0, n1, purple, 0.60, 0.80, 0.20, 0.80, 0.10, 0.50);
+    Plane plane(p0, n1, purple, 0.60, 0.80, 0.20, 0.80, 0.10, 1.00);
 
     return plane;
 }

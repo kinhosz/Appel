@@ -43,7 +43,7 @@ Plane buildPlane() {
 
     Vetor n1 = (Vetor(p1) - Vetor(p0)).cross(Vetor(p2) - Vetor(p0)).normalize();
 
-    Plane plane(p0, n1, purple, 0.60, 0.80, 0.20, 0.10, 0.10, 0.50);
+    Plane plane(p0, n1, purple, 0.60, 0.80, 0.20, 0.10, 0.10, 1.00);
 
     return plane;
 }
@@ -54,7 +54,7 @@ Sphere buildSphere() {
     Point center(200, 0, 50);
     double radius = 50;
 
-    Sphere sphere(center, radius, orange, 0.60, 0.80, 0.20, 0.10, 0.00, 0.50);
+    Sphere sphere(center, radius, orange, 0.60, 0.80, 0.20, 0.10, 0.00, 1.00);
 
     return sphere;
 }
