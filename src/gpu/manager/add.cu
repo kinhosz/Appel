@@ -5,7 +5,7 @@
 #include <gpu/kernel.h>
 
 int Manager::add(const Triangle& t, int host_id) {
-    if(free_pos == maxTriangles) {
+    if(free_pos == (int)maxTriangles) {
         throw std::runtime_error("Cache overflow!");
     }
 
