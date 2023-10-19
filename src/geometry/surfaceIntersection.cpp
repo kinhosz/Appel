@@ -18,7 +18,7 @@ SurfaceIntersection::SurfaceIntersection(
 
 Vetor SurfaceIntersection::getReflection(const Vetor &direction) const {
     Vetor tNormal = normal.normalize();
-    Vetor tDirection = normal.normalize();
+    Vetor tDirection = direction.normalize();
 
     return (Vetor(tNormal * (2.0 * tNormal.dot(tDirection))) - tDirection).normalize();   
 }

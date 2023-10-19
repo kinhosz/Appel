@@ -1,15 +1,24 @@
 include scripts/global.mk
 
 ifeq ($(OS),Windows_NT)
-	include scripts/windows.mk
+include scripts/OS/windows.mk
 else ifeq ($(shell uname), Linux)
-	include scripts/linux.mk
+include scripts/OS/linux.mk
 endif
 
-include scripts/install.mk
-include scripts/compile.mk
-include scripts/run.mk
-include scripts/tests.mk
-include scripts/unitTest.mk
-include scripts/changelog.mk
-include scripts/semVer.mk
+ifeq ($(EGPU), 1)
+include scripts/hardware/gpu.mk
+else
+include scripts/hardware/cpu.mk
+endif
+
+include scripts/dependencies/install.mk
+
+include scripts/runner/run.mk
+include scripts/runner/tests.mk
+include scripts/runner/unitTest.mk
+include scripts/runner/build.mk
+include scripts/runner/clear.mk
+
+include scripts/versioning/changelog.mk
+include scripts/versioning/semVer.mk

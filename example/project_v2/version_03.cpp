@@ -168,7 +168,7 @@ Sphere buildSphere3() {
     return sphere;
 }
 
-void image00(const Scene &scene) {
+void image00(Scene &scene) {
     Camera camera(Point(500, 250, 125), Point(0, 250, 125), HEIGHT, WIDTH);
     clock_t t;
     t = clock();

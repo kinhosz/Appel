@@ -3,7 +3,7 @@ TESTS := $(shell find $(TEST) -name '*.cpp')
 BINS := $(patsubst $(TEST)/%.cpp, $(BIN)/%, $(TESTS))
 
 # make tests
-tests: build_bin $(BINS)
+tests: build_bin compile_cpp compile_cuda $(BINS)
 
 define print_message
 	@echo ------------------------
@@ -15,6 +15,6 @@ endef
 # $< will be replaced by the dependecy
 # compile & run code
 $(BIN)/%: $(TEST)/%.cpp
-	$(call compile,$<,$(subst /,_,$@))
+	$(call compile,$<,$@)
 	$(call print_message,$(subst /,_,$@))
-	$(call run,$(subst /,_,$@))
+	$(call run,$(subst /,_,$@).exe)

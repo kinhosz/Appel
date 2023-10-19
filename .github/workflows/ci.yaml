@@ -11,4 +11,4 @@ jobs:
     - name: install dependencies
       run: make install
     - name: Build and Test
-      run: make tests
+      run: make tests EGPU=0

@@ -21,12 +21,26 @@ To facilitate development, the project will follow the below conventions:
 ```sh
 make tests
 ```
- Will compile & run all tests inside `tests/` directory.
+ Will compile & run all tests inside `tests/` directory using `GPU`.
+
+```sh
+make tests EGPU=0
+```
+ Will compile & run all tests inside `tests/` directory using `CPU` (EGPU = Enable GPU).
 
 ```sh
 make unit FNAME=tests/geometry/vetor.cpp
 ```
-Will compile & run the specific file.
+Will compile & run the specific file using `GPU`.
+```sh
+make unit FNAME=tests/geometry/vetor.cpp EGPU=0
+```
+Will compile & run the specific file using `CPU`.
+
+### clear bin
+```sh
+make clear
+```
 
 ### Dependencies
 Cuda toolkit(optional)

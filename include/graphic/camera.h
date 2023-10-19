@@ -24,7 +24,7 @@ public:
     void zoom(double delta);
     void move(Point p);
 
-    Frame take(const Scene &scene) const;
+    Frame take(Scene &scene) const;
 };
 
 #endif

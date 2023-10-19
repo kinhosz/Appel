@@ -48,7 +48,7 @@ Ray Camera::createRay(int x, int y) const {
     return Ray(location, pixelVector);
 }
 
-Frame Camera::take(const Scene &scene) const {
+Frame Camera::take(Scene &scene) const {
     Frame frame(vPixels, hPixels);
 
     for(int x=0; x<hPixels; x++) {
