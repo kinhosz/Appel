@@ -9,8 +9,13 @@
 int Manager::run(const Ray& ray) {
     GRay gr(ray);
 
+    dvc_N[0] = free_pos;
+    CUDA_STATUS(cudaMemcpy(cache, tmp, free_pos * sizeof(GTriangle), cudaMemcpyHostToDevice));
+
     CUDA_STATUS(cudaDeviceSynchronize());
     *dvc_ray = gr;
+
+    free_pos = 0;
 
     castRay<<<blocksPerGrid, threadsPerBlock>>>(dvc_ray, buffer_dist, buffer_idx, cache, dvc_N);
     CUDA_STATUS(cudaDeviceSynchronize());

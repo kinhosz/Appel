@@ -5,15 +5,14 @@
 #include <gpu/kernel.h>
 
 int Manager::add(const Triangle& t, int host_id) {
-    if(free_pos.empty()) {
+    if(free_pos == maxTriangles) {
         throw std::runtime_error("Cache overflow!");
     }
 
-    int dvc_id = free_pos.front();
-    free_pos.pop();
+    int dvc_id = free_pos++;
 
     GTriangle gt(t, host_id);
-    updateCache<<<1,1>>>(dvc_id, gt, cache);
+    tmp[dvc_id] = gt;
 
     return dvc_id;
 }
