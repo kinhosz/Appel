@@ -8,7 +8,6 @@
 #include <geometry/ray.h>
 
 class Manager {
-    std::queue<int> free_pos;
     unsigned int maxTriangles;
 
     GTriangle* cache;
@@ -22,6 +21,9 @@ class Manager {
 
     int threadsPerBlock;
     int blocksPerGrid;
+
+    int free_pos;
+    GTriangle* tmp;
 public:
     Manager(unsigned int maxTriangles);
     ~Manager();

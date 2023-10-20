@@ -107,6 +107,13 @@ std::pair<SurfaceIntersection, int> Scene::castRay(const Ray &ray) {
     }
 
     if(ENABLE_GPU) {
+        const std::vector<int> indexes = octree.find(ray);
+        for(int idx: indexes) {
+            int triangle_id = triangleIndex[idx].second;
+            const Triangle triangle = triangles[triangle_id];
+            manager->add(triangle, idx);
+        }
+
         int idx = manager->run(ray);
 
         if(idx != -1) {

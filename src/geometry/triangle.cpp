@@ -99,25 +99,30 @@ bool Triangle::operator!=(const Triangle& other) const {
 }
 
 bool Triangle::isInside(const Point &p) const {
-    std::vector<std::vector<double>> matrix = {
-        {vertices[0].x, vertices[1].x, vertices[2].x, p.x},
-        {vertices[0].y, vertices[1].y, vertices[2].y, p.y},
-        {vertices[0].z, vertices[1].z, vertices[2].z, p.z},
-        {1.0, 1.0, 1.0, 1.0}
-    };
+    Vetor A = vertices[0];
+    Vetor B = vertices[1];
+    Vetor C = vertices[2];
+    Vetor P = p;
 
-    std::vector<double> baricenter = gaussElimination(matrix);
+    double ABC = 0.5 * ((B - A).cross(C - A)).norm();
+    double PBC = 0.5 * (((B - P).cross(C - P))).norm();
+    double PAC = 0.5 * (((A - P).cross(C - P))).norm();
+    double PAB = 0.5 * (((A - P).cross(B - P))).norm();
 
-    if(baricenter.size() != 3) return false;
-    if(cmp(baricenter[0] + baricenter[1] + baricenter[2], 1.0) != 0) return false;
+    if(cmp(ABC, 0.0) == 0) return false;
 
-    bool isInside = true;
+    double u = PBC / ABC;
+    double v = PAC / ABC;
+    double w = PAB / ABC;
 
-    for(int i=0;i<3;i++){
-        if(cmp(baricenter[i], 0) == -1 || cmp(baricenter[i], 1) == 1) isInside = false;
-    }
+    double sumt = u + v + w;
 
-    return isInside;
+    if(cmp(sumt, 1.0) != 0) return false;
+    if(cmp(u, 0.0) == -1 || cmp(u, 1.0) == 1) return false;
+    if(cmp(v, 0.0) == -1 || cmp(v, 1.0) == 1) return false;
+    if(cmp(w, 0.0) == -1 || cmp(w, 1.0) == 1) return false;
+
+    return true;
 }
 
 SurfaceIntersection Triangle::intersect(Ray ray) const {

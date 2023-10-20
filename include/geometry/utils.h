@@ -22,6 +22,4 @@ std::vector<Triangle> createTriangles(
     std::vector<Color> colors
 );
 
-std::vector<double> gaussElimination(std::vector<std::vector<double>> matrix);
-
 #endif
