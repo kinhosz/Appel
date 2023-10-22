@@ -8,28 +8,31 @@
 #include <geometry/ray.h>
 
 class Manager {
-    unsigned int maxTriangles;
+    int maxTriangles;
+    int BATCHSIZE;
+    std::queue<int> free_pos;
 
-    GTriangle* cache;
-    int* buffer_idx;
-    float* buffer_dist;
-    int* result;
+    GTriangle *cache;
 
-    GRay* dvc_ray;
-    int* dvc_N;
-    int* dvc_BLOCK;
+    GRay *host_rays, *dvc_rays;
 
-    int threadsPerBlock;
-    int blocksPerGrid;
+    int *rays_N, *triangles_N, *blocks_N;
 
-    int free_pos;
-    GTriangle* tmp;
+    int threadsperblock_x;
+    int threadsperblock_y;
+    int bufferN;
+    int *dvc_bufferN;
+
+    int *buffer_idx;
+    float *buffer_dist;
+
+    int *host_res_idx, *dvc_res_idx;
 public:
-    Manager(unsigned int maxTriangles);
+    Manager(int maxTriangles, int batchsize);
     ~Manager();
 
     int add(const Triangle& t, int host_id);
-    int run(const Ray& ray);
+    std::vector<int> run(const std::vector<Ray> &partial);
 };
 
 #endif

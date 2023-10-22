@@ -2,6 +2,7 @@
 #define ENTITY_SCENE_H
 
 #include <map>
+#include <vector>
 #include <entity/light.h>
 #include <entity/plane.h>
 #include <entity/sphere.h>
@@ -24,9 +25,13 @@ private:
     Color environmentColor;
     int objectsCurrentIndex;
     int depth;
+    int batchsize;
 
     Octree octree;
     Manager* manager;
+
+    std::vector<std::queue<int>> castRayTable;
+    int currentBatch;
 
     std::map<int, Plane> planes;
     std::map<int, Sphere> spheres;
@@ -34,6 +39,9 @@ private:
 
     std::vector<std::pair<int, int>> triangleIndex;
     std::vector<Triangle> triangles;
+
+    std::pair<SurfaceIntersection, int> intersectOnPlanes(const Ray &ray) const;
+    std::pair<SurfaceIntersection, int> intersectOnSpheres(const Ray &ray) const;
 
     Color brightness(const Ray& ray, SurfaceIntersection surface, const Box& box, const Light& light);
     Color phong(const Ray &ray, const SurfaceIntersection &surface, int index, int layer);
@@ -58,6 +66,9 @@ public:
 
     std::pair<SurfaceIntersection, int> castRay(const Ray &ray);
     Color traceRay(const Ray &ray, int layer);
+
+    int getBatchSize() const;
+    void traceRayInBatch(const std::vector<Ray> &rays, std::vector<Color> &result);
 };
 
 #endif

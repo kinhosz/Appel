@@ -13,7 +13,7 @@ struct GRay {
     GPoint direction;
 
 #ifndef APPEL_GPU_DISABLED
-    __host__ __device__ GRay();
+    __host__ __device__ GRay() = default;
 #else
     GRay();
 #endif

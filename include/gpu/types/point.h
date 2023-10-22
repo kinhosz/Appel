@@ -12,7 +12,7 @@ struct GPoint {
     float x, y, z;
 
 #ifndef APPEL_GPU_DISABLED
-    __host__ __device__ GPoint();
+    __host__ __device__ GPoint() = default;
 #else
     GPoint();
 #endif

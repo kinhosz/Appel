@@ -5,7 +5,8 @@
 
 #include <cuda_runtime.h>
 
-__global__ void getMin(float* buffer_dist, int* buffer_idx, int* N, int* res);
+__global__ void getMin(float *buffer_dist, int *buffer_idx, 
+    int *rays_N, int *buffer_N, int *res_idx);
 
 #endif
 #endif

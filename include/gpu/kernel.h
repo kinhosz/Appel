@@ -9,7 +9,8 @@
 
 __global__ void updateCache(int device_id, GTriangle triangle, GTriangle* cache);
 
-__global__ void castRay(GRay* ray, float* buffer_dist, int* buffer_idx, GTriangle* cache, int* N);
+__global__ void castRay(GRay *rays, int *rays_N, GTriangle *cache,
+    int *triangles_N, float *buffer_dist, int *buffer_idx, int *buffer_N);
 
 #endif
 #endif

@@ -2,6 +2,7 @@
 #include <geometry/utils.h>
 #include <memory>
 #include <math.h>
+#include <datastructure/graph.h>
 
 Scene::Scene() : Scene(Color()) {}
 
@@ -18,9 +19,12 @@ Scene::Scene(const Color& environmentColor) {
     double MAX_BORDER = 100000;
 
     this->depth = 5;
+    this->batchsize = 1024;
+
+    this->castRayTable.resize(batchsize);
 
     this->octree = Octree(MIN_BORDER, MAX_BORDER, MIN_BORDER, MAX_BORDER, MIN_BORDER, MAX_BORDER);
-    this->manager = new Manager(50000);
+    this->manager = new Manager(50000, batchsize);
 }
 
 std::map<int, Light> Scene::getLights() const {
@@ -90,7 +94,7 @@ Box Scene::getObject(int index) const {
     assert(false);
 }
 
-std::pair<SurfaceIntersection, int> Scene::castRay(const Ray &ray) {
+std::pair<SurfaceIntersection, int> Scene::intersectOnPlanes(const Ray &ray) const {
     SurfaceIntersection nearSurface;
     int index = -1;
 
@@ -100,21 +104,35 @@ std::pair<SurfaceIntersection, int> Scene::castRay(const Ray &ray) {
         if(current.distance < nearSurface.distance) std::swap(current, nearSurface), index = tmp.first;
     }
 
+    return std::make_pair(nearSurface, index);
+}
+
+std::pair<SurfaceIntersection, int> Scene::intersectOnSpheres(const Ray &ray) const {
+    SurfaceIntersection nearSurface;
+    int index = -1;
+
     for(const std::pair<int, Sphere> tmp: spheres) {
         const Sphere sphere = tmp.second;
         SurfaceIntersection current = sphere.intersect(ray);
         if(current.distance < nearSurface.distance) std::swap(current, nearSurface), index = tmp.first;
     }
 
-    if(ENABLE_GPU) {
-        const std::vector<int> indexes = octree.find(ray);
-        for(int idx: indexes) {
-            int triangle_id = triangleIndex[idx].second;
-            const Triangle triangle = triangles[triangle_id];
-            manager->add(triangle, idx);
-        }
+    return std::make_pair(nearSurface, index);
+}
 
-        int idx = manager->run(ray);
+std::pair<SurfaceIntersection, int> Scene::castRay(const Ray &ray) {
+    SurfaceIntersection nearSurface;
+    int index = -1;
+
+    std::pair<SurfaceIntersection, int> candidate = intersectOnPlanes(ray);
+    if(cmp(nearSurface.distance, candidate.first.distance) == 1) std::swap(candidate.first, nearSurface), index = candidate.second;
+
+    candidate = intersectOnSpheres(ray);
+    if(cmp(nearSurface.distance, candidate.first.distance) == 1) std::swap(candidate.first, nearSurface), index = candidate.second;
+
+    if(ENABLE_GPU) {
+        int idx = castRayTable[currentBatch].front();
+        castRayTable[currentBatch].pop();
 
         if(idx != -1) {
             int object_id = triangleIndex[idx].first;
@@ -123,7 +141,7 @@ std::pair<SurfaceIntersection, int> Scene::castRay(const Ray &ray) {
             const Triangle triangle = triangles[triangle_id];
 
             SurfaceIntersection current = triangle.getSurface(ray);
-            if(current.distance < nearSurface.distance) std::swap(current, nearSurface), index = object_id;
+            if(cmp(current.distance, nearSurface.distance) == -1) std::swap(current, nearSurface), index = object_id;
         }
     }
     else {
@@ -207,4 +225,111 @@ Color Scene::traceRay(const Ray &ray, int layer) {
     int index = match.second;
 
     return surface.color * phong(ray, surface, index, layer);
+}
+
+int Scene::getBatchSize() const {
+    return batchsize;
+}
+
+void Scene::traceRayInBatch(const std::vector<Ray> &rays, std::vector<Color> &result) {
+    std::queue<std::pair<int, Ray>> lazy;
+    std::queue<int> lazy_levels;
+    std::vector<Graph> graphs(rays.size());
+    std::queue<int> parent;
+
+    for(int i=0;i<(int)rays.size();i++) {
+        lazy.push(std::make_pair(i, rays[i]));
+        lazy_levels.push(0);
+        parent.push(0);
+    }
+
+    while(!lazy.empty()) {
+        std::vector<Ray> partial;
+        std::vector<int> batch_ids;
+        std::vector<int> partial_level;
+        std::vector<int> partial_parent;
+
+        for(int i=0;i<batchsize && !lazy.empty();i++) {
+            batch_ids.push_back(lazy.front().first);
+            partial.push_back(lazy.front().second);
+            lazy.pop();
+
+            partial_level.push_back(lazy_levels.front());
+            lazy_levels.pop();
+
+            partial_parent.push_back(parent.front());
+            parent.pop();
+        }
+
+        const std::vector<int> host_ids = manager->run(partial);
+
+        for(int i=0;i<(int)batch_ids.size();i++) {
+            SurfaceIntersection near;
+            SurfaceIntersection curr = intersectOnPlanes(partial[i]).first;
+            if(cmp(near.distance, curr.distance) == 1) near = curr;
+
+            curr = intersectOnSpheres(partial[i]).first;
+            if(cmp(near.distance, curr.distance) == 1) near = curr;
+
+            int host_id = host_ids[i];
+
+            if(host_id != -1) {
+                int t_id = triangleIndex[host_id].second;
+                const Triangle triangle = triangles[t_id];
+                
+                curr = triangle.getSurface(partial[i]);
+
+                if(cmp(curr.distance, near.distance) >= 0) host_id = -1;
+            }
+
+            int vertex = graphs[batch_ids[i]].addEdge(partial_parent[i], host_id);
+
+            if(host_id == -1) continue;
+            if(partial_level[i] == -1) continue;
+            if(partial_level[i] == this->depth) continue;
+
+            const Ray ray = partial[i];
+            const Box box = getObject(triangleIndex[host_id].first);
+
+            for(std::pair<int, Light> tmp: lights) {
+                const Light light = tmp.second;
+
+                Point match = ray.pointAt(near.distance);
+
+                Ray lightRay(match, (Vetor(light.getLocation()) - Vetor(match)).normalize());
+                lightRay.location = lightRay.pointAt(0.01);
+
+                lazy.push(std::make_pair(batch_ids[i], lightRay));
+                lazy_levels.push(-1);
+
+                parent.push(vertex);
+            }
+
+            Ray reflexRay(ray.pointAt(near.distance - 0.01), near.getReflection(ray.direction * -1.0));
+            Ray refractRay(ray.pointAt(near.distance + 0.01), near.getRefraction(ray.direction * -1.0, box.getRefractionIndex()));
+
+            lazy.push(std::make_pair(batch_ids[i], reflexRay));
+            lazy_levels.push(partial_level[i] + 1);
+            parent.push(vertex);
+
+            lazy.push(std::make_pair(batch_ids[i], refractRay));
+            lazy_levels.push(partial_level[i] + 1);
+            parent.push(vertex);
+        }
+    }
+
+    currentBatch = 0;
+    while(currentBatch < (int)rays.size()) {
+        std::vector<int> path;
+        graphs[currentBatch].dfs(0, path);
+
+        for(int i=0;i<(int)path.size(); i++) {
+            castRayTable[currentBatch].push(path[i]);
+        }
+
+        Color color = traceRay(rays[currentBatch], 0);
+        result[currentBatch] = color;
+
+        currentBatch++;
+    }
 }

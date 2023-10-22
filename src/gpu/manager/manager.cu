@@ -6,50 +6,72 @@
 #include <gpu/kernel.h>
 #include <gpu/types/ray.h>
 
-Manager::Manager(unsigned int maxTriangles) {
+Manager::Manager(int maxTriangles, int batchsize) {
     this->maxTriangles = maxTriangles;
-    this->threadsPerBlock = 1024;
-    this->blocksPerGrid = (maxTriangles + threadsPerBlock - 1) / threadsPerBlock;
-    this->free_pos = 0;
+    this->BATCHSIZE = batchsize;
 
-    size_t size = maxTriangles * sizeof(GTriangle);
-    CUDA_STATUS(cudaMalloc((void**)&cache, size));
-    CUDA_STATUS(cudaMallocManaged((void**)&result, sizeof(int)));
-    CUDA_STATUS(cudaMallocManaged((void**)&dvc_ray, sizeof(GRay)));
-    CUDA_STATUS(cudaMallocManaged((void**)&dvc_N, sizeof(int)));
-    CUDA_STATUS(cudaMallocManaged((void**)&dvc_BLOCK, sizeof(int)));
-    
-    size = blocksPerGrid * sizeof(float);
-    CUDA_STATUS(cudaMalloc((void**)&buffer_dist, size));
-    size = blocksPerGrid * sizeof(int);
-    CUDA_STATUS(cudaMalloc((void**)&buffer_idx, size));
+    this->threadsperblock_x = 32;
+    this->threadsperblock_y = 32;
+
+    this->bufferN = (maxTriangles + threadsperblock_y - 1) / threadsperblock_y;
+
+    size_t size;
+
+    CUDA_STATUS(cudaMalloc((void**)&dvc_bufferN, sizeof(int)));
+
+    CUDA_STATUS(cudaMalloc((void**)&blocks_N, sizeof(int)));
+    CUDA_STATUS(cudaMalloc((void**)&triangles_N, sizeof(int)));
+
+    CUDA_STATUS(cudaMalloc((void**)&rays_N, sizeof(int)));
 
     size = maxTriangles * sizeof(GTriangle);
-    tmp = (GTriangle* ) malloc(size);
+    CUDA_STATUS(cudaMalloc((void**)&cache, size));
+
+    size = BATCHSIZE * sizeof(GRay);
+    CUDA_STATUS(cudaMalloc((void**)&dvc_rays, size));
+    host_rays = (GRay*)malloc(size);
+
+    size = (BATCHSIZE * bufferN) * sizeof(int*);
+    CUDA_STATUS(cudaMalloc((void**)&buffer_idx, size));
+
+    size = (BATCHSIZE * bufferN) * sizeof(float);
+    CUDA_STATUS(cudaMalloc((void**)&buffer_dist, size));
+
+    size = BATCHSIZE * sizeof(int);
+    CUDA_STATUS(cudaMalloc((void**)&dvc_res_idx, size));
+    host_res_idx = (int*)malloc(size);
 
     CUDA_STATUS(cudaDeviceSynchronize());
 
-    dvc_N[0] = (int)maxTriangles;
-    dvc_BLOCK[0] = blocksPerGrid;
+    CUDA_STATUS(cudaMemcpy(dvc_bufferN, &bufferN, sizeof(int),
+        cudaMemcpyHostToDevice));
 
-    for(int i=0;i<(int)maxTriangles;i++) {
-        GTriangle t;
-        t.host_id = -1;
-        updateCache<<<1,1>>>(i, t, cache);
+    CUDA_STATUS(cudaMemcpy(triangles_N, &maxTriangles, sizeof(int), 
+        cudaMemcpyHostToDevice));
+
+    CUDA_STATUS(cudaDeviceSynchronize());
+
+    for(int i=0;i<maxTriangles;i++) {
+        GTriangle gt;
+        gt.host_id = -1;
+        updateCache<<<1,1>>>(i, gt, cache);
+        free_pos.push(i);
     }
-
-    CUDA_STATUS(cudaDeviceSynchronize());
 }
 
 Manager::~Manager() {
-    CUDA_STATUS(cudaFree(result));
+    CUDA_STATUS(cudaFree(blocks_N));
+    CUDA_STATUS(cudaFree(triangles_N));
+    CUDA_STATUS(cudaFree(rays_N));
     CUDA_STATUS(cudaFree(cache));
-    CUDA_STATUS(cudaFree(dvc_N));
-    CUDA_STATUS(cudaFree(dvc_BLOCK));
-    CUDA_STATUS(cudaFree(dvc_ray));
-    CUDA_STATUS(cudaFree(buffer_dist));
+    CUDA_STATUS(cudaFree(dvc_rays));
+    free(host_rays);
+    CUDA_STATUS(cudaFree(dvc_res_idx));
+    free(host_res_idx);
+
     CUDA_STATUS(cudaFree(buffer_idx));
-    free(tmp);
+    CUDA_STATUS(cudaFree(buffer_dist));
+    CUDA_STATUS(cudaFree(dvc_bufferN));
 }
 
 #endif
