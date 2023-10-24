@@ -19,12 +19,15 @@ Scene::Scene(const Color& environmentColor) {
     double MAX_BORDER = 100000;
 
     this->depth = 5;
-    this->batchsize = 1024;
+    this->batchsize = 256;
 
     this->castRayTable.resize(batchsize);
 
     this->octree = Octree(MIN_BORDER, MAX_BORDER, MIN_BORDER, MAX_BORDER, MIN_BORDER, MAX_BORDER);
-    this->manager = new Manager(50000, batchsize);
+
+    int maxTriangles = 64 * 1024;
+
+    this->manager = new Manager(maxTriangles, batchsize);
 }
 
 std::map<int, Light> Scene::getLights() const {

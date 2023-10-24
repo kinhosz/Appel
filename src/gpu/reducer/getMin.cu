@@ -20,6 +20,11 @@ __global__ void getMin(float *buffer_dist, int *buffer_idx, int *rays_N, int *bu
 
     __syncthreads();
 
+    if(tx < N) {
+        s_index[tx] = buffer_idx[ray_id * N + tx];
+        s_dist[tx] = buffer_dist[ray_id * N + tx];
+    }
+
     if(TS < N) {
         int parts = (N + TS - 1) / TS;
 

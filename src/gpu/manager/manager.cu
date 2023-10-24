@@ -10,8 +10,8 @@ Manager::Manager(int maxTriangles, int batchsize) {
     this->maxTriangles = maxTriangles;
     this->BATCHSIZE = batchsize;
 
-    this->threadsperblock_x = 32;
-    this->threadsperblock_y = 32;
+    this->threadsperblock_x = 1;
+    this->threadsperblock_y = 1024;
 
     this->bufferN = (maxTriangles + threadsperblock_y - 1) / threadsperblock_y;
 
@@ -31,7 +31,7 @@ Manager::Manager(int maxTriangles, int batchsize) {
     CUDA_STATUS(cudaMalloc((void**)&dvc_rays, size));
     host_rays = (GRay*)malloc(size);
 
-    size = (BATCHSIZE * bufferN) * sizeof(int*);
+    size = (BATCHSIZE * bufferN) * sizeof(int);
     CUDA_STATUS(cudaMalloc((void**)&buffer_idx, size));
 
     size = (BATCHSIZE * bufferN) * sizeof(float);
