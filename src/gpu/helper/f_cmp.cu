@@ -3,7 +3,8 @@
 __device__ int f_cmp(float a, float b) {
     float eps = 0.0005;
 
-    if(fabs(a - b) < eps) return 0;
-    if(a < b) return -1;
-    return 1;
+    int ret = ((a<b)? -1: 1);
+    ret = (fabs(a - b) < eps ? 0: ret);
+
+    return ret;
 }

@@ -13,7 +13,7 @@ struct GTriangle {
     int host_id;
 
 #ifndef APPEL_GPU_DISABLED
-    __host__ __device__ GTriangle();
+    __host__ __device__ GTriangle() = default;
 #else
     GTriangle();
 #endif

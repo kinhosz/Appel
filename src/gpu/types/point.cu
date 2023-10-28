@@ -1,7 +1,5 @@
 #include <gpu/types/point.h>
 
-__host__ __device__ GPoint::GPoint() {}
-
 GPoint::GPoint(const Point &p) {
     this->x = p.x;
     this->y = p.y;

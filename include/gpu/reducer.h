@@ -4,8 +4,9 @@
 #ifndef APPEL_GPU_DISABLED
 
 #include <cuda_runtime.h>
+#include <gpu/types/triangleArray.h>
 
-__global__ void getMin(float* buffer_dist, int* buffer_idx, int* N, int* res);
+__global__ void getMin(GTriangleArray *cache, float *dvc_res_dist, int *dvc_buffer_idx, float *dvc_buffer_dist, int *N);
 
 #endif
 #endif

@@ -1,15 +1,18 @@
 #include <gpu/helper.h>
 
 __device__ float triangleIntersect(GRay ray, GTriangle triangle) {
-    if(triangle.host_id == -1) return -1.0;
-
     GPoint normal = getNormal(triangle);
-    if(f_cmp(dot(normal, ray.direction), 0.0) == 0) return -1.0;
+    float curDist = getDistance(ray, triangle, normal);
+    float ang = dot(normal, ray.direction);
+    int isd = isInside(pointAt(ray, curDist), triangle);
 
-    float curDist = getDistance(ray, triangle);
-    if(f_cmp(curDist, 0) <= 0) return -1.0;
+    if(triangle.host_id == -1 ||
+        f_cmp(ang, 0.0) == 0 ||
+        f_cmp(curDist, 0) <= 0 ||
+        isd == 0) {
 
-    if(!isInside(pointAt(ray, curDist), triangle)) return -1.0;
+        return __FLT_MAX__;
+    }
 
     return curDist;
 }

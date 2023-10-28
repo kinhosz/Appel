@@ -1,46 +1,51 @@
 #include <gpu/kernel.h>
 #include <gpu/helper.h>
+#include <stdio.h>
 
-__global__ void castRay(GRay* ray, float* buffer_dist, int* buffer_idx, GTriangle* cache, int* N) {
-    __shared__ float dist[1200];
-    __shared__ int idx[1200];
+__global__ void castRay(GRay *rays, int *rays_N, GTriangleArray *cache, int *triangles_N, float *res_dist, int *table) {
+    //clock_t t = clock();
+    int ray_id = blockIdx.x;
+    int ty = threadIdx.y + (blockDim.y * blockIdx.y);
 
-    int tid = threadIdx.x;
-    int pointer = threadIdx.x + blockDim.x * blockIdx.x;
-
-    dist[tid] = -1.0;
-    idx[tid] = -1;
-
-    if(tid == 0) {
-        buffer_dist[blockIdx.x] = -1.0;
-        buffer_idx[blockIdx.x] = -1;
+    GRay ray = rays[ray_id];
+    GTriangle triangle;
+    triangle.host_id = cache->host_id[ty];
+    for(int i=0;i<3;i++) {
+        triangle.point[i].x = cache->point[i].x[ty];
+        triangle.point[i].y = cache->point[i].y[ty];
+        triangle.point[i].z = cache->point[i].z[ty];
     }
 
-    if(pointer >= (*N)) return;
+    res_dist[ty] = triangleIntersect(ray, triangle);
 
-    float d = triangleIntersect(*ray, cache[pointer]);
-    if(d > 0.0) {
-        idx[tid] = cache[pointer].host_id;
-        dist[tid] = d;
-    }
-
-    __syncthreads();
-    
-    int ts = blockDim.x;
-
-    while(ts > 1) {
-        if(tid >= ts/2) return;
-
-        if(idx[tid] == -1 || (dist[tid] > dist[tid+ts/2] && idx[tid+ts/2] != -1)) {
-            idx[tid] = idx[tid+ts/2];
-            dist[tid] = dist[tid+ts/2];
-        }
-
-        ts /= 2;
-
-        __syncthreads();
-    }
-
-    buffer_idx[blockIdx.x] = idx[0];
-    buffer_dist[blockIdx.x] = dist[0];
+    //t = clock() - t;
+    //if(threadIdx.y%32 == 0) table[blockIdx.y * (blockDim.y / 32) + threadIdx.y/32] = t;
 }
+
+/*
+min[13300]. max[209077]. avg[26662.792969]
+*/
+
+/*
+
+GTriangle {
+    GPoint point[3] {
+        float x, y, z;
+    }
+    int host_id;
+}
+
+GTriangle -> point[0], point[1], point[2], host_id
+
+[x0, y0, z0, x1, y1, z1, x2, y2, z2, host_id][x0, y0, z0, x1, y1, z1, x2, y2, z2, host_id]...
+
+
+G[i].point[j].y
+G[i].host_id
+
+on cpu...
+
+G.host_id[i]
+G.point[j].y[i]
+
+*/

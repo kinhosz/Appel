@@ -3,33 +3,37 @@
 
 #include <queue>
 #include <gpu/types/ray.h>
-#include <gpu/types/triangle.h>
+#include <gpu/types/triangleArray.h>
 #include <geometry/triangle.h>
 #include <geometry/ray.h>
 
 class Manager {
-    unsigned int maxTriangles;
-
-    GTriangle* cache;
-    int* buffer_idx;
-    float* buffer_dist;
-    int* result;
-
-    GRay* dvc_ray;
-    int* dvc_N;
-    int* dvc_BLOCK;
-
-    int threadsPerBlock;
-    int blocksPerGrid;
-
+    int maxTriangles;
+    int BATCHSIZE;
     int free_pos;
-    GTriangle* tmp;
+
+    GTriangleArray *cache, *host_cache, *aux;
+
+    GRay *host_rays, *dvc_rays;
+
+    int *rays_N, *triangles_N, *blocks_N;
+
+    int threadsperblock_x;
+    int threadsperblock_y;
+
+    float *dvc_res_dist, *host_res_dist;
+
+    int *dvc_buffer_idx, *host_buffer_idx;
+    float *dvc_buffer_dist, *host_buffer_dist;
+
+    int minClock, maxClock, cntCalls;
+    float avgClock;
 public:
-    Manager(unsigned int maxTriangles);
+    Manager(int maxTriangles, int batchsize);
     ~Manager();
 
     int add(const Triangle& t, int host_id);
-    int run(const Ray& ray);
+    std::vector<int> run(const std::vector<Ray> &partial);
 };
 
 #endif

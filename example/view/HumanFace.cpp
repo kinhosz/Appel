@@ -9,8 +9,8 @@
 #include <graphic/utils.h>
 using namespace std;
 
-#define WIDTH 640
-#define HEIGHT 360
+#define WIDTH 640/4
+#define HEIGHT 360/4
 
 TriangularMesh buildHumanFace() {
     if(!freopen("assets/models/HumanFace.obj", "r", stdin)) {
@@ -81,3 +81,8 @@ int main() {
     std::cerr << "clock_per_sec: " << t/CLOCKS_PER_SEC << "\n";
     assert(saveAsPng(frame, "assets/outputs/view/humanFace.png"));
 }
+
+/*
+g++ -c -I include example/view/HumanFace.cpp -o bin/tmp.o -Wall -Werror -O2 -std=c++17
+nvcc -Llib/SFML bin/tmp.o bin/obj/_graphic_frame.o bin/obj/_geometry_utils.o bin/obj/_entity_scene.o bin/obj/_graphic_utils.o bin/obj/_gpu_helper_multByScalar.o bin/obj/_gpu_helper_f_cmp.o bin/obj/_gpu_helper_dot.o bin/obj/_entity_plane.o bin/obj/_datastructure_graph.o bin/obj/_gpu_helper_triangleIntersect.o bin/obj/_gpu_helper_getDistance.o bin/obj/_gpu_helper_sub.o bin/obj/_gpu_manager_run.o bin/obj/_graphic_camera.o bin/obj/_gpu_helper_angle.o bin/obj/_gpu_manager_manager.o bin/obj/_graphic_color.o bin/obj/_graphic_pixel.o bin/obj/_gpu_types_point.o bin/obj/_gpu_helper_add.o bin/obj/_gpu_helper_norm.o bin/obj/_gpu_reducer_getMin.o bin/obj/_entity_light.o bin/obj/_geometry_point.o bin/obj/_gpu_helper_getNormal.o bin/obj/_datastructure_octree.o bin/obj/_gpu_manager_add.o bin/obj/_geometry_ray.o bin/obj/_gpu_helper_getReflection.o bin/obj/_geometry_vetor.o bin/obj/_gpu_helper_isInside.o bin/obj/_gpu_kernel_updateCache.o bin/obj/_gpu_helper_getRefraction.o bin/obj/_gpu_helper_normalize.o bin/obj/_geometry_surfaceIntersection.o bin/obj/_gpu_kernel_castRay.o bin/obj/_datastructure_octreeNode.o bin/obj/_entity_sphere.o bin/obj/_gpu_types_ray.o bin/obj/_gpu_helper_castRay.o bin/obj/_gpu_helper_cross.o bin/obj/_gpu_helper_pointAt.o bin/obj/_entity_box.o bin/obj/_entity_triangularMesh.o bin/obj/_geometry_triangle.o bin/obj/_gpu_types_triangle.o -o bin/example.exe
+*/
