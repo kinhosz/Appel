@@ -1,8 +1,6 @@
 #include <gpu/helper.h>
 
-__device__ float getDistance(GRay ray, GTriangle triangle) {
-    GPoint normal = getNormal(triangle);
-
+__device__ float getDistance(GRay ray, GTriangle triangle, GPoint normal) {
     float D = -normal.x * triangle.point[0].x - normal.y * triangle.point[0].y - normal.z * triangle.point[0].z;
     float A = normal.x, B = normal.y, C = normal.z;
 

@@ -2,58 +2,50 @@
 #include <gpu/helper.h>
 #include <stdio.h>
 
-__global__ void castRay(GRay *rays, int *rays_N, GTriangle *cache, int *triangles_N, 
-    float *buffer_dist, int *buffer_idx, int *buffer_N) {
-    __shared__ float s_dist[1024];
-    __shared__ int s_index[1024];
-
-    int N = buffer_N[0];
-
-    s_index[threadIdx.y] = -1;
-
+__global__ void castRay(GRay *rays, int *rays_N, GTriangleArray *cache, int *triangles_N, float *res_dist, int *table) {
+    //clock_t t = clock();
     int ray_id = blockIdx.x;
-    int triangle_id = threadIdx.y + blockDim.y * blockIdx.y;
+    int ty = threadIdx.y + (blockDim.y * blockIdx.y);
 
-    if(threadIdx.y == 0 && ray_id < rays_N[0]) {        
-        buffer_idx[ray_id * N + blockIdx.y] = -1;
+    GRay ray = rays[ray_id];
+    GTriangle triangle;
+    triangle.host_id = cache->host_id[ty];
+    for(int i=0;i<3;i++) {
+        triangle.point[i].x = cache->point[i].x[ty];
+        triangle.point[i].y = cache->point[i].y[ty];
+        triangle.point[i].z = cache->point[i].z[ty];
     }
 
-    const GTriangle triangle = cache[triangle_id];
-    const GRay ray = rays[ray_id];
+    res_dist[ty] = triangleIntersect(ray, triangle);
 
-    if(threadIdx.x == 0 && threadIdx.y == 0) {
-        buffer_idx[ray_id * N + blockIdx.y] = -1;
-    }
-
-    __syncthreads();
-
-    if(ray_id >= rays_N[0] || triangle_id >= triangles_N[0]) return;
-
-    float d = triangleIntersect(ray, triangle);
-    if(f_cmp(d, 0.00) == 1) {
-        s_index[threadIdx.y] = triangle.host_id;
-        s_dist[threadIdx.y] = d;
-    }
-
-    __syncthreads();
-
-    int ts = 1024;
-
-    int ty = threadIdx.y;
-
-    while(ts > 1) {
-        if(ty >= ts/2) return;
-
-        if(s_index[ty] == -1 || (s_index[ty + ts/2] != -1 && f_cmp(s_dist[ty], s_dist[ty + ts/2]) == 1)) {
-            s_index[ty] = s_index[ty+ts/2];
-            s_dist[ty] = s_dist[ty+ts/2];
-        }
-
-        ts /= 2;
-
-        __syncthreads();
-    }
-
-    buffer_idx[ray_id * N + blockIdx.y] = s_index[0];
-    buffer_dist[ray_id * N + blockIdx.y] = s_dist[0];
+    //t = clock() - t;
+    //if(threadIdx.y%32 == 0) table[blockIdx.y * (blockDim.y / 32) + threadIdx.y/32] = t;
 }
+
+/*
+min[13300]. max[209077]. avg[26662.792969]
+*/
+
+/*
+
+GTriangle {
+    GPoint point[3] {
+        float x, y, z;
+    }
+    int host_id;
+}
+
+GTriangle -> point[0], point[1], point[2], host_id
+
+[x0, y0, z0, x1, y1, z1, x2, y2, z2, host_id][x0, y0, z0, x1, y1, z1, x2, y2, z2, host_id]...
+
+
+G[i].point[j].y
+G[i].host_id
+
+on cpu...
+
+G.host_id[i]
+G.point[j].y[i]
+
+*/

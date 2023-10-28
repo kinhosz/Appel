@@ -3,16 +3,16 @@
 
 #include <queue>
 #include <gpu/types/ray.h>
-#include <gpu/types/triangle.h>
+#include <gpu/types/triangleArray.h>
 #include <geometry/triangle.h>
 #include <geometry/ray.h>
 
 class Manager {
     int maxTriangles;
     int BATCHSIZE;
-    std::queue<int> free_pos;
+    int free_pos;
 
-    GTriangle *cache;
+    GTriangleArray *cache, *host_cache, *aux;
 
     GRay *host_rays, *dvc_rays;
 
@@ -20,13 +20,14 @@ class Manager {
 
     int threadsperblock_x;
     int threadsperblock_y;
-    int bufferN;
-    int *dvc_bufferN;
 
-    int *buffer_idx;
-    float *buffer_dist;
+    float *dvc_res_dist, *host_res_dist;
 
-    int *host_res_idx, *dvc_res_idx;
+    int *dvc_buffer_idx, *host_buffer_idx;
+    float *dvc_buffer_dist, *host_buffer_dist;
+
+    int minClock, maxClock, cntCalls;
+    float avgClock;
 public:
     Manager(int maxTriangles, int batchsize);
     ~Manager();

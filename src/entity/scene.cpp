@@ -3,6 +3,8 @@
 #include <memory>
 #include <math.h>
 #include <datastructure/graph.h>
+#include <iostream>
+#include <set>
 
 Scene::Scene() : Scene(Color()) {}
 
@@ -15,11 +17,11 @@ Scene::Scene(const Color& environmentColor) {
     this->triangleIndex = std::vector<std::pair<int, int>>();
     this->triangles = std::vector<Triangle>();
 
-    double MIN_BORDER = -100000;
-    double MAX_BORDER = 100000;
+    double MIN_BORDER = -100000000;
+    double MAX_BORDER = 1000000000;
 
     this->depth = 5;
-    this->batchsize = 256;
+    this->batchsize = 1;
 
     this->castRayTable.resize(batchsize);
 
@@ -75,7 +77,6 @@ int Scene::addObject(TriangularMesh object) {
     for(Triangle triangle: meshTriangles) {
         int node = octree.add(triangle, triangles.size());
         assert(node != -1);
-        manager->add(triangle, triangleIndex.size());
         triangleIndex.push_back(std::make_pair(objectsCurrentIndex-1, triangles.size()));
 
         triangles.push_back(triangle);
@@ -255,6 +256,9 @@ void Scene::traceRayInBatch(const std::vector<Ray> &rays, std::vector<Color> &re
         for(int i=0;i<batchsize && !lazy.empty();i++) {
             batch_ids.push_back(lazy.front().first);
             partial.push_back(lazy.front().second);
+            if(isnan(lazy.front().second.direction.x)) {
+                assert(false);
+            }
             lazy.pop();
 
             partial_level.push_back(lazy_levels.front());
@@ -262,6 +266,24 @@ void Scene::traceRayInBatch(const std::vector<Ray> &rays, std::vector<Color> &re
 
             partial_parent.push_back(parent.front());
             parent.pop();
+        }
+
+        std::set<int> candidates;
+
+        for(int i=0;i<(int)partial.size();i++) {
+            const std::vector<int> cand = octree.find(partial[i]);
+            for(int j=0;j<(int)cand.size();j++) {
+                candidates.insert(cand[j]);
+            }
+        }
+
+        if(candidates.size() > 10000) std::cerr << candidates.size() << "\n";
+
+        for(int c: candidates) {
+            int triangle_id = triangleIndex[c].second;
+            const Triangle triangle = triangles[triangle_id];
+
+            manager->add(triangle, c);
         }
 
         const std::vector<int> host_ids = manager->run(partial);
@@ -283,6 +305,7 @@ void Scene::traceRayInBatch(const std::vector<Ray> &rays, std::vector<Color> &re
                 curr = triangle.getSurface(partial[i]);
 
                 if(cmp(curr.distance, near.distance) >= 0) host_id = -1;
+                else near = curr;
             }
 
             int vertex = graphs[batch_ids[i]].addEdge(partial_parent[i], host_id);
@@ -302,6 +325,14 @@ void Scene::traceRayInBatch(const std::vector<Ray> &rays, std::vector<Color> &re
                 Ray lightRay(match, (Vetor(light.getLocation()) - Vetor(match)).normalize());
                 lightRay.location = lightRay.pointAt(0.01);
 
+                if(isnan(lightRay.direction.x)) {
+                    std::cerr << light.getLocation().x << ", " << light.getLocation().y << ", " << light.getLocation().z << "\n";
+                    std::cerr << match.x << ", " << match.y << ", " << match.z << "\n";
+                    std::cerr << near.distance << "<- distance\n";
+                    std::cerr << host_id << "<- host\n";
+                    assert(false);
+                }
+
                 lazy.push(std::make_pair(batch_ids[i], lightRay));
                 lazy_levels.push(-1);
 
@@ -310,6 +341,13 @@ void Scene::traceRayInBatch(const std::vector<Ray> &rays, std::vector<Color> &re
 
             Ray reflexRay(ray.pointAt(near.distance - 0.01), near.getReflection(ray.direction * -1.0));
             Ray refractRay(ray.pointAt(near.distance + 0.01), near.getRefraction(ray.direction * -1.0, box.getRefractionIndex()));
+
+            if(isnan(reflexRay.direction.x)) {
+                assert(false);
+            }
+            if(isnan(refractRay.direction.x)) {
+                assert(false);
+            }
 
             lazy.push(std::make_pair(batch_ids[i], reflexRay));
             lazy_levels.push(partial_level[i] + 1);
