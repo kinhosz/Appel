@@ -7,13 +7,14 @@
 #include <graphic/camera.h>
 #include <assert.h>
 #include <graphic/utils.h>
+#include <ctime>
 using namespace std;
 
 #define WIDTH 640
 #define HEIGHT 360
 
 TriangularMesh buildHumanFace() {
-    if(!freopen("assets/models/HumanFace.obj", "r", stdin)) {
+    if(!freopen("assets\\models\\HumanFace.obj", "r", stdin)) {
         std::cerr << "error\n";
     }
     string tmp;
@@ -79,5 +80,5 @@ int main() {
     Frame frame = camera.take(scene);
     t = clock() - t;
     std::cerr << "clock_per_sec: " << t/CLOCKS_PER_SEC << "\n";
-    assert(saveAsPng(frame, "assets/outputs/view/humanFace.png"));
+    assert(saveAsPng(frame, "assets\\outputs\\view\\humanFace.png"));
 }

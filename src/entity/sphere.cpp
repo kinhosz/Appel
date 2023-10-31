@@ -33,7 +33,7 @@ void Sphere::setColor(Color color) {
     this->color = color;
 }
 
-SurfaceIntersection Sphere::intersect(const Ray &ray) const {
+SurfaceIntersection Sphere::intersect(Ray ray) const {
     Vetor oc = Vetor(ray.location) - Vetor(this->center);
     double a = ray.direction.dot(ray.direction);
     double b = 2.0 * oc.dot(ray.direction);
