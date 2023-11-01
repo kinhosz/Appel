@@ -24,3 +24,13 @@ TEST := tests
 OBJ := $(BIN)/obj
 
 PR_DESCRIPTION := Description here
+
+PREFIX_RUNNER := ./
+MKDIR := mkdir -p
+
+build_bin:
+	@$(MKDIR) $(BIN)
+	@$(MKDIR) $(OBJ)
+
+.PHONY: build_bin
+

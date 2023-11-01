@@ -7,6 +7,7 @@
 #include <graphic/camera.h>
 #include <assert.h>
 #include <graphic/utils.h>
+#include <ctime>
 using namespace std;
 
 #define WIDTH 640

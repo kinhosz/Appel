@@ -31,7 +31,7 @@ void Plane::setColor(Color color) {
     this->color = color;
 }
 
-SurfaceIntersection Plane::intersect(const Ray &ray) const {
+SurfaceIntersection Plane::intersect(Ray ray) const {
     Vetor normal = normalVector.normalize();
 
     if (normal.isOrthogonal(ray.direction))
