@@ -1,7 +1,7 @@
 EGPU := 1
 
 CPP_COMPILER := g++
-CPP_FLAGS := -Wall -Werror -O2 -std=c++17
+CPP_FLAGS := -Wall -Werror -O2 -std=gnu++20
 
 CUDA_COMPILER := nvcc
 CUDA_FLAGS := -Xcompiler -Wall -Xcompiler -Werror -Xcompiler -O2 -std=c++17
@@ -10,7 +10,7 @@ INCLUDE := $(PREFIX)include
 LIB_CPP = $(call remove_curdir,$(shell dir /b/s $(SRC)\*.cpp))
 LIB_CU = $(call remove_curdir,$(shell dir /b/s $(SRC)\*.cu))
 LINK_FLAGS = -Llib\SFML $(LIBS_SO)
-LIBS_SO := -lsfml-audio-2 -lsfml-graphics-2 -lsfml-network-2 -lsfml-system-2 -lsfml-window-2
+LIBS_SO := -lsfml-graphics-s -lsfml-window-s -lsfml-system-s
 # -lcudart ?
 PREFIX_RUNNER_LD := LD_LIBRARY_PATH=lib\SFML
 

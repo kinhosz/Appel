@@ -20,7 +20,7 @@ endef
 
 define sfml_move_lib
 	@mkdir $(INCLUDE_SFML) && xcopy /E /Y SFML-2.6.0\include\SFML\* $(INCLUDE_SFML) 1>nul 2>nul
-	@mkdir $(LIB_SFML) && xcopy /E /Y SFML-2.6.0\bin\* $(LIB_SFML) 1>nul 2>nul
+	@mkdir $(LIB_SFML) && xcopy /E /Y SFML-2.6.0\lib\* $(LIB_SFML) 1>nul 2>nul
 endef
 
 define sfml_clear_temp_files
