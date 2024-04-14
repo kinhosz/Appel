@@ -10,6 +10,7 @@ Manager::Manager(unsigned int maxTriangles) {
     this->maxTriangles = maxTriangles;
     this->threadsPerBlock = 1024;
     this->blocksPerGrid = (maxTriangles + threadsPerBlock - 1) / threadsPerBlock;
+    this->free_pos = 0;
 
     size_t size = maxTriangles * sizeof(GTriangle);
     CUDA_STATUS(cudaMalloc((void**)&cache, size));
@@ -23,6 +24,9 @@ Manager::Manager(unsigned int maxTriangles) {
     size = blocksPerGrid * sizeof(int);
     CUDA_STATUS(cudaMalloc((void**)&buffer_idx, size));
 
+    size = maxTriangles * sizeof(GTriangle);
+    tmp = (GTriangle* ) malloc(size);
+
     CUDA_STATUS(cudaDeviceSynchronize());
 
     dvc_N[0] = (int)maxTriangles;
@@ -32,7 +36,6 @@ Manager::Manager(unsigned int maxTriangles) {
         GTriangle t;
         t.host_id = -1;
         updateCache<<<1,1>>>(i, t, cache);
-        free_pos.push(i);
     }
 
     CUDA_STATUS(cudaDeviceSynchronize());
@@ -46,6 +49,7 @@ Manager::~Manager() {
     CUDA_STATUS(cudaFree(dvc_ray));
     CUDA_STATUS(cudaFree(buffer_dist));
     CUDA_STATUS(cudaFree(buffer_idx));
+    free(tmp);
 }
 
 #endif

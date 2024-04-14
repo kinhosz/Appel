@@ -25,15 +25,20 @@ __global__ void castRay(GRay* ray, float* buffer_dist, int* buffer_idx, GTriangl
     }
 
     __syncthreads();
+    
+    int ts = blockDim.x;
 
-    if(tid != 0) return;
+    while(ts > 1) {
+        if(tid >= ts/2) return;
 
-    for(int i=1;i<blockDim.x;i++) {
-        if(idx[i] == -1) continue;
-        if(idx[0] == -1 || dist[0] > dist[i]) {
-            idx[0] = idx[i];
-            dist[0] = dist[i];
+        if(idx[tid] == -1 || (dist[tid] > dist[tid+ts/2] && idx[tid+ts/2] != -1)) {
+            idx[tid] = idx[tid+ts/2];
+            dist[tid] = dist[tid+ts/2];
         }
+
+        ts /= 2;
+
+        __syncthreads();
     }
 
     buffer_idx[blockIdx.x] = idx[0];
