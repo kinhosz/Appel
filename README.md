@@ -56,7 +56,9 @@ make install
 Will Install:
 * [`SFML v2.6.0`](https://github.com/SFML/SFML): For image processing
 
-**BREAKING CHANGE**: Only Linux suport!
+> Note: On windows, use this compiler: https://github.com/brechtsanders/winlibs_mingw/releases/download/13.1.0-16.0.5-11.0.0-msvcrt-r5/winlibs-x86_64-posix-seh-gcc-13.1.0-mingw-w64msvcrt-11.0.0-r5.7z
+
+**BREAKING CHANGE**: (GPU feature) Only Linux support!
 
 ### Project Showcase
 
