@@ -25,6 +25,7 @@ public:
     void move(Point p);
 
     Frame take(Scene &scene) const;
+    Frame resize(const Frame &frame, double r) const;
 };
 
 #endif

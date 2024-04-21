@@ -62,3 +62,58 @@ Frame Camera::take(Scene &scene) const {
 
     return frame;
 }
+
+Frame Camera::resize(const Frame &frame, double r) const {
+    int vRes = (double)frame.vertical() * r;
+    int hRes = (double)frame.horizontal() * r;
+
+    Frame frameResized(vRes, hRes);
+    double pixelsPerV = (double)vRes / (frame.vertical() - 1);
+    double pixelsPerH = (double)hRes / (frame.horizontal() - 1);
+
+    for(int x=0; x<hRes; x++) {
+        for(int y=0; y<vRes; y++) {
+            int fx = x / pixelsPerH;
+            int fy = y / pixelsPerV;
+
+            double factor_x = (double)(x - fx * pixelsPerH) / pixelsPerH;
+            double factor_y = (double)(y - fy * pixelsPerV) / pixelsPerV;
+
+            Color color;
+            color.setRed(
+                (1.0 - factor_x) * (
+                    (1.0 - factor_y) * (double)frame.getPixel(fx, fy).getRed()/255
+                    + (factor_y) * (double)frame.getPixel(fx, fy+1).getRed()/255
+                )
+                + (factor_x) * (
+                    (1.0 - factor_y) * (double)frame.getPixel(fx+1, fy).getRed()/255
+                    + (factor_y) * (double)frame.getPixel(fx+1, fy+1).getRed()/255
+                )
+            );
+            color.setGreen(
+                (1.0 - factor_x) * (
+                    (1.0 - factor_y) * (double)frame.getPixel(fx, fy).getGreen()/255
+                    + (factor_y) * (double)frame.getPixel(fx, fy+1).getGreen()/255
+                )
+                + (factor_x) * (
+                    (1.0 - factor_y) * (double)frame.getPixel(fx+1, fy).getGreen()/255
+                    + (factor_y) * (double)frame.getPixel(fx+1, fy+1).getGreen()/255
+                )
+            );
+            color.setBlue(
+                (1.0 - factor_x) * (
+                    (1.0 - factor_y) * (double)frame.getPixel(fx, fy).getBlue()/255
+                    + (factor_y) * (double)frame.getPixel(fx, fy+1).getBlue()/255
+                )
+                + (factor_x) * (
+                    (1.0 - factor_y) * (double)frame.getPixel(fx+1, fy).getBlue()/255
+                    + (factor_y) * (double)frame.getPixel(fx+1, fy+1).getBlue()/255
+                )
+            );
+
+            frameResized.setPixel(x, y, Pixel(color));
+        }
+    }
+
+    return frameResized;
+}
