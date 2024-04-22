@@ -24,6 +24,12 @@ Camera::Camera(Point loc, Point focus, int vPixels, int hPixels, double dist) {
     this->vRight = vRight.normalize();
 }
 
+void Camera::setResolution(int hPixels, int vPixels) {
+    this->hPixels = hPixels;
+    this->vPixels = vPixels;
+    this->distance = (double) (hPixels - 1) / 2.0;
+}
+
 void Camera::zoom(double delta) {
     distance += delta;
 }
@@ -32,6 +38,25 @@ void Camera::move(Point p) {
     location.x += p.x;
     location.y += p.y;
     location.z += p.z;
+}
+
+void Camera::setPosition(Point p) {
+    location.x = p.x;
+    location.y = p.y;
+    location.z = p.z;
+
+    Vetor vFocus(focus);
+    Vetor vLoc(location);
+
+    vUp = Vetor(0, 0, 1);
+    vFront = vFocus - vLoc;
+
+    vRight = vFront.cross(vUp);
+    vUp = vRight.cross(vFront);
+
+    this->vUp = vUp.normalize();
+    this->vFront = vFront.normalize();
+    this->vRight = vRight.normalize();
 }
 
 Ray Camera::createRay(int x, int y) const {
@@ -63,10 +88,7 @@ Frame Camera::take(Scene &scene) const {
     return frame;
 }
 
-Frame Camera::resize(const Frame &frame, double r) const {
-    int vRes = (double)frame.vertical() * r;
-    int hRes = (double)frame.horizontal() * r;
-
+Frame Camera::resize(const Frame &frame, int hRes, int vRes) const {
     Frame frameResized(vRes, hRes);
     double pixelsPerV = (double)vRes / (frame.vertical() - 1);
     double pixelsPerH = (double)hRes / (frame.horizontal() - 1);

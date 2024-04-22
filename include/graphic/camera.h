@@ -21,11 +21,14 @@ public:
     Camera(Point loc, Point focus, int vPixels, int hPixels);
     Camera(Point loc, Point focus, int vPixels, int hPixels, double dist);
 
+    void setResolution(int hPixels, int vPixels);
+
     void zoom(double delta);
     void move(Point p);
+    void setPosition(Point p);
 
     Frame take(Scene &scene) const;
-    Frame resize(const Frame &frame, double r) const;
+    Frame resize(const Frame &frame, int hRes, int vRes) const;
 };
 
 #endif
