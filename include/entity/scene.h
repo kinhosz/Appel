@@ -10,6 +10,7 @@
 #include <graphic/color.h>
 #include <datastructure/octree.h>
 #include <gpu/manager.h>
+#include <geometry/vetor.h>
 
 #ifdef APPEL_GPU_DISABLED
 #define ENABLE_GPU false
@@ -35,6 +36,8 @@ private:
     std::vector<std::pair<int, int>> triangleIndex;
     std::vector<Triangle> triangles;
 
+    Vetor acceleration;
+
     Color brightness(const Ray& ray, SurfaceIntersection surface, const Box& box, const Light& light);
     Color phong(const Ray &ray, const SurfaceIntersection &surface, int index, int layer);
 
@@ -58,6 +61,10 @@ public:
 
     std::pair<SurfaceIntersection, int> castRay(const Ray &ray);
     Color traceRay(const Ray &ray, int layer);
+
+    Vetor getAcceleration() const;
+    void setAcceleration(Vetor acceleration);
+    void simulate(double t);
 };
 
 #endif

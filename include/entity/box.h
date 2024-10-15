@@ -4,6 +4,7 @@
 #include <graphic/color.h>
 #include <geometry/surfaceIntersection.h>
 #include <geometry/ray.h>
+#include <geometry/vetor.h>
 
 class Box {
 private:
@@ -14,6 +15,8 @@ private:
     double transmissionCoefficient;
     double roughnessCoefficient;
     double refractionIndex;
+    Vetor velocity;
+    bool movable = false;
 public:
     Box();
     Box(double kd, double ks, double ka, double kr, double kt, double roughness);
@@ -27,6 +30,10 @@ public:
     double getRoughnessCoefficient() const;
     double getRefractionIndex() const;
     void setRefractionIndex(double refractionIndex);
+    Vetor getVelocity() const;
+    void setVelocity(Vetor velocity);
+    bool isMovable() const;
+    void setMovable();
 };
 
 #endif

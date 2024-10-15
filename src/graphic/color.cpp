@@ -37,19 +37,19 @@ double Color::getBlue() const {
 }
 
 void Color::setRed(double red) {
-    assert(red >= 0.0 && red <= 1.0);
+    red = std::max(std::min(red, 1.0), 0.0);
 
     this->red = red;
 }
 
 void Color::setGreen(double green) {
-    assert(green >= 0.0 && green <= 1.0);
+    green = std::max(std::min(green, 1.0), 0.0);
 
     this->green = green;
 }
 
 void Color::setBlue(double blue) {
-    assert(blue >= 0.0 && blue <= 1.0);
+    blue = std::max(std::min(blue, 1.0), 0.0);
 
     this->blue = blue;
 }

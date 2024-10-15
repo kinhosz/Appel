@@ -14,6 +14,8 @@ Scene::Scene(const Color& environmentColor) {
     this->triangleIndex = std::vector<std::pair<int, int>>();
     this->triangles = std::vector<Triangle>();
 
+    this->acceleration = Vetor(0, 0, 0);
+
     double MIN_BORDER = -100000;
     double MAX_BORDER = 100000;
 
@@ -207,4 +209,36 @@ Color Scene::traceRay(const Ray &ray, int layer) {
     int index = match.second;
 
     return surface.color * phong(ray, surface, index, layer);
+}
+
+Vetor Scene::getAcceleration() const {
+    return this->acceleration;
+}
+
+void Scene::setAcceleration(Vetor acceleration) {
+    this->acceleration = acceleration;
+}
+
+void Scene::simulate(double t) {
+    Vetor partialAcceleration = this->acceleration * t;
+
+    for(std::pair<const int, Sphere>& tmp: spheres) {
+        Sphere &sphere = tmp.second;
+        if(!sphere.isMovable()) continue;
+
+        Vetor vel = sphere.getVelocity();
+        vel = vel + partialAcceleration;
+        sphere.setVelocity(vel);
+        Point center = sphere.getCenter();
+        Vetor partialVel = vel * t;
+        sphere.setCenter(
+            Point(
+                center.x + partialVel.x,
+                center.y + partialVel.y,
+                center.z + partialVel.z
+            )
+        );
+    }
+
+    // TODO: Simulate for meshes
 }
