@@ -27,6 +27,8 @@ Box::Box(double kd, double ks, double ka, double kr, double kt, double roughness
     this->transmissionCoefficient = kt;
     this->roughnessCoefficient = roughness;
     this->refractionIndex = 1.0;
+
+    this->velocity = Vetor(0, 0, 0);
 }
 
 SurfaceIntersection Box::intersect(const Ray& ray) const {
@@ -63,4 +65,20 @@ double Box::getRefractionIndex() const {
 
 void Box::setRefractionIndex(double refractionIndex) {
     this->refractionIndex = refractionIndex;
+}
+
+Vetor Box::getVelocity() const {
+    return this->velocity;
+}
+
+void Box::setVelocity(Vetor velocity) {
+    this->velocity = velocity;
+}
+
+bool Box::isMovable() const {
+    return this->movable;
+}
+
+void Box::setMovable() {
+    this->movable = true;
 }
