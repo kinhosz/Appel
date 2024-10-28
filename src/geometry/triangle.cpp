@@ -164,3 +164,11 @@ SurfaceIntersection Triangle::getSurface(Ray ray) const {
 
     return SurfaceIntersection(color, t, normal);
 }
+
+Triangle Triangle::rebase(const CoordinateSystem& cs) const {
+    Point p0 = cs.rebase(vertices[0]);
+    Point p1 = cs.rebase(vertices[1]);
+    Point p2 = cs.rebase(vertices[2]);
+
+    return Triangle(p0, p1, p2, color);
+}

@@ -5,6 +5,7 @@
 #include <geometry/vetor.h>
 #include <geometry/surfaceIntersection.h>
 #include <geometry/ray.h>
+#include <geometry/coordinateSystem.h>
 #include <graphic/color.h>
 #include <assert.h> 
 
@@ -34,7 +35,9 @@ struct Triangle {
     bool isInside(const Point &p) const;
 
     SurfaceIntersection intersect(Ray ray) const;
-    SurfaceIntersection getSurface(Ray ray) const ;
+    SurfaceIntersection getSurface(Ray ray) const;
+
+    Triangle rebase(const CoordinateSystem& cs) const;
 };
 
 #endif

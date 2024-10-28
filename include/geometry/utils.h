@@ -22,4 +22,6 @@ std::vector<Triangle> createTriangles(
     std::vector<Color> colors
 );
 
+double getAngle(double x, double y);
+
 #endif

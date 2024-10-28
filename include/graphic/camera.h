@@ -14,8 +14,12 @@ private:
     double distance;
     int vPixels;
     int hPixels;
+    Frame frame;
 
     Ray createRay(int x, int y) const;
+    Frame singleRender(Scene &scene);
+    Frame batchRender(Scene &scene);
+    void recalculateVetors();
 
 public:
     Camera(Point loc, Point focus, int vPixels, int hPixels);
@@ -26,8 +30,9 @@ public:
     void zoom(double delta);
     void move(Point p);
     void setPosition(Point p);
+    void setFocus(Point p);
 
-    Frame take(Scene &scene) const;
+    Frame take(Scene &scene, bool rayTracing=true);
     Frame resize(const Frame &frame, int hRes, int vRes) const;
 };
 

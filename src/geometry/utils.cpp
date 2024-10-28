@@ -37,3 +37,16 @@ std::vector<Triangle> createTriangles(
     }
     return triangleObjects;
 }
+
+double getAngle(double x, double y) {
+    if(cmp(x, 0.0) == 0 && cmp(y, 0.0) == 0) return 0;
+    else if(cmp(x, 0.0) == 0) {
+        if(cmp(y, 0.0) == 1) return PI/2.0;
+        else return -PI/2.0;
+    }
+    else if(cmp(y, 0.0) == 0) {
+        if(cmp(x, 0.0) == 1) return 0.0;
+        else return PI;
+    }
+    return atan(y / x);
+}
