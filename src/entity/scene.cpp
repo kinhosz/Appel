@@ -1,11 +1,13 @@
 #include <entity/scene.h>
 #include <geometry/utils.h>
+#include <geometry/coordinateSystem.h>
 #include <memory>
 #include <math.h>
+#include <algorithm>
 
-Scene::Scene() : Scene(Color()) {}
+Scene::Scene(int depth) : Scene(Color(), depth) {}
 
-Scene::Scene(const Color& environmentColor) {
+Scene::Scene(const Color& environmentColor, int depth) {
     this->lights = std::map<int, Light>();
     this->lightsCurrentIndex = this->lights.size();
     this->environmentColor = environmentColor;
@@ -17,7 +19,7 @@ Scene::Scene(const Color& environmentColor) {
     double MIN_BORDER = -100000;
     double MAX_BORDER = 100000;
 
-    this->depth = 5;
+    this->depth = depth;
 
     this->octree = Octree(MIN_BORDER, MAX_BORDER, MIN_BORDER, MAX_BORDER, MIN_BORDER, MAX_BORDER);
     this->manager = new Manager(50000);
@@ -207,4 +209,139 @@ Color Scene::traceRay(const Ray &ray, int layer) {
     int index = match.second;
 
     return surface.color * phong(ray, surface, index, layer);
+}
+
+void Scene::rebaseTriangles(const CoordinateSystem& cs) {
+    mappedTriangles.clear();
+    for(const std::pair<const int, TriangularMesh>& p: meshes) {
+        const std::vector<Triangle>& triangles = p.second.getTriangles();
+        for(const Triangle& triangle: triangles) {
+            mappedTriangles.push_back(triangle.rebase(cs));
+        }
+    }
+}
+
+void Scene::sortTriangleIndexes() {
+    /* 
+        Sorting triangles by the slope of z/y in the new coordinate system.
+        All points with y < 0 are behind the observer and will not be rendered.
+        The sortedTrianglesIndexes contains: <minSlope, maxSlope>, <index>
+        This structure will be used for all rows of the image, from down to up
+        simulating a sweep line.
+    */
+    sortedTrianglesIndexes.clear();
+    for(int i=0;i<(int)mappedTriangles.size();i++) {
+        const Triangle& triangle = mappedTriangles[i];
+        double minSlope, maxSlope;
+        bool hasSlope = false;
+        for(int i=0;i<3;i++) {
+            if(cmp(triangle.vertices[i].y, 0.0) <= 0) continue;
+
+            double slope = triangle.vertices[i].z / triangle.vertices[i].y;
+            if(!hasSlope) minSlope = slope, maxSlope = slope;
+            minSlope = std::min(minSlope, slope);
+            maxSlope = std::max(maxSlope, slope);
+            hasSlope = true;
+        }
+        if(hasSlope) {
+            sortedTrianglesIndexes.push_back({{minSlope, maxSlope}, i});
+        }
+    }
+    std::sort(sortedTrianglesIndexes.begin(), sortedTrianglesIndexes.end());
+}
+
+void Scene::activateTriangles(int& pointerToSortedIndexes, double planeSlopeVertical) {
+    while(pointerToSortedIndexes < (int)sortedTrianglesIndexes.size()) {
+        if(cmp(sortedTrianglesIndexes[pointerToSortedIndexes].first.first, planeSlopeVertical) == 1) break;
+        double minSlopeH, maxSlopeH;
+        int idx = sortedTrianglesIndexes[pointerToSortedIndexes].second;
+        double maxSlopeV = sortedTrianglesIndexes[pointerToSortedIndexes].first.second;
+
+        for(int i=0;i<3;i++){
+            double slope = mappedTriangles[idx].vertices[i].x / mappedTriangles[idx].vertices[i].y;
+            if(i == 0) minSlopeH = slope, maxSlopeH = slope;
+            minSlopeH = std::min(minSlopeH, slope);
+            maxSlopeH = std::max(maxSlopeH, slope);
+        }
+        activeIndexes.push_back({{minSlopeH, maxSlopeH}, {maxSlopeV, idx}});
+        pointerToSortedIndexes++;
+    }
+    std::sort(activeIndexes.begin(), activeIndexes.end());
+}
+
+SurfaceIntersection Scene::sweepOnTriangles(int& pointerToActives, double planeSlopeHorizontal, const Ray& ray) {
+    SurfaceIntersection nearSurface;
+    /*
+        Passing for all triangles until the minSlopeH > planeSlopeHorizontal.
+        However, if maxSlopeH < planeSlope, then deactivate it.
+    */
+    int current_active = pointerToActives;
+    while(current_active < (int)activeIndexes.size()) {
+        if(cmp(activeIndexes[current_active].first.first, planeSlopeHorizontal) == 1) break;
+        if(cmp(activeIndexes[current_active].first.second, planeSlopeHorizontal) == -1) {
+            std::swap(activeIndexes[current_active], activeIndexes[pointerToActives]);
+            pointerToActives++;
+            current_active++;
+            continue;
+        }
+        /*
+            Strong candidate: It matches on horizontal and vertical plane
+        */
+        int idx = activeIndexes[current_active].second.second;
+        const Triangle& triangle = mappedTriangles[idx];
+
+        SurfaceIntersection current = triangle.intersect(ray);
+        if(current.distance < nearSurface.distance) std::swap(current, nearSurface);
+        current_active++;
+    }
+    return nearSurface;
+}
+
+void Scene::deactivateTriangles(double planeSlopeVertical) {
+    /*
+        Now, after finish the sweep line for an entire row, we need clean up all triangles
+        with maxSlopeV < planeSlopeVertical
+    */
+    for(int i=(int)activeIndexes.size()-1;i>=0;i--) {
+        if(cmp(activeIndexes[i].second.first, planeSlopeVertical) < 1) {
+            std::swap(activeIndexes[i], activeIndexes[(int)activeIndexes.size() - 1]);
+            activeIndexes.pop_back();
+        }
+    }
+}
+
+std::vector<std::vector<Color>> Scene::batchIntersect(const CoordinateSystem& cs, int width, int height, double distance) {
+    std::vector<std::vector<Color>> res(width, std::vector<Color>(height));
+
+    rebaseTriangles(cs);
+    sortTriangleIndexes();
+
+    int pointerToSortedIndexes = 0;
+    activeIndexes.clear();
+    int mid_h = height / 2;
+
+    for(int int_z=0;int_z<height;int_z++){
+        double planeSlopeVertical = (double)(int_z - mid_h)/distance;
+
+        activateTriangles(pointerToSortedIndexes, planeSlopeVertical);
+
+        int mid_w = width / 2;
+        int pointerToActives = 0;
+        for(int int_x=0;int_x<width;int_x++){
+            SurfaceIntersection nearSurface;
+            double planeSlopeHorizontal = (double)(int_x - mid_w)/distance;
+
+            Vetor dir(planeSlopeHorizontal * distance, distance, planeSlopeVertical * distance);
+            dir = dir.normalize();
+            Ray ray(Point(0,0,0), dir);
+
+            SurfaceIntersection nearTriangle = sweepOnTriangles(pointerToActives, planeSlopeHorizontal, ray);
+            if(cmp(nearTriangle.distance, nearSurface.distance) == -1) std::swap(nearSurface, nearTriangle);
+
+            res[int_x][int_z] = nearSurface.color;
+        }
+        deactivateTriangles(planeSlopeVertical);
+    }
+
+    return res;
 }
