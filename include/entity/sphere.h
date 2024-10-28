@@ -23,7 +23,7 @@ public:
     void setRadius(double radius);
     void setColor(Color color);
 
-    SurfaceIntersection intersect(const Ray &ray) const;
+    SurfaceIntersection intersect(const Ray &ray) const override;
 };
 
 #endif

@@ -29,7 +29,7 @@ Box::Box(double kd, double ks, double ka, double kr, double kt, double roughness
     this->refractionIndex = 1.0;
 }
 
-SurfaceIntersection Box::intersect(Ray ray) const {
+SurfaceIntersection Box::intersect(const Ray& ray) const {
     return SurfaceIntersection();
 }
 
