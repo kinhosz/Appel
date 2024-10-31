@@ -1,4 +1,6 @@
 #include <graphic/camera.h>
+#include <geometry/coordinateSystem.h>
+#include <geometry/vetor.h>
 
 Camera::Camera(Point loc, Point focus, int vPixels, int hPixels): 
     Camera(loc, focus, vPixels, hPixels, (double) (hPixels - 1) / 2.0) {}
@@ -13,15 +15,8 @@ Camera::Camera(Point loc, Point focus, int vPixels, int hPixels, double dist) {
     Vetor vFocus(focus);
     Vetor vLoc(loc);
 
-    vUp = Vetor(0, 0, 1);
-    vFront = vFocus - vLoc;
-
-    vRight = vFront.cross(vUp);
-    vUp = vRight.cross(vFront);
-
-    this->vUp = vUp.normalize();
-    this->vFront = vFront.normalize();
-    this->vRight = vRight.normalize();
+    recalculateVetors();
+    this->frame = Frame(vPixels, hPixels);
 }
 
 void Camera::setResolution(int hPixels, int vPixels) {
@@ -38,18 +33,16 @@ void Camera::move(Point p) {
     location.x += p.x;
     location.y += p.y;
     location.z += p.z;
+    recalculateVetors();
 }
 
-void Camera::setPosition(Point p) {
-    location.x = p.x;
-    location.y = p.y;
-    location.z = p.z;
-
+void Camera::recalculateVetors() {
     Vetor vFocus(focus);
     Vetor vLoc(location);
 
     vUp = Vetor(0, 0, 1);
     vFront = vFocus - vLoc;
+    if(cmp(vFront.x, 0.0) == 0 && cmp(vFront.y, 0.0) == 0) vUp = Vetor(0, 1, 0);
 
     vRight = vFront.cross(vUp);
     vUp = vRight.cross(vFront);
@@ -57,6 +50,16 @@ void Camera::setPosition(Point p) {
     this->vUp = vUp.normalize();
     this->vFront = vFront.normalize();
     this->vRight = vRight.normalize();
+}
+
+void Camera::setPosition(Point p) {
+    location = p;
+    recalculateVetors();
+}
+
+void Camera::setFocus(Point p) {
+    focus = p;
+    recalculateVetors();
 }
 
 Ray Camera::createRay(int x, int y) const {
@@ -73,19 +76,34 @@ Ray Camera::createRay(int x, int y) const {
     return Ray(location, pixelVector);
 }
 
-Frame Camera::take(Scene &scene) const {
-    Frame frame(vPixels, hPixels);
-
+Frame Camera::singleRender(Scene &scene) {
     for(int x=0; x<hPixels; x++) {
         for(int y=0; y<vPixels; y++) {
             Ray ray = createRay(x, y);
             Color color = scene.traceRay(ray, 0);
-
             frame.setPixel(x, (vPixels - y - 1), Pixel(color));
         }
     }
 
     return frame;
+}
+
+Frame Camera::batchRender(Scene &scene) {
+    CoordinateSystem cs(location, vRight, vFront, vUp);
+    std::vector<std::vector<Color>> colors = scene.batchIntersect(cs, hPixels, vPixels, distance);
+
+    for(int x=0;x<hPixels;x++) {
+        for(int y=0;y<vPixels;y++) {
+            frame.setPixel(x, (vPixels - y - 1), Pixel(colors[x][y]));
+        }
+    }
+
+    return frame;
+}
+
+Frame Camera::take(Scene &scene, bool rayTracing) {
+    if (rayTracing) return singleRender(scene);
+    return batchRender(scene);
 }
 
 Frame Camera::resize(const Frame &frame, int hRes, int vRes) const {
