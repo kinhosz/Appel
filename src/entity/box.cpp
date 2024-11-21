@@ -13,6 +13,10 @@ Box::Box() {
 }
 
 Box::Box(double kd, double ks, double ka, double kr, double kt, double roughness) {
+    setPhongValues(kd, ks, ka, kr, kt, roughness);
+}
+
+void Box::setPhongValues(double kd, double ks, double ka, double kr, double kt, double roughness) {
     assert(kd >= 0.0 && kd <= 1.0);
     assert(ks >= 0.0 && ks <= 1.0);
     assert(ka >= 0.0 && ka <= 1.0);

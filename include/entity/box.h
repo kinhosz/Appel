@@ -26,6 +26,7 @@ public:
     double getTransmissionCoefficient() const;
     double getRoughnessCoefficient() const;
     double getRefractionIndex() const;
+    void setPhongValues(double kd, double ks, double ka, double kr, double kt, double roughness);
     void setRefractionIndex(double refractionIndex);
 };
 
