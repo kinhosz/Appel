@@ -234,16 +234,22 @@ void Scene::sortTriangleIndexes() {
         const Triangle& triangle = mappedTriangles[i];
         double minSlope = 0.0, maxSlope = 0.0;
         bool hasSlope = false;
-        for(int i=0;i<3;i++) {
-            if(cmp(triangle.vertices[i].y, 0.0) <= 0) continue;
 
-            double slope = triangle.vertices[i].z / triangle.vertices[i].y;
+        for(int j=0;j<3;j++) {
+            if(cmp(triangle.vertices[j].y, 0.0) <= 0) continue;
+
+            double slope = triangle.vertices[j].z / triangle.vertices[j].y;
+
             if(!hasSlope) minSlope = slope, maxSlope = slope;
             minSlope = std::min(minSlope, slope);
             maxSlope = std::max(maxSlope, slope);
             hasSlope = true;
         }
         if(hasSlope) {
+            if(cmp(minSlope, maxSlope) == 0) {
+                if(cmp(minSlope, 0.0) == -1) minSlope = -1;
+                else if(cmp(minSlope, 0.0) == 1) maxSlope = 1;
+            }
             sortedTrianglesIndexes.push_back({{minSlope, maxSlope}, i});
         }
     }
@@ -253,17 +259,29 @@ void Scene::sortTriangleIndexes() {
 void Scene::activateTriangles(int& pointerToSortedIndexes, double planeSlopeVertical) {
     while(pointerToSortedIndexes < (int)sortedTrianglesIndexes.size()) {
         if(cmp(sortedTrianglesIndexes[pointerToSortedIndexes].first.first, planeSlopeVertical) == 1) break;
-        double minSlopeH, maxSlopeH;
+        double minSlopeH = 0.0, maxSlopeH = 0.0;
         int idx = sortedTrianglesIndexes[pointerToSortedIndexes].second;
         double maxSlopeV = sortedTrianglesIndexes[pointerToSortedIndexes].first.second;
+        bool hasSlope = false;
 
         for(int i=0;i<3;i++){
             double slope = mappedTriangles[idx].vertices[i].x / mappedTriangles[idx].vertices[i].y;
-            if(i == 0) minSlopeH = slope, maxSlopeH = slope;
+
+            if(!hasSlope) {
+                minSlopeH = slope;
+                maxSlopeH = slope;
+                hasSlope = true;
+            }
             minSlopeH = std::min(minSlopeH, slope);
             maxSlopeH = std::max(maxSlopeH, slope);
         }
-        activeIndexes.push_back({{minSlopeH, maxSlopeH}, {maxSlopeV, idx}});
+        if(hasSlope) {
+            if(cmp(minSlopeH, maxSlopeH) == 0) {
+                if(cmp(minSlopeH, 0.0) == -1) minSlopeH = -1;
+                else if(cmp(minSlopeH, 0.0) == 1) maxSlopeH = 1;
+            }
+            activeIndexes.push_back({{minSlopeH, maxSlopeH}, {maxSlopeV, idx}});
+        }
         pointerToSortedIndexes++;
     }
     std::sort(activeIndexes.begin(), activeIndexes.end());
