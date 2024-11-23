@@ -16,7 +16,6 @@ private:
     double refractionIndex;
 public:
     Box();
-    Box(double kd, double ks, double ka, double kr, double kt, double roughness);
     virtual SurfaceIntersection intersect(const Ray& ray) const;
 
     double getDiffuseCoefficient() const;
