@@ -17,8 +17,9 @@ TriangularMesh::TriangularMesh(
     double kr,
     double kt,
     double roughness
-) : Box(kd, ks, ka, kr, kt, roughness) {
+) : Box() {
     this->triangles = triangles;
+    setPhongValues(kd, ks, ka, kr, kt, roughness);
 }
 
 std::vector<Triangle> TriangularMesh::getTriangles() const {
