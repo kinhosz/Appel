@@ -11,16 +11,7 @@ private:
 
 public:
     TriangularMesh();
-
-    TriangularMesh(
-        const std::vector<Triangle> triangles, 
-        double kd,
-        double ks,
-        double ka,
-        double kr,
-        double kt,
-        double roughness
-    );
+    TriangularMesh(const std::vector<Triangle> triangles);
 
     Triangle getTriangle(int index) const;
     std::vector<Triangle> getTriangles() const;
