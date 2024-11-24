@@ -14,7 +14,7 @@ private:
     Color color;
 public:
     Plane();
-    Plane(Point point, Vetor normalVector, Color color, double kd, double ks, double ka, double kr, double kt, double roughness);
+    Plane(Point point, Vetor normalVector, Color color);
 
     Point getPoint() const;
     Vetor getNormalVector() const;

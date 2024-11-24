@@ -6,7 +6,9 @@
 using namespace std;
 
 int main() {
-    Plane p1, p2(Point(0.00, 0.00, 0.00), Vetor(0.00, 1.00, 0.00), Color(0.23, 0.60, 0.98), 0.60, 0.80, 0.20, 0.10, 0.00, 0.50);
+    Plane p1, p2(Point(0.00, 0.00, 0.00), Vetor(0.00, 1.00, 0.00), Color(0.23, 0.60, 0.98));
+
+    p2.setPhongValues(0.60, 0.80, 0.20, 0.10, 0.00, 0.50);
 
     assert(p1.getPoint() == Point(0.00, 0.00, 0.00));
     assert(p1.getNormalVector() == Vetor(0.00, 0.00, 0.00));

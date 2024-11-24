@@ -3,10 +3,8 @@
 
 Plane::Plane() : Box(), point(Point()), normalVector(Vetor()), color(Color()) {}
 
-Plane::Plane(Point point, Vetor normalVector, Color color, double kd, double ks, double ka, double kr, double kt, double roughness)
-    : Box(), point(point), normalVector(normalVector), color(color) {
-    setPhongValues(kd, ks, ka, kr, kt, roughness);
-}
+Plane::Plane(Point point, Vetor normalVector, Color color)
+    : Box(), point(point), normalVector(normalVector), color(color) {}
 
 Point Plane::getPoint() const {
     return this->point;
