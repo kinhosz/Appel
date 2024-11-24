@@ -13,9 +13,16 @@ int main() {
     scene3.addLight(Light(Point(1, 1, 1), Color(0.2, 0.3, 0.4)));
     scene3.addLight(Light(Point(2, 2, 2), Color(0.3, 0.4, 0.5)));
 
-    scene3.addObject(Sphere(Point(), 0, Color(), 0.1, 0.2, 0.3, 0.4, 0.5, 0.6));
-    scene3.addObject(Sphere(Point(), 0, Color(), 0.2, 0.3, 0.4, 0.5, 0.6, 0.7));
-    scene3.addObject(Sphere(Point(), 0, Color(), 0.3, 0.4, 0.5, 0.6, 0.7, 0.8));
+    Sphere sphere(Point(), 0, Color());
+
+    sphere.setPhongValues(0.1, 0.2, 0.3, 0.4, 0.5, 0.6);
+    scene3.addObject(sphere);
+
+    sphere.setPhongValues(0.2, 0.3, 0.4, 0.5, 0.6, 0.7);
+    scene3.addObject(sphere);
+
+    sphere.setPhongValues(0.3, 0.4, 0.5, 0.6, 0.7, 0.8);
+    scene3.addObject(sphere);
 
     assert(scene1.getLights().size() == 0);
     assert(scene1.getEnvironmentColor() == Color(0.0, 0.0, 0.0));
@@ -30,8 +37,11 @@ int main() {
     Light light1(Point(0, 0, 0), Color(0.1, 0.2, 0.3));
     Light light2(Point(1, 1, 1), Color(0.2, 0.3, 0.4));
 
-    Sphere box1(Point(), 0.0, Color(), 0.1, 0.2, 0.3, 0.4, 0.5, 0.6);
-    Sphere box2(Point(), 0.0, Color(), 0.2, 0.3, 0.4, 0.5, 0.6, 0.7);
+    Sphere box1(Point(), 0.0, Color());
+    Sphere box2(Point(), 0.0, Color());
+
+    box1.setPhongValues(0.1, 0.2, 0.3, 0.4, 0.5, 0.6);
+    box2.setPhongValues(0.2, 0.3, 0.4, 0.5, 0.6, 0.7);
 
     scene1.addLight(light1);
     scene1.addLight(light2);
