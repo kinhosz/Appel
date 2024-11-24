@@ -1,5 +1,5 @@
 #ifndef ENTITY_PLANE_H
-#define ETNITY_PLANE_H
+#define ENTITY_PLANE_H
 
 #include <entity/box.h>
 #include <geometry/point.h>
