@@ -25,7 +25,9 @@ int main(){
     triangles.push_back(t3);
     triangles.push_back(t4);
 
-    TriangularMesh tMesh(triangles, 0, 0, 0, 0, 0, 1.0);
+    TriangularMesh tMesh(triangles);
+
+    tMesh.setPhongValues(0, 0, 0, 0, 0, 1.0);
 
     Point observer1(2, 2, 0.5);
     Point observer2(-2, 2, 0.5);
