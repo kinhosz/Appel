@@ -45,14 +45,16 @@ vector<TriangularMesh> buildMesh() {
     triangles.push_back(t11);
     triangles.push_back(t12);
 
-    TriangularMesh tMesh(triangles, 0.10, 0.10, 0.20, 0.70, 0.10, 10.0);
+    TriangularMesh tMesh(triangles);
+    tMesh.setPhongValues(0.10, 0.10, 0.20, 0.70, 0.10, 10.0);
 
     triangles.clear();
 
     triangles.push_back(t3);
     triangles.push_back(t4);
 
-    TriangularMesh tMesh2(triangles, 0.10, 0.10, 0.20, 0.70, 0.00, 200.0);
+    TriangularMesh tMesh2(triangles);
+    tMesh2.setPhongValues(0.10, 0.10, 0.20, 0.70, 0.00, 200.0);
 
     vector<TriangularMesh> meshes;
 
@@ -68,7 +70,8 @@ Sphere buildSphere0() {
     Point center(100, 100, 100);
     double radius = 100;
 
-    Sphere sphere(center, radius, color, 0.30, 0.30, 0.20, 0.80, 0.00, 1.0);
+    Sphere sphere(center, radius, color);
+    sphere.setPhongValues(0.30, 0.30, 0.20, 0.80, 0.00, 1.0);
 
     return sphere;
 }
@@ -79,7 +82,8 @@ Sphere buildSphere1() {
     Point center(100, 400, 100);
     double radius = 100;
 
-    Sphere sphere(center, radius, color, 0.60, 0.80, 0.20, 0.80, 0.00, 5.00);
+    Sphere sphere(center, radius, color);
+    sphere.setPhongValues(0.60, 0.80, 0.20, 0.80, 0.00, 5.00);
 
     return sphere;
 }
@@ -90,7 +94,8 @@ Sphere buildSphere2() {
     Point center(400, 100, 100);
     double radius = 100;
 
-    Sphere sphere(center, radius, color, 0.70, 0.20, 0.20, 0.00, 0.00, 20.00);
+    Sphere sphere(center, radius, color);
+    sphere.setPhongValues(0.70, 0.20, 0.20, 0.00, 0.00, 20.00);
 
     return sphere;
 }
@@ -101,7 +106,8 @@ Sphere buildSphere3() {
     Point center(400, 400, 100);
     double radius = 100;
 
-    Sphere sphere(center, radius, color, 0.60, 0.30, 0.20, 0.80, 0.00, 1.0);
+    Sphere sphere(center, radius, color);
+    sphere.setPhongValues(0.60, 0.30, 0.20, 0.80, 0.00, 1.0);
 
     return sphere;
 }
