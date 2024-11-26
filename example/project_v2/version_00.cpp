@@ -31,7 +31,8 @@ TriangularMesh buildMesh() {
     triangles.push_back(t3);
     triangles.push_back(t4);
 
-    TriangularMesh tMesh(triangles, 0.60, 0.80, 0.20, 0.80, 0.10, 10.0);
+    TriangularMesh tMesh(triangles);
+    tMesh.setPhongValues(0.60, 0.80, 0.20, 0.80, 0.10, 10.0);
 
     return tMesh;
 }
@@ -43,7 +44,8 @@ Plane buildPlane() {
 
     Vetor n1 = (Vetor(p1) - Vetor(p0)).cross(Vetor(p2) - Vetor(p0)).normalize();
 
-    Plane plane(p0, n1, purple, 0.60, 0.80, 0.20, 0.80, 0.10, 1.00);
+    Plane plane(p0, n1, purple);
+    plane.setPhongValues(0.60, 0.80, 0.20, 0.80, 0.10, 1.00);
 
     return plane;
 }
@@ -54,7 +56,8 @@ Sphere buildSphere0() {
     Point center(200, 0, 50);
     double radius = 50;
 
-    Sphere sphere(center, radius, orange, 0.60, 0.80, 0.20, 0.80, 0.00, 10.0);
+    Sphere sphere(center, radius, orange);
+    sphere.setPhongValues(0.60, 0.80, 0.20, 0.80, 0.00, 10.0);
 
     return sphere;
 }
@@ -65,7 +68,8 @@ Sphere buildSphere1() {
     Point center(0, 200, 50);
     double radius = 50;
 
-    Sphere sphere(center, radius, orange, 0.60, 0.80, 0.20, 0.80, 0.00, 10.0);
+    Sphere sphere(center, radius, orange);
+    sphere.setPhongValues(0.60, 0.80, 0.20, 0.80, 0.00, 10.0);
 
     return sphere;
 }
@@ -76,7 +80,8 @@ Sphere buildSphere2() {
     Point center(-200, 0, 50);
     double radius = 50;
 
-    Sphere sphere(center, radius, orange, 0.60, 0.80, 0.20, 0.80, 0.00, 10.0);
+    Sphere sphere(center, radius, orange);
+    sphere.setPhongValues(0.60, 0.80, 0.20, 0.80, 0.00, 10.0);
 
     return sphere;
 }
@@ -87,7 +92,8 @@ Sphere buildSphere3() {
     Point center(0, -200, 50);
     double radius = 50;
 
-    Sphere sphere(center, radius, orange, 0.60, 0.80, 0.20, 0.80, 0.00, 10.0);
+    Sphere sphere(center, radius, orange);
+    sphere.setPhongValues(0.60, 0.80, 0.20, 0.80, 0.00, 10.0);
 
     return sphere;
 }

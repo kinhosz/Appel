@@ -13,7 +13,7 @@ private:
     Color color;
 public:
     Sphere();
-    Sphere(Point center, double radius, Color color, double kd, double ks, double ka, double kr, double kt, double roughness);
+    Sphere(Point center, double radius, Color color);
 
     Point getCenter() const;
     double getRadius() const;

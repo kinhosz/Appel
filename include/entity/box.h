@@ -16,7 +16,6 @@ private:
     double refractionIndex;
 public:
     Box();
-    Box(double kd, double ks, double ka, double kr, double kt, double roughness);
     virtual SurfaceIntersection intersect(const Ray& ray) const;
 
     double getDiffuseCoefficient() const;
@@ -26,6 +25,7 @@ public:
     double getTransmissionCoefficient() const;
     double getRoughnessCoefficient() const;
     double getRefractionIndex() const;
+    void setPhongValues(double kd, double ks, double ka, double kr, double kt, double roughness);
     void setRefractionIndex(double refractionIndex);
 };
 

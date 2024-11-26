@@ -56,15 +56,10 @@ TriangularMesh buildHumanFace() {
 
     fclose(stdin);
 
-    return TriangularMesh(
-        triangles,
-        0.8, // kd
-        0.9, // ks
-        0.1, // ka
-        0.0, // kr
-        0.0, // kt
-        100 // roughness
-    );
+    TriangularMesh tMesh(triangles);
+    tMesh.setPhongValues(0.8, 0.9, 0.1, 0.0, 0.0, 100);
+
+    return tMesh;
 }
 
 int main() {

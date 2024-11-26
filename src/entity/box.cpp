@@ -12,23 +12,6 @@ Box::Box() {
     this->refractionIndex = 1.0;
 }
 
-Box::Box(double kd, double ks, double ka, double kr, double kt, double roughness) {
-    assert(kd >= 0.0 && kd <= 1.0);
-    assert(ks >= 0.0 && ks <= 1.0);
-    assert(ka >= 0.0 && ka <= 1.0);
-    assert(kr >= 0.0 && kr <= 1.0);
-    assert(kt >= 0.0 && kt <= 1.0);
-    assert(roughness > 0.0);
-
-    this->diffuseCoefficient = kd;
-    this->specularCoefficient = ks;
-    this->ambientCoefficient = ka;
-    this->reflectionCoefficient = kr;
-    this->transmissionCoefficient = kt;
-    this->roughnessCoefficient = roughness;
-    this->refractionIndex = 1.0;
-}
-
 SurfaceIntersection Box::intersect(const Ray& ray) const {
     return SurfaceIntersection();
 }
@@ -59,6 +42,23 @@ double Box::getRoughnessCoefficient() const {
 
 double Box::getRefractionIndex() const {
     return this->refractionIndex;
+}
+
+void Box::setPhongValues(double kd, double ks, double ka, double kr, double kt, double roughness) {
+    assert(kd >= 0.0 && kd <= 1.0);
+    assert(ks >= 0.0 && ks <= 1.0);
+    assert(ka >= 0.0 && ka <= 1.0);
+    assert(kr >= 0.0 && kr <= 1.0);
+    assert(kt >= 0.0 && kt <= 1.0);
+    assert(roughness > 0.0);
+
+    this->diffuseCoefficient = kd;
+    this->specularCoefficient = ks;
+    this->ambientCoefficient = ka;
+    this->reflectionCoefficient = kr;
+    this->transmissionCoefficient = kt;
+    this->roughnessCoefficient = roughness;
+    this->refractionIndex = 1.0;
 }
 
 void Box::setRefractionIndex(double refractionIndex) {

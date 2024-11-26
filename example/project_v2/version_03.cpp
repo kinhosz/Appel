@@ -28,15 +28,10 @@ vector<TriangularMesh> buildMesh() {
         p0, p2, p1, c0
     ));
 
-    meshes.push_back(TriangularMesh(
-        triangles,
-        0.5, // kd
-        0.9, // ks
-        0.1, // ka
-        0.1, // kr
-        0.1, // kt
-        1.0 // roughness
-    ));
+    TriangularMesh tMesh1(triangles);
+    tMesh1.setPhongValues(0.5, 0.9, 0.1, 0.1, 0.1, 1.0);
+
+    meshes.push_back(tMesh1);
 
     triangles.clear();
 
@@ -48,15 +43,10 @@ vector<TriangularMesh> buildMesh() {
         p0, p7, p3, c1
     ));
 
-    meshes.push_back(TriangularMesh(
-        triangles,
-        0.5, // kd
-        0.5, // ks
-        0.1, // ka
-        0.1, // kr
-        0.1, // kt
-        1.0 // roughness
-    ));
+    TriangularMesh tMesh2(triangles);
+    tMesh2.setPhongValues(0.5, 0.5, 0.1, 0.1, 0.1, 1.0);
+
+    meshes.push_back(tMesh2);
 
     triangles.clear();
 
@@ -68,15 +58,10 @@ vector<TriangularMesh> buildMesh() {
         p0, p5, p4, c2
     ));
 
-    meshes.push_back(TriangularMesh(
-        triangles,
-        0.5, // kd
-        0.5, // ks
-        0.1, // ka
-        0.1, // kr
-        0.1, // kt
-        1.0 // roughness
-    ));
+    TriangularMesh tMesh3(triangles);
+    tMesh3.setPhongValues(0.5, 0.5, 0.1, 0.1, 0.1, 1.0);
+
+    meshes.push_back(tMesh3);
 
     triangles.clear();
 
@@ -88,15 +73,10 @@ vector<TriangularMesh> buildMesh() {
         p1, p6, p5, c3
     ));
 
-    meshes.push_back(TriangularMesh(
-        triangles,
-        0.5, // kd
-        0.5, // ks
-        0.1, // ka
-        0.1, // kr
-        0.1, // kt
-        1.0 // roughness
-    ));
+    TriangularMesh tMesh4(triangles);
+    tMesh4.setPhongValues(0.5, 0.5, 0.1, 0.1, 0.1, 1.0);
+
+    meshes.push_back(tMesh4);
 
     triangles.clear();
 
@@ -108,15 +88,10 @@ vector<TriangularMesh> buildMesh() {
         p4, p6, p7, c4
     ));
 
-    meshes.push_back(TriangularMesh(
-        triangles,
-        0.5, // kd
-        0.5, // ks
-        0.1, // ka
-        0.1, // kr
-        0.1, // kt
-        100.0 // roughness
-    ));
+    TriangularMesh tMesh5(triangles);
+    tMesh5.setPhongValues(0.5, 0.5, 0.1, 0.1, 0.1, 100.0);
+
+    meshes.push_back(tMesh5);
 
     triangles.clear();
 
@@ -129,7 +104,8 @@ Sphere buildSphere0() {
     Point center(70, 60, 50);
     double radius = 50;
 
-    Sphere sphere(center, radius, color, 0.80, 0.40, 0.00, 0.00, 0.00, 100.00);
+    Sphere sphere(center, radius, color);
+    sphere.setPhongValues(0.80, 0.40, 0.00, 0.00, 0.00, 100.00);
 
     return sphere;
 }
@@ -140,7 +116,8 @@ Sphere buildSphere1() {
     Point center(170, 200, 50);
     double radius = 50;
 
-    Sphere sphere(center, radius, color, 0.80, 0.40, 0.10, 0.10, 1.00, 100.0);
+    Sphere sphere(center, radius, color);
+    sphere.setPhongValues(0.80, 0.40, 0.10, 0.10, 1.00, 100.0);
     sphere.setRefractionIndex(10.0);
 
     return sphere;
@@ -152,7 +129,8 @@ Sphere buildSphere2() {
     Point center(70, 340, 50);
     double radius = 50;
 
-    Sphere sphere(center, radius, color, 0.80, 0.40, 0.00, 1.00, 0.00, 100.0);
+    Sphere sphere(center, radius, color);
+    sphere.setPhongValues(0.80, 0.40, 0.00, 1.00, 0.00, 100.0);
 
     return sphere;
 }
@@ -163,7 +141,8 @@ Sphere buildSphere3() {
     Point center(170, 400, 10);
     double radius = 25;
 
-    Sphere sphere(center, radius, color, 0.80, 0.40, 0.00, 1.00, 0.00, 100.0);
+    Sphere sphere(center, radius, color);
+    sphere.setPhongValues(0.80, 0.40, 0.00, 1.00, 0.00, 100.0);
 
     return sphere;
 }
@@ -179,7 +158,10 @@ void image00(Scene &scene) {
 }
 
 Plane buildPlane(){
-    return Plane(Point(0, 0, -10), Vetor(Point(0, 0, 1)), Color(1.0, 0.5, 0.25), 0.5, 0.5, 0.1, 0.1, 0.1, 1.0);
+    Plane plane(Point(0, 0, -10), Vetor(Point(0, 0, 1)), Color(1.0, 0.5, 0.25));
+    plane.setPhongValues(0.5, 0.5, 0.1, 0.1, 0.1, 1.0);
+
+    return plane;
 }
 
 int main() {

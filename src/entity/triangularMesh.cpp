@@ -5,20 +5,13 @@ TriangularMesh::TriangularMesh() : Box() {
     this->triangles =  std::vector<Triangle>();
 }
 
-Triangle TriangularMesh::getTriangle(int index) const {
-    return this->triangles[index];
+
+TriangularMesh::TriangularMesh(std::vector<Triangle> triangles) : Box() {
+    this->triangles = triangles;
 }
 
-TriangularMesh::TriangularMesh(
-    std::vector<Triangle> triangles,
-    double kd,
-    double ks,
-    double ka,
-    double kr,
-    double kt,
-    double roughness
-) : Box(kd, ks, ka, kr, kt, roughness) {
-    this->triangles = triangles;
+Triangle TriangularMesh::getTriangle(int index) const {
+    return this->triangles[index];
 }
 
 std::vector<Triangle> TriangularMesh::getTriangles() const {

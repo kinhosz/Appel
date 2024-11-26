@@ -23,15 +23,10 @@ TriangularMesh buildTriangles() {
     // right
     ts.push_back(Triangle(Point(100, 0, 0), Point(100, 100, 0), Point(100, 50, 100), Color(0.48, 0.24, 0.87)));
 
-    return TriangularMesh(
-        ts,
-        0.8, // kd
-        0.9, // ks
-        0.1, // ka
-        0.0, // kr
-        0.0, // kt
-        100 // roughness
-    );
+    TriangularMesh tMesh(ts);
+    tMesh.setPhongValues(0.8, 0.9, 0.1, 0.0, 0.0, 100);
+
+    return tMesh;
 }
 
 int main() {

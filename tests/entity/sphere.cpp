@@ -5,7 +5,9 @@
 using namespace std;
 
 int main() {
-    Sphere s1, s2(Point(1.55, -2.05, 3.00), 8.00, Color(0.23, 0.60, 0.98), 0.40, 0.92, 1.00, 0.11, 0.24, 0.31);
+    Sphere s1, s2(Point(1.55, -2.05, 3.00), 8.00, Color(0.23, 0.60, 0.98));
+
+    s2.setPhongValues(0.40, 0.92, 1.00, 0.11, 0.24, 0.31);
 
     assert(s1.getCenter() == Point(0.0, 0.0, 0.0));
     assert(s1.getRadius() == 0.0);

@@ -5,9 +5,8 @@
 
 Sphere::Sphere() : Box(), center(Point()), radius(0.0), color(Color()) {}
 
-Sphere::Sphere(Point center, double radius, Color color, double kd, double ks, double ka, double kr, double kt, double roughness)
-    : Box(kd, ks, ka, kr, kt, roughness), center(center), radius(radius), color(color) {
-}
+Sphere::Sphere(Point center, double radius, Color color)
+    : Box(), center(center), radius(radius), color(color) {}
 
 Point Sphere::getCenter() const {
     return center;
