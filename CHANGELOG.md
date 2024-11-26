@@ -10,6 +10,9 @@
  <Summary> See Patch updates </Summary>
 
  <!--PATCH-->
+#### PATCH 2
+https://github.com/kinhosz/Appel/pull/136
+
 #### PATCH 1
 https://github.com/kinhosz/Appel/pull/134
 
