@@ -28,10 +28,10 @@ vector<TriangularMesh> buildMesh() {
         p0, p2, p1, c0
     ));
 
-    TriangularMesh tMesh(triangles);
-    tMesh.setPhongValues(0.5, 0.9, 0.1, 0.1, 0.1, 1.0);
+    TriangularMesh tMesh1(triangles);
+    tMesh1.setPhongValues(0.5, 0.9, 0.1, 0.1, 0.1, 1.0);
 
-    meshes.push_back(tMesh);
+    meshes.push_back(tMesh1);
 
     triangles.clear();
 
@@ -43,10 +43,10 @@ vector<TriangularMesh> buildMesh() {
         p0, p7, p3, c1
     ));
 
-    tMesh(triangles);
-    tMesh.setPhongValues(0.5, 0.5, 0.1, 0.1, 0.1, 1.0);
+    TriangularMesh tMesh2(triangles);
+    tMesh2.setPhongValues(0.5, 0.5, 0.1, 0.1, 0.1, 1.0);
 
-    meshes.push_back(tMesh);
+    meshes.push_back(tMesh2);
 
     triangles.clear();
 
@@ -58,10 +58,10 @@ vector<TriangularMesh> buildMesh() {
         p0, p5, p4, c2
     ));
 
-    tMesh(triangles);
-    tMesh.setPhongValues(0.5, 0.5, 0.1, 0.1, 0.1, 1.0);
+    TriangularMesh tMesh3(triangles);
+    tMesh3.setPhongValues(0.5, 0.5, 0.1, 0.1, 0.1, 1.0);
 
-    meshes.push_back(tMesh);
+    meshes.push_back(tMesh3);
 
     triangles.clear();
 
@@ -73,10 +73,10 @@ vector<TriangularMesh> buildMesh() {
         p1, p6, p5, c3
     ));
 
-    tMesh(triangles);
-    tMesh.setPhongValues(0.5, 0.5, 0.1, 0.1, 0.1, 1.0);
+    TriangularMesh tMesh4(triangles);
+    tMesh4.setPhongValues(0.5, 0.5, 0.1, 0.1, 0.1, 1.0);
 
-    meshes.push_back(tMesh);
+    meshes.push_back(tMesh4);
 
     triangles.clear();
 
@@ -88,10 +88,10 @@ vector<TriangularMesh> buildMesh() {
         p4, p6, p7, c4
     ));
 
-    tMesh(triangles);
-    tMesh.setPhongValues(0.5, 0.5, 0.1, 0.1, 0.1, 100.0);
+    TriangularMesh tMesh5(triangles);
+    tMesh5.setPhongValues(0.5, 0.5, 0.1, 0.1, 0.1, 100.0);
 
-    meshes.push_back(tMesh);
+    meshes.push_back(tMesh5);
 
     triangles.clear();
 
@@ -158,7 +158,10 @@ void image00(Scene &scene) {
 }
 
 Plane buildPlane(){
-    return Plane(Point(0, 0, -10), Vetor(Point(0, 0, 1)), Color(1.0, 0.5, 0.25), 0.5, 0.5, 0.1, 0.1, 0.1, 1.0);
+    Plane plane(Point(0, 0, -10), Vetor(Point(0, 0, 1)), Color(1.0, 0.5, 0.25));
+    plane.setPhongValues(0.5, 0.5, 0.1, 0.1, 0.1, 1.0);
+
+    return plane;
 }
 
 int main() {
