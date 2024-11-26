@@ -32,7 +32,7 @@ TriangularMesh buildMesh() {
     triangles.push_back(t4);
 
     TriangularMesh tMesh(triangles);
-    tMesh(0.60, 0.80, 0.20, 0.10, 0.10, 1.0);
+    tMesh.setPhongValues(0.60, 0.80, 0.20, 0.10, 0.10, 1.0);
 
     return tMesh;
 }
