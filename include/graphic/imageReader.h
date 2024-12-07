@@ -3,11 +3,15 @@
 
 #include <graphic/pixel.h>
 #include <SFML/Graphics.hpp>
+#include <string>
 
 class ImageReader {
+private:
+    sf::Image image;
 public:
     ImageReader();
-    Pixel getPixel(sf::Image image, int x, int y);
+    bool loadImage(const std::string& filePath);
+    Pixel getPixel(int x, int y) const;
 };
 
 #endif
