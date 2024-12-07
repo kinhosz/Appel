@@ -14,8 +14,8 @@ int main() {
     middleX = image.getWidth()/2;
     middleY = image.getHeight()/2;
 
-    assert(middleX == image.getSize().width/2);
-    assert(middleY == image.getSize().height/2);
+    assert(middleX == 320);
+    assert(middleY == 180);
 
     p1 = image.getPixel(0, 0);
     p2 = image.getPixel(middleX, middleY);

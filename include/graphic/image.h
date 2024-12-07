@@ -1,7 +1,6 @@
 #ifndef GRAPHIC_IMAGE_H
 #define GRAPHIC_IMAGE_H
 
-#include <geometry/size.h>
 #include <graphic/pixel.h>
 #include <SFML/Graphics.hpp>
 #include <string>
@@ -16,7 +15,6 @@ public:
     
     int getWidth() const;
     int getHeight() const;
-    Size getSize() const;
 
     Pixel getPixel(int x, int y) const;
 };

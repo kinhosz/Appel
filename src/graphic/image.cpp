@@ -1,6 +1,5 @@
 #include <graphic/image.h>
 #include <graphic/pixel.h>
-#include <geometry/size.h>
 #include <SFML/Graphics.hpp>
 #include <cassert>
 
@@ -16,10 +15,6 @@ int Image::getWidth() const {
 
 int Image::getHeight() const {
     return int(image.getSize().y);
-}
-
-Size Image::getSize() const {
-    return Size(int(image.getSize().x), int(image.getSize().y));
 }
 
 Pixel Image::getPixel(int x, int y) const {
