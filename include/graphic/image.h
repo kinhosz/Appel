@@ -1,16 +1,23 @@
-#ifndef GRAPHIC_IMAGE_READER_H
-#define GRAPHIC_IMAGE_READER_H
+#ifndef GRAPHIC_IMAGE_H
+#define GRAPHIC_IMAGE_H
 
+#include <geometry/size.h>
 #include <graphic/pixel.h>
 #include <SFML/Graphics.hpp>
 #include <string>
 
-class ImageReader {
+class Image {
 private:
     sf::Image image;
 public:
-    ImageReader();
+    Image();
+    
     bool loadImage(const std::string& filePath);
+    
+    int getWidth() const;
+    int getHeight() const;
+    Size getSize() const;
+
     Pixel getPixel(int x, int y) const;
 };
 
