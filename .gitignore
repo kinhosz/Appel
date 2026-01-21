@@ -1,6 +1,7 @@
 bin/
 lib/
 include/SFML
+include/STB
 assets/outputs
 .vscode
 cuda/

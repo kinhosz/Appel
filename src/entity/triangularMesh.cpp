@@ -1,13 +1,36 @@
 #include <entity/triangularMesh.h>
 #include <geometry/triangle.h>
+#include <datastructure/wavefront.h>
+#include <fstream>
 
 TriangularMesh::TriangularMesh() : Box() {
     this->triangles =  std::vector<Triangle>();
+    this->_hasTexture = false;
 }
-
 
 TriangularMesh::TriangularMesh(std::vector<Triangle> triangles) : Box() {
     this->triangles = triangles;
+    this->_hasTexture = false;
+}
+
+TriangularMesh::TriangularMesh(std::string filename) : Box() {
+    this->_hasTexture = false;
+    Wavefront wf(filename);
+    triangles = wf.getTriangles();
+}
+
+void TriangularMesh::setTexture(std::string filename) {
+    _hasTexture = texture.loadImage(filename);
+}
+
+bool TriangularMesh::hasTexture() const {
+    return _hasTexture;
+}
+
+Pixel TriangularMesh::getTexture(double x, double y) const {
+    int px = (texture.getWidth() - 1) * (1.0 - x);
+    int py = (texture.getHeight() - 1) * y;
+    return texture.getPixel(px, py);
 }
 
 Triangle TriangularMesh::getTriangle(int index) const {
