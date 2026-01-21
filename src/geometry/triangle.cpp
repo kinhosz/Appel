@@ -38,6 +38,12 @@ Triangle::Triangle(Point v1, Point v2, Point v3, Vetor n1, Vetor n2, Vetor n3, V
     vertexNormals[2] = n3;
 }
 
+void Triangle::setUVMapping(std::pair<double, double> vt1, std::pair<double, double> vt2, std::pair<double, double> vt3) {
+    uv[0] = vt1;
+    uv[1] = vt2;
+    uv[2] = vt3;
+}
+
 double Triangle::area() const {
     Vetor side1 = Vetor(vertices[1]) - Vetor(vertices[0]);
     Vetor side2 = Vetor(vertices[2]) - Vetor(vertices[0]);
@@ -125,6 +131,27 @@ bool Triangle::isInside(const Point &p) const {
     return true;
 }
 
+std::pair<double, double> Triangle::getUVAtPoint(const Point &p) const {
+    Vetor A = vertices[0];
+    Vetor B = vertices[1];
+    Vetor C = vertices[2];
+    Vetor P = p;
+
+    double ABC = 0.5 * ((B - A).cross(C - A)).norm();
+    double PBC = 0.5 * (((B - P).cross(C - P))).norm();
+    double PAC = 0.5 * (((A - P).cross(C - P))).norm();
+    double PAB = 0.5 * (((A - P).cross(B - P))).norm();
+    
+    double u = PBC / ABC;
+    double v = PAC / ABC;
+    double w = PAB / ABC;
+
+    double finalU = (uv[0].first * u) + (uv[1].first * v) + (uv[2].first * w);
+    double finalV = (uv[0].second * u) + (uv[1].second * v) + (uv[2].second * w);
+
+    return std::make_pair(finalU, finalV);
+}
+
 SurfaceIntersection Triangle::intersect(Ray ray) const {
     Vetor normal = triangleNormal.normalize();
 
@@ -170,5 +197,7 @@ Triangle Triangle::rebase(const CoordinateSystem& cs) const {
     Point p1 = cs.rebase(vertices[1]);
     Point p2 = cs.rebase(vertices[2]);
 
-    return Triangle(p0, p1, p2, color);
+    Triangle t(p0, p1, p2, color);
+    t.setUVMapping(uv[0], uv[1], uv[2]);
+    return t;
 }

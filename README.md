@@ -74,3 +74,7 @@ Will Install:
     - A Human Face:
 
     ![img](/assets/outputs/view/humanFace.png)
+
+    - Cube with texture
+
+    ![img](/assets/models/cube.gif)

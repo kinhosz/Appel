@@ -30,6 +30,7 @@ private:
 
     /* batch intersect stuffs */
     std::vector<Triangle> mappedTriangles;
+    std::vector<int> triangleToMesh;
     std::vector<std::pair<std::pair<double, double>, int>> sortedTrianglesIndexes;
     std::vector<std::pair<std::pair<double, double>, std::pair<double, int>>> activeIndexes;
 
@@ -48,7 +49,7 @@ private:
     void rebaseTriangles(const CoordinateSystem& cs);
     void sortTriangleIndexes();
     void activateTriangles(int& pointerToSortedIndexes, double planeSlopeVertical);
-    SurfaceIntersection sweepOnTriangles(int& pointerToActives, double planeSlopeHorizontal, const Ray& ray);
+    int sweepOnTriangles(int& pointerToActives, double planeSlopeHorizontal, const Ray& ray);
     void deactivateTriangles(double planeSlopeVertical);
 
 public:
@@ -71,7 +72,7 @@ public:
 
     std::pair<SurfaceIntersection, int> castRay(const Ray &ray);
     Color traceRay(const Ray &ray, int layer);
-    std::vector<std::vector<Color>> batchIntersect(const CoordinateSystem& cs, int width, int height, double distance);
+    std::vector<std::vector<Pixel>> batchIntersect(const CoordinateSystem& cs, int width, int height, double distance);
 };
 
 #endif

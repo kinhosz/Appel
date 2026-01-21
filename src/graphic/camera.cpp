@@ -90,11 +90,11 @@ Frame Camera::singleRender(Scene &scene) {
 
 Frame Camera::batchRender(Scene &scene) {
     CoordinateSystem cs(location, vRight, vFront, vUp);
-    std::vector<std::vector<Color>> colors = scene.batchIntersect(cs, hPixels, vPixels, distance);
+    std::vector<std::vector<Pixel>> pixels = scene.batchIntersect(cs, hPixels, vPixels, distance);
 
     for(int x=0;x<hPixels;x++) {
         for(int y=0;y<vPixels;y++) {
-            frame.setPixel(x, (vPixels - y - 1), Pixel(colors[x][y]));
+            frame.setPixel(x, (vPixels - y - 1), pixels[x][y]);
         }
     }
 

@@ -213,10 +213,12 @@ Color Scene::traceRay(const Ray &ray, int layer) {
 
 void Scene::rebaseTriangles(const CoordinateSystem& cs) {
     mappedTriangles.clear();
+    triangleToMesh.clear();
     for(const std::pair<const int, TriangularMesh>& p: meshes) {
         const std::vector<Triangle>& triangles = p.second.getTriangles();
         for(const Triangle& triangle: triangles) {
             mappedTriangles.push_back(triangle.rebase(cs));
+            triangleToMesh.push_back(p.first);
         }
     }
 }
@@ -287,8 +289,9 @@ void Scene::activateTriangles(int& pointerToSortedIndexes, double planeSlopeVert
     std::sort(activeIndexes.begin(), activeIndexes.end());
 }
 
-SurfaceIntersection Scene::sweepOnTriangles(int& pointerToActives, double planeSlopeHorizontal, const Ray& ray) {
+int Scene::sweepOnTriangles(int& pointerToActives, double planeSlopeHorizontal, const Ray& ray) {
     SurfaceIntersection nearSurface;
+    int triangle_idx = -1;
     /*
         Passing for all triangles until the minSlopeH > planeSlopeHorizontal.
         However, if maxSlopeH < planeSlope, then deactivate it.
@@ -309,10 +312,13 @@ SurfaceIntersection Scene::sweepOnTriangles(int& pointerToActives, double planeS
         const Triangle& triangle = mappedTriangles[idx];
 
         SurfaceIntersection current = triangle.intersect(ray);
-        if(current.distance < nearSurface.distance) std::swap(current, nearSurface);
+        if(current.distance < nearSurface.distance) {
+            std::swap(current, nearSurface);
+            std::swap(triangle_idx, idx);
+        }
         current_active++;
     }
-    return nearSurface;
+    return triangle_idx;
 }
 
 void Scene::deactivateTriangles(double planeSlopeVertical) {
@@ -328,8 +334,8 @@ void Scene::deactivateTriangles(double planeSlopeVertical) {
     }
 }
 
-std::vector<std::vector<Color>> Scene::batchIntersect(const CoordinateSystem& cs, int width, int height, double distance) {
-    std::vector<std::vector<Color>> res(width, std::vector<Color>(height));
+std::vector<std::vector<Pixel>> Scene::batchIntersect(const CoordinateSystem& cs, int width, int height, double distance) {
+    std::vector<std::vector<Pixel>> res(width, std::vector<Pixel>(height));
 
     rebaseTriangles(cs);
     sortTriangleIndexes();
@@ -347,16 +353,33 @@ std::vector<std::vector<Color>> Scene::batchIntersect(const CoordinateSystem& cs
         int pointerToActives = 0;
         for(int int_x=0;int_x<width;int_x++){
             SurfaceIntersection nearSurface;
+            int near_idx = -1;
             double planeSlopeHorizontal = (double)(int_x - mid_w)/distance;
 
             Vetor dir(planeSlopeHorizontal * distance, distance, planeSlopeVertical * distance);
             dir = dir.normalize();
             Ray ray(Point(0,0,0), dir);
 
-            SurfaceIntersection nearTriangle = sweepOnTriangles(pointerToActives, planeSlopeHorizontal, ray);
-            if(cmp(nearTriangle.distance, nearSurface.distance) == -1) std::swap(nearSurface, nearTriangle);
+            int curr_idx = sweepOnTriangles(pointerToActives, planeSlopeHorizontal, ray);
+            SurfaceIntersection nearTriangle = (curr_idx == -1 ? SurfaceIntersection() : mappedTriangles[curr_idx].intersect(ray));
+            if(cmp(nearTriangle.distance, nearSurface.distance) == -1) {
+                near_idx = curr_idx;
+                std::swap(nearSurface, nearTriangle);
+            }
 
-            res[int_x][int_z] = nearSurface.color;
+            if(near_idx != -1) {
+                int mesh_id = triangleToMesh[near_idx];
+                const TriangularMesh &mesh = meshes[mesh_id];
+                if(mesh.hasTexture()) {
+                    Point p = ray.pointAt(nearSurface.distance);
+                    std::pair<double, double> uv = mappedTriangles[near_idx].getUVAtPoint(p);
+                    res[int_x][int_z] = mesh.getTexture(uv.first, uv.second);
+                } else {
+                    res[int_x][int_z] = Pixel(mappedTriangles[near_idx].color);
+                }
+            } else {
+                res[int_x][int_z] = Pixel(0, 0, 0);
+            }
         }
         deactivateTriangles(planeSlopeVertical);
     }
