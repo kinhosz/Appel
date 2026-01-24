@@ -3,6 +3,7 @@
 #include <Appel/geometry/utils.h>
 
 using namespace std;
+using namespace Appel;
 
 int main(){
     SurfaceIntersection sf;

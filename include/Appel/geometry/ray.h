@@ -4,13 +4,15 @@
 #include <Appel/geometry/point.h>
 #include <Appel/geometry/vetor.h>
 
-struct Ray {
-    Point location;
-    Vetor direction;
+namespace Appel {
+    struct Ray {
+        Point location;
+        Vetor direction;
 
-    Ray();
-    Ray(Point location, Vetor direction);
-    Point pointAt(double t) const;
-};
+        Ray();
+        Ray(Point location, Vetor direction);
+        Point pointAt(double t) const;
+    };
+}
 
 #endif

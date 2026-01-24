@@ -2,6 +2,7 @@
 #include <assert.h>
 #include <cmath>
 using namespace std;
+using namespace Appel;
 
 int main(){
     const double epsilon = 1e-6;

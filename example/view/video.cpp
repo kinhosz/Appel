@@ -10,6 +10,7 @@
 #include <SFML/Graphics.hpp>
 #include <math.h>
 using namespace std;
+using namespace Appel;
 
 #define WIDTH 640
 #define HEIGHT 360

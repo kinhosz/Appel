@@ -1,9 +1,11 @@
 #include <Appel/gpu/helper.h>
 
-__device__ GPoint multByScalar(GPoint p, float s) {
-    p.x *= s;
-    p.y *= s;
-    p.z *= s;
+namespace Appel {
+    __device__ GPoint multByScalar(GPoint p, float s) {
+        p.x *= s;
+        p.y *= s;
+        p.z *= s;
 
-    return p;
+        return p;
+    }
 }

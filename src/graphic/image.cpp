@@ -3,24 +3,26 @@
 #include <SFML/Graphics.hpp>
 #include <cassert>
 
-Image::Image() {}
+namespace Appel {
+    Image::Image() {}
 
-bool Image::loadImage(const std::string& filePath) {
-    return image.loadFromFile(filePath);
-}
+    bool Image::loadImage(const std::string& filePath) {
+        return image.loadFromFile(filePath);
+    }
 
-int Image::getWidth() const {
-    return int(image.getSize().x);
-}
+    int Image::getWidth() const {
+        return int(image.getSize().x);
+    }
 
-int Image::getHeight() const {
-    return int(image.getSize().y);
-}
+    int Image::getHeight() const {
+        return int(image.getSize().y);
+    }
 
-Pixel Image::getPixel(int x, int y) const {
-    assert(x >= 0 && x < int(image.getSize().x));
-    assert(y >= 0 && y < int(image.getSize().y));
+    Pixel Image::getPixel(int x, int y) const {
+        assert(x >= 0 && x < int(image.getSize().x));
+        assert(y >= 0 && y < int(image.getSize().y));
 
-    sf::Color color = image.getPixel(x, y);
-    return Pixel(color.r, color.g, color.b);
+        sf::Color color = image.getPixel(x, y);
+        return Pixel(color.r, color.g, color.b);
+    }
 }

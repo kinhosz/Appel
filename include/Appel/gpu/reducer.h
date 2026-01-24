@@ -5,7 +5,9 @@
 
 #include <cuda_runtime.h>
 
-__global__ void getMin(float* buffer_dist, int* buffer_idx, int* N, int* res);
+namespace Appel {
+  __global__ void getMin(float* buffer_dist, int* buffer_idx, int* N, int* res);
+}
 
 #endif
 #endif

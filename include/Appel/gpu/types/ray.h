@@ -8,17 +8,19 @@
 #include <cuda_runtime.h>
 #endif 
 
-struct GRay {
-    GPoint location;
-    GPoint direction;
+namespace Appel {
+    struct GRay {
+        GPoint location;
+        GPoint direction;
 
-#ifndef APPEL_GPU_DISABLED
-    __host__ __device__ GRay();
-#else
-    GRay();
-#endif
+    #ifndef APPEL_GPU_DISABLED
+        __host__ __device__ GRay();
+    #else
+        GRay();
+    #endif
 
-    GRay(const Ray &ray); 
-};
+        GRay(const Ray &ray); 
+    };
+}
 
 #endif

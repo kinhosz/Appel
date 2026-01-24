@@ -6,6 +6,7 @@
 #include <time.h>
 #include <iostream>
 using namespace std;
+using namespace Appel;
 
 #define WIDTH 1920
 #define HEIGHT 1080

@@ -4,6 +4,7 @@
 #include <Appel/graphic/utils.h>
 #include <Appel/geometry/utils.h>
 using namespace std;
+using namespace Appel;
 
 #define WIDTH 1920
 #define HEIGHT 1080

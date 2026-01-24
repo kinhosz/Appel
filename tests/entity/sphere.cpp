@@ -3,6 +3,7 @@
 #include <Appel/graphic/color.h>
 #include <assert.h>
 using namespace std;
+using namespace Appel;
 
 int main() {
     Sphere s1, s2(Point(1.55, -2.05, 3.00), 8.00, Color(0.23, 0.60, 0.98));

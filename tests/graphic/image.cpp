@@ -1,6 +1,7 @@
 #include <Appel/graphic/image.h>
 #include <Appel/graphic/pixel.h>
 #include <cassert>
+using namespace Appel;
 
 int main() {
     Image image;

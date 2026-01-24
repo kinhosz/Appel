@@ -17,62 +17,64 @@
 #define ENABLE_GPU true
 #endif
 
-class Scene {
-private:
-    std::map<int, Light> lights;
-    int lightsCurrentIndex;
-    Color environmentColor;
-    int objectsCurrentIndex;
-    int depth;
+namespace Appel {
+    class Scene {
+    private:
+        std::map<int, Light> lights;
+        int lightsCurrentIndex;
+        Color environmentColor;
+        int objectsCurrentIndex;
+        int depth;
 
-    Octree octree;
-    Manager* manager;
+        Octree octree;
+        Manager* manager;
 
-    /* batch intersect stuffs */
-    std::vector<Triangle> mappedTriangles;
-    std::vector<int> triangleToMesh;
-    std::vector<std::pair<std::pair<double, double>, int>> sortedTrianglesIndexes;
-    std::vector<std::pair<std::pair<double, double>, std::pair<double, int>>> activeIndexes;
+        /* batch intersect stuffs */
+        std::vector<Triangle> mappedTriangles;
+        std::vector<int> triangleToMesh;
+        std::vector<std::pair<std::pair<double, double>, int>> sortedTrianglesIndexes;
+        std::vector<std::pair<std::pair<double, double>, std::pair<double, int>>> activeIndexes;
 
-    // TODO: Change Map to Vector
-    std::map<int, Plane> planes;
-    std::map<int, Sphere> spheres;
-    std::map<int, TriangularMesh> meshes;
+        // TODO: Change Map to Vector
+        std::map<int, Plane> planes;
+        std::map<int, Sphere> spheres;
+        std::map<int, TriangularMesh> meshes;
 
-    std::vector<std::pair<int, int>> triangleIndex;
-    std::vector<Triangle> triangles;
+        std::vector<std::pair<int, int>> triangleIndex;
+        std::vector<Triangle> triangles;
 
-    Color brightness(const Ray& ray, SurfaceIntersection surface, const Box& box, const Light& light);
-    Color phong(const Ray &ray, const SurfaceIntersection &surface, int index, int layer);
+        Color brightness(const Ray& ray, SurfaceIntersection surface, const Box& box, const Light& light);
+        Color phong(const Ray &ray, const SurfaceIntersection &surface, int index, int layer);
 
-    /* batch intersect methods */
-    void rebaseTriangles(const CoordinateSystem& cs);
-    void sortTriangleIndexes();
-    void activateTriangles(int& pointerToSortedIndexes, double planeSlopeVertical);
-    int sweepOnTriangles(int& pointerToActives, double planeSlopeHorizontal, const Ray& ray);
-    void deactivateTriangles(double planeSlopeVertical);
+        /* batch intersect methods */
+        void rebaseTriangles(const CoordinateSystem& cs);
+        void sortTriangleIndexes();
+        void activateTriangles(int& pointerToSortedIndexes, double planeSlopeVertical);
+        int sweepOnTriangles(int& pointerToActives, double planeSlopeHorizontal, const Ray& ray);
+        void deactivateTriangles(double planeSlopeVertical);
 
-public:
-    Scene(int depth=5);
-    Scene(const Color& environmentColor, int depth=5);
+    public:
+        Scene(int depth=5);
+        Scene(const Color& environmentColor, int depth=5);
 
-    std::map<int, Light> getLights() const;
-    Color getEnvironmentColor() const;
+        std::map<int, Light> getLights() const;
+        Color getEnvironmentColor() const;
 
-    int addLight(const Light& light);
-    void removeLight(int index);
-    void setEnvironmentColor(const Color& environmentColor);
-    void removeObject(int index);
+        int addLight(const Light& light);
+        void removeLight(int index);
+        void setEnvironmentColor(const Color& environmentColor);
+        void removeObject(int index);
 
-    int addObject(Plane object);
-    int addObject(Sphere object);
-    int addObject(TriangularMesh object);
+        int addObject(Plane object);
+        int addObject(Sphere object);
+        int addObject(TriangularMesh object);
 
-    Box getObject(int index) const;
+        Box getObject(int index) const;
 
-    std::pair<SurfaceIntersection, int> castRay(const Ray &ray);
-    Color traceRay(const Ray &ray, int layer);
-    std::vector<std::vector<Pixel>> batchIntersect(const CoordinateSystem& cs, int width, int height, double distance);
-};
+        std::pair<SurfaceIntersection, int> castRay(const Ray &ray);
+        Color traceRay(const Ray &ray, int layer);
+        std::vector<std::vector<Pixel>> batchIntersect(const CoordinateSystem& cs, int width, int height, double distance);
+    };
+}
 
 #endif

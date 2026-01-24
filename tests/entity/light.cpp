@@ -3,6 +3,7 @@
 #include <Appel/graphic/color.h>
 #include <assert.h>
 using namespace std;
+using namespace Appel;
 
 int main(){
     Light l(Point(-1, 2, 10), Color(0.15, 0.97, 0.50));

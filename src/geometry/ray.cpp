@@ -1,15 +1,17 @@
 #include <Appel/geometry/ray.h>
 
-Ray::Ray() {
-    location = Point();
-    direction = Vetor().normalize();   
-}
+namespace Appel {
+    Ray::Ray() {
+        location = Point();
+        direction = Vetor().normalize();   
+    }
 
-Ray::Ray(Point location, Vetor direction) {
-    this->location = location;
-    this->direction = direction.normalize();
-}
+    Ray::Ray(Point location, Vetor direction) {
+        this->location = location;
+        this->direction = direction.normalize();
+    }
 
-Point Ray::pointAt(double t) const {
-    return (direction * t + location).getPoint();
+    Point Ray::pointAt(double t) const {
+        return (direction * t + location).getPoint();
+    }
 }

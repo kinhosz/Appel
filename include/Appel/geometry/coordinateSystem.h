@@ -4,14 +4,16 @@
 #include <Appel/geometry/point.h>
 #include <Appel/geometry/vetor.h>
 
-struct CoordinateSystem {
-    Point origin;
-    double angle_x, angle_y, angle_z;
+namespace Appel {
+    struct CoordinateSystem {
+        Point origin;
+        double angle_x, angle_y, angle_z;
 
-    CoordinateSystem();
-    CoordinateSystem(Point origin, Vetor ux, Vetor uy, Vetor uz);
+        CoordinateSystem();
+        CoordinateSystem(Point origin, Vetor ux, Vetor uy, Vetor uz);
 
-    Point rebase(const Point& p) const;
-};
+        Point rebase(const Point& p) const;
+    };
+}
 
 #endif

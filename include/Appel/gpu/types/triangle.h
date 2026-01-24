@@ -8,16 +8,18 @@
 #include <cuda_runtime.h>
 #endif
 
-struct GTriangle {
-    GPoint point[3];
-    int host_id;
+namespace Appel {
+    struct GTriangle {
+        GPoint point[3];
+        int host_id;
 
-#ifndef APPEL_GPU_DISABLED
-    __host__ __device__ GTriangle();
-#else
-    GTriangle();
-#endif
+    #ifndef APPEL_GPU_DISABLED
+        __host__ __device__ GTriangle();
+    #else
+        GTriangle();
+    #endif
 
-    GTriangle(const Triangle &t, int host_id);
-};
+        GTriangle(const Triangle &t, int host_id);
+    };
+}
 #endif

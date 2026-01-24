@@ -8,6 +8,7 @@
 #include <assert.h>
 #include <Appel/graphic/utils.h>
 using namespace std;
+using namespace Appel;
 
 #define WIDTH 640
 #define HEIGHT 360

@@ -6,24 +6,26 @@
 #include <Appel/geometry/ray.h>
 #include <Appel/graphic/color.h>
 
-class Sphere : public Box {
-private:
-    Point center;
-    double radius;
-    Color color;
-public:
-    Sphere();
-    Sphere(Point center, double radius, Color color);
+namespace Appel {
+    class Sphere : public Box {
+    private:
+        Point center;
+        double radius;
+        Color color;
+    public:
+        Sphere();
+        Sphere(Point center, double radius, Color color);
 
-    Point getCenter() const;
-    double getRadius() const;
-    Color getColor() const;
+        Point getCenter() const;
+        double getRadius() const;
+        Color getColor() const;
 
-    void setCenter(Point center);
-    void setRadius(double radius);
-    void setColor(Color color);
+        void setCenter(Point center);
+        void setRadius(double radius);
+        void setColor(Color color);
 
-    SurfaceIntersection intersect(const Ray &ray) const override;
-};
+        SurfaceIntersection intersect(const Ray &ray) const override;
+    };
+}
 
 #endif

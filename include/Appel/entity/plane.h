@@ -7,24 +7,26 @@
 #include <Appel/geometry/ray.h>
 #include <Appel/graphic/color.h>
 
-class Plane : public Box {
-private:
-    Point point;
-    Vetor normalVector;
-    Color color;
-public:
-    Plane();
-    Plane(Point point, Vetor normalVector, Color color);
+namespace Appel {
+    class Plane : public Box {
+    private:
+        Point point;
+        Vetor normalVector;
+        Color color;
+    public:
+        Plane();
+        Plane(Point point, Vetor normalVector, Color color);
 
-    Point getPoint() const;
-    Vetor getNormalVector() const;
-    Color getColor() const;
+        Point getPoint() const;
+        Vetor getNormalVector() const;
+        Color getColor() const;
 
-    void setPoint(Point point);
-    void setNormalVector(Vetor normalVector);
-    void setColor(Color color);
+        void setPoint(Point point);
+        void setNormalVector(Vetor normalVector);
+        void setColor(Color color);
 
-    SurfaceIntersection intersect(const Ray &ray) const override;
-};
+        SurfaceIntersection intersect(const Ray &ray) const override;
+    };
+}
 
 #endif

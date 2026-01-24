@@ -4,16 +4,18 @@
 #include <Appel/graphic/color.h>
 #include <Appel/geometry/vetor.h>
 
-struct SurfaceIntersection {
-    Color color;
-    double distance;
-    Vetor normal;
+namespace Appel {
+    struct SurfaceIntersection {
+        Color color;
+        double distance;
+        Vetor normal;
 
-    SurfaceIntersection();
-    SurfaceIntersection(Color color, double distance, Vetor normal);
+        SurfaceIntersection();
+        SurfaceIntersection(Color color, double distance, Vetor normal);
 
-    Vetor getReflection(const Vetor &direction) const;
-    Vetor getRefraction(Vetor direction, double refractionIndex) const;
-};
+        Vetor getReflection(const Vetor &direction) const;
+        Vetor getRefraction(Vetor direction, double refractionIndex) const;
+    };
+}
 
 #endif

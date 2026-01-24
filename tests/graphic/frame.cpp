@@ -1,5 +1,6 @@
 #include <Appel/graphic/frame.h>
 #include <cassert>
+using namespace Appel;
 
 int main(){
     int vRes = 100;

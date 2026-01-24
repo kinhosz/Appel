@@ -4,6 +4,8 @@
 #include <Appel/graphic/frame.h>
 #include <string>
 
-bool saveAsPng(const Frame &frame, const std::string &filename);
+namespace Appel {
+  bool saveAsPng(const Frame &frame, const std::string &filename);
+}
 
 #endif

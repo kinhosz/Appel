@@ -3,6 +3,7 @@
 #include <Appel/geometry/utils.h>
 #include <cassert>
 using namespace std;
+using namespace Appel;
 
 int main(){
     Box b1, b2;

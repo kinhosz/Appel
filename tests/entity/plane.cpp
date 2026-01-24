@@ -4,6 +4,7 @@
 #include <Appel/graphic/color.h>
 #include <assert.h>
 using namespace std;
+using namespace Appel;
 
 int main() {
     Plane p1, p2(Point(0.00, 0.00, 0.00), Vetor(0.00, 1.00, 0.00), Color(0.23, 0.60, 0.98));

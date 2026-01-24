@@ -4,6 +4,7 @@
 #include <Appel/geometry/utils.h>
 #include <assert.h>
 using namespace std;
+using namespace Appel;
 
 int main() {
     Point p(0, 0, 0);

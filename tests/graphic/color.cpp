@@ -2,6 +2,7 @@
 #include <assert.h>
 #include <cmath>
 using namespace std;
+using namespace Appel;
 
 int main() {
     Color c1, c2(0.25, 0.83, 0.42);

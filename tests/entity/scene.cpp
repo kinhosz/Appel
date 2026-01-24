@@ -5,6 +5,7 @@
 #include <vector>
 #include <assert.h>
 using namespace std;
+using namespace Appel;
 
 int main() {
     Scene scene1, scene2(Color(1.0, 1.0, 0.9)), scene3(Color(0.5, 0.0, 0.4));

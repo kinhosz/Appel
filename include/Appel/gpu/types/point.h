@@ -8,17 +8,19 @@
 #include <cuda_runtime.h>
 #endif
 
-struct GPoint {
-    float x, y, z;
+namespace Appel {
+    struct GPoint {
+        float x, y, z;
 
-#ifndef APPEL_GPU_DISABLED
-    __host__ __device__ GPoint();
-#else
-    GPoint();
-#endif
+    #ifndef APPEL_GPU_DISABLED
+        __host__ __device__ GPoint();
+    #else
+        GPoint();
+    #endif
 
-    GPoint(const Point &p);
-    GPoint(const Vetor &v);
-};
+        GPoint(const Point &p);
+        GPoint(const Vetor &v);
+    };
+}
 
 #endif

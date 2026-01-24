@@ -11,17 +11,20 @@
 #define DOUBLE_INF DBL_MAX
 
 extern const double EPSILON;
-extern int cmp(double a, double b);
 
-std::vector<Triangle> createTriangles(
-    std::vector<Point>::size_type numberOfTriangles,
-    std::vector<Point> vertices,
-    std::vector<std::array<int, 3>> triangles,
-    std::vector<Vetor> vertexNormals,  
-    std::vector<Vetor> triangleNormals,
-    std::vector<Color> colors
-);
+namespace Appel {
+    extern int cmp(double a, double b);
 
-double getAngle(double x, double y);
+    std::vector<Triangle> createTriangles(
+        std::vector<Point>::size_type numberOfTriangles,
+        std::vector<Point> vertices,
+        std::vector<std::array<int, 3>> triangles,
+        std::vector<Vetor> vertexNormals,  
+        std::vector<Vetor> triangleNormals,
+        std::vector<Color> colors
+    );
+
+    double getAngle(double x, double y);
+}
 
 #endif

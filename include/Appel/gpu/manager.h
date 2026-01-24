@@ -7,29 +7,31 @@
 #include <Appel/geometry/triangle.h>
 #include <Appel/geometry/ray.h>
 
-class Manager {
-    unsigned int maxTriangles;
+namespace Appel {
+    class Manager {
+        unsigned int maxTriangles;
 
-    GTriangle* cache;
-    int* buffer_idx;
-    float* buffer_dist;
-    int* result;
+        GTriangle* cache;
+        int* buffer_idx;
+        float* buffer_dist;
+        int* result;
 
-    GRay* dvc_ray;
-    int* dvc_N;
-    int* dvc_BLOCK;
+        GRay* dvc_ray;
+        int* dvc_N;
+        int* dvc_BLOCK;
 
-    int threadsPerBlock;
-    int blocksPerGrid;
+        int threadsPerBlock;
+        int blocksPerGrid;
 
-    int free_pos;
-    GTriangle* tmp;
-public:
-    Manager(unsigned int maxTriangles);
-    ~Manager();
+        int free_pos;
+        GTriangle* tmp;
+    public:
+        Manager(unsigned int maxTriangles);
+        ~Manager();
 
-    int add(const Triangle& t, int host_id);
-    int run(const Ray& ray);
-};
+        int add(const Triangle& t, int host_id);
+        int run(const Ray& ray);
+    };
+}
 
 #endif
