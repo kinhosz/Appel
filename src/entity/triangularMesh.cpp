@@ -29,7 +29,7 @@ namespace Appel {
     }
 
     Pixel TriangularMesh::getTexture(double x, double y) const {
-        int px = (texture.getWidth() - 1) * (1.0 - x);
+        int px = (texture.getWidth() - 1) * x;
         int py = (texture.getHeight() - 1) * y;
         return texture.getPixel(px, py);
     }
