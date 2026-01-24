@@ -1,8 +1,9 @@
 #include <cassert>
-#include <geometry/surfaceIntersection.h>
-#include <geometry/utils.h>
+#include <Appel/geometry/surfaceIntersection.h>
+#include <Appel/geometry/utils.h>
 
 using namespace std;
+using namespace Appel;
 
 int main(){
     SurfaceIntersection sf;

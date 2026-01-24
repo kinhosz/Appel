@@ -1,8 +1,9 @@
-#include <geometry/vetor.h>
-#include <geometry/utils.h>
+#include <Appel/geometry/vetor.h>
+#include <Appel/geometry/utils.h>
 #include <assert.h>
 #include <cmath>
 using namespace std;
+using namespace Appel;
 
 int main(){
     const double epsilon = 1e-6;

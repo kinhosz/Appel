@@ -1,7 +1,8 @@
-#include <graphic/pixel.h>
-#include <graphic/color.h>
+#include <Appel/graphic/pixel.h>
+#include <Appel/graphic/color.h>
 #include <assert.h>
 using namespace std;
+using namespace Appel;
 
 int main() {
     Pixel p1, p2(255, 174, 10), p3(Color(0.2, 0.8, 0.4));

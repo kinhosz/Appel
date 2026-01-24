@@ -1,5 +1,6 @@
-#include <geometry/triangle.h>
+#include <Appel/geometry/triangle.h>
 using namespace std;
+using namespace Appel;
 
 int main(){
     // using eq = 2x - 3y + z - 4 = 0

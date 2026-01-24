@@ -1,8 +1,9 @@
-#include <entity/light.h>
-#include <geometry/point.h>
-#include <graphic/color.h>
+#include <Appel/entity/light.h>
+#include <Appel/geometry/point.h>
+#include <Appel/graphic/color.h>
 #include <assert.h>
 using namespace std;
+using namespace Appel;
 
 int main(){
     Light l(Point(-1, 2, 10), Color(0.15, 0.97, 0.50));

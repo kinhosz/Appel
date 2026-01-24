@@ -1,36 +1,38 @@
-#include <entity/light.h>
+#include <Appel/entity/light.h>
 #include <assert.h>
 
-Light::Light() {
-    this->location = Point();
-    this->intensity = Color();
-}
+namespace Appel {
+    Light::Light() {
+        this->location = Point();
+        this->intensity = Color();
+    }
 
-Light::Light(Point location, Color intensity) {
-    this->location = location;
-    this->intensity = intensity;
-}
+    Light::Light(Point location, Color intensity) {
+        this->location = location;
+        this->intensity = intensity;
+    }
 
-Point Light::getLocation() const {
-    return location;
-}
+    Point Light::getLocation() const {
+        return location;
+    }
 
-Color Light::getIntensity() const {
-    return intensity;
-}
+    Color Light::getIntensity() const {
+        return intensity;
+    }
 
-void Light::setLocation(Point location) {
-    this->location = location;
-}
+    void Light::setLocation(Point location) {
+        this->location = location;
+    }
 
-void Light::setIntensity(Color intensity) {
-    this->intensity = intensity;
-}
+    void Light::setIntensity(Color intensity) {
+        this->intensity = intensity;
+    }
 
-bool Light::operator==(const Light& other) const {
-    return location == other.location && intensity == other.intensity;
-}
+    bool Light::operator==(const Light& other) const {
+        return location == other.location && intensity == other.intensity;
+    }
 
-bool Light::operator!=(const Light& other) const {
-    return !(*this == other);
+    bool Light::operator!=(const Light& other) const {
+        return !(*this == other);
+    }
 }

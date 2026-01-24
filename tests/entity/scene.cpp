@@ -1,10 +1,11 @@
-#include <entity/scene.h>
-#include <entity/light.h>
-#include <geometry/point.h>
-#include <graphic/color.h>
+#include <Appel/entity/scene.h>
+#include <Appel/entity/light.h>
+#include <Appel/geometry/point.h>
+#include <Appel/graphic/color.h>
 #include <vector>
 #include <assert.h>
 using namespace std;
+using namespace Appel;
 
 int main() {
     Scene scene1, scene2(Color(1.0, 1.0, 0.9)), scene3(Color(0.5, 0.0, 0.4));

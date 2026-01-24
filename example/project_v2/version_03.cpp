@@ -1,11 +1,12 @@
-#include <entity/triangularMesh.h>
-#include <entity/scene.h>
-#include <graphic/camera.h>
-#include <graphic/utils.h>
-#include <geometry/utils.h>
+#include <Appel/entity/triangularMesh.h>
+#include <Appel/entity/scene.h>
+#include <Appel/graphic/camera.h>
+#include <Appel/graphic/utils.h>
+#include <Appel/geometry/utils.h>
 #include <time.h>
 #include <iostream>
 using namespace std;
+using namespace Appel;
 
 #define WIDTH 1920
 #define HEIGHT 1080

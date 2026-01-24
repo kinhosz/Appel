@@ -1,5 +1,6 @@
-#include <graphic/camera.h>
-#include <geometry/point.h>
+#include <Appel/graphic/camera.h>
+#include <Appel/geometry/point.h>
+using namespace Appel;
 
 int main(){
     Point point(0, 0, 0);

@@ -1,10 +1,12 @@
-#include <gpu/helper.h>
+#include <Appel/gpu/helper.h>
 
-__device__ GPoint pointAt(GRay ray, float t) {
-    GPoint p;
-    p.x = ray.location.x + ray.direction.x * t;
-    p.y = ray.location.y + ray.direction.y * t;
-    p.z = ray.location.z + ray.direction.z * t;
+namespace Appel {
+    __device__ GPoint pointAt(GRay ray, float t) {
+        GPoint p;
+        p.x = ray.location.x + ray.direction.x * t;
+        p.y = ray.location.y + ray.direction.y * t;
+        p.z = ray.location.z + ray.direction.z * t;
 
-    return p;
+        return p;
+    }
 }

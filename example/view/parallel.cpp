@@ -1,12 +1,13 @@
 #include <vector>
-#include <geometry/point.h>
-#include <geometry/triangle.h>
-#include <entity/triangularMesh.h>
-#include <entity/scene.h>
-#include <graphic/camera.h>
+#include <Appel/geometry/point.h>
+#include <Appel/geometry/triangle.h>
+#include <Appel/entity/triangularMesh.h>
+#include <Appel/entity/scene.h>
+#include <Appel/graphic/camera.h>
 #include <SFML/Graphics.hpp>
 #include <math.h>
 using namespace std;
+using namespace Appel;
 
 #define WIDTH 640
 #define HEIGHT 360
