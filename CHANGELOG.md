@@ -5,6 +5,16 @@
  <Summary> See Minor updates </Summary>
 
  <!--MINOR-->
+ ### MINOR 28
+ <details>
+ <Summary> See Patch updates </Summary>
+
+ <!--PATCH-->
+#### PATCH 0
+https://github.com/kinhosz/Appel/pull/146
+
+ </details>
+
  ### MINOR 27
  <details>
  <Summary> See Patch updates </Summary>
