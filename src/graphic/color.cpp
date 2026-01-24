@@ -1,5 +1,5 @@
-#include <graphic/color.h>
-#include <geometry/utils.h>
+#include <Appel/graphic/color.h>
+#include <Appel/geometry/utils.h>
 
 Color::Color() {
     red = 0.0;

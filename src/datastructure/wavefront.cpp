@@ -1,4 +1,4 @@
-#include <datastructure/wavefront.h>
+#include <Appel/datastructure/wavefront.h>
 #include <fstream>
 #include <assert.h>
 

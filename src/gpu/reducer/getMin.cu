@@ -1,4 +1,4 @@
-#include <gpu/reducer.h>
+#include <Appel/gpu/reducer.h>
 
 __global__ void getMin(float* buffer_dist, int* buffer_idx, int* N, int* res) {
     float val = buffer_dist[0];

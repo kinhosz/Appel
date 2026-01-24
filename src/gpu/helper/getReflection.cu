@@ -1,4 +1,4 @@
-#include <gpu/helper.h>
+#include <Appel/gpu/helper.h>
 
 __device__ GPoint getReflection(GTriangle triangle, GPoint dir) {
     GPoint tNormal = normalize(getNormal(triangle));

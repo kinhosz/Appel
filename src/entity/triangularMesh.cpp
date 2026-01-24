@@ -1,6 +1,6 @@
-#include <entity/triangularMesh.h>
-#include <geometry/triangle.h>
-#include <datastructure/wavefront.h>
+#include <Appel/entity/triangularMesh.h>
+#include <Appel/geometry/triangle.h>
+#include <Appel/datastructure/wavefront.h>
 #include <fstream>
 
 TriangularMesh::TriangularMesh() : Box() {

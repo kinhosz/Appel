@@ -1,6 +1,6 @@
-#include <datastructure/octree.h>
+#include <Appel/datastructure/octree.h>
 #include <math.h>
-#include <geometry/utils.h>
+#include <Appel/geometry/utils.h>
 
 Octree::Octree() {}
 

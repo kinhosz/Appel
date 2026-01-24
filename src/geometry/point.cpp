@@ -1,5 +1,5 @@
-#include <geometry/point.h>
-#include <geometry/utils.h>
+#include <Appel/geometry/point.h>
+#include <Appel/geometry/utils.h>
 #include <cmath>
 
 Point::Point() : x(0), y(0), z(0) {}

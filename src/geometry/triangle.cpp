@@ -1,9 +1,9 @@
-#include <geometry/triangle.h>
-#include <geometry/utils.h>
-#include <graphic/color.h>
-#include <geometry/vetor.h> 
-#include <geometry/surfaceIntersection.h>
-#include <geometry/ray.h>
+#include <Appel/geometry/triangle.h>
+#include <Appel/geometry/utils.h>
+#include <Appel/graphic/color.h>
+#include <Appel/geometry/vetor.h> 
+#include <Appel/geometry/surfaceIntersection.h>
+#include <Appel/geometry/ray.h>
 #include <math.h>
 
 Triangle::Triangle() {

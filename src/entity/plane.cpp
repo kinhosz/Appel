@@ -1,5 +1,5 @@
-#include <entity/plane.h>
-#include <geometry/utils.h>
+#include <Appel/entity/plane.h>
+#include <Appel/geometry/utils.h>
 
 Plane::Plane() : Box(), point(Point()), normalVector(Vetor()), color(Color()) {}
 

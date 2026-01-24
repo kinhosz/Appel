@@ -1,6 +1,6 @@
 #ifdef APPEL_GPU_DISABLED
 
-#include <gpu/manager.h>
+#include <Appel/gpu/manager.h>
 
 Manager::Manager(unsigned int maxTriangles) {}
 Manager::~Manager() {}

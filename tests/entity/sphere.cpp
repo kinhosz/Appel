@@ -1,6 +1,6 @@
-#include <entity/sphere.h>
-#include <geometry/point.h>
-#include <graphic/color.h>
+#include <Appel/entity/sphere.h>
+#include <Appel/geometry/point.h>
+#include <Appel/graphic/color.h>
 #include <assert.h>
 using namespace std;
 

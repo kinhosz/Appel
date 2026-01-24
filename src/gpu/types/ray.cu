@@ -1,4 +1,4 @@
-#include <gpu/types/ray.h>
+#include <Appel/gpu/types/ray.h>
 
 __host__ __device__ GRay::GRay() {}
 

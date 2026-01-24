@@ -1,5 +1,5 @@
-#include <datastructure/octreeNode.h>
-#include <geometry/utils.h>
+#include <Appel/datastructure/octreeNode.h>
+#include <Appel/geometry/utils.h>
 
 OctreeNode::OctreeNode(double xl, double xr, double yl, double yr, double zl, double zr) {
     xL = xl;

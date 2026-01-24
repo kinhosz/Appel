@@ -1,5 +1,5 @@
-#include <gpu/kernel.h>
-#include <gpu/helper.h>
+#include <Appel/gpu/kernel.h>
+#include <Appel/gpu/helper.h>
 
 __global__ void castRay(GRay* ray, float* buffer_dist, int* buffer_idx, GTriangle* cache, int* N) {
     __shared__ float dist[1200];

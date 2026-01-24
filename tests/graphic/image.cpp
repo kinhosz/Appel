@@ -1,5 +1,5 @@
-#include <graphic/image.h>
-#include <graphic/pixel.h>
+#include <Appel/graphic/image.h>
+#include <Appel/graphic/pixel.h>
 #include <cassert>
 
 int main() {

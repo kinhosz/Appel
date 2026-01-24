@@ -1,8 +1,8 @@
-#include <entity/triangularMesh.h>
-#include <geometry/ray.h>
-#include <geometry/utils.h>
+#include <Appel/entity/triangularMesh.h>
+#include <Appel/geometry/ray.h>
+#include <Appel/geometry/utils.h>
 #include <cassert>
-#include <geometry/utils.h>
+#include <Appel/geometry/utils.h>
 using namespace std;
 
 int main() {

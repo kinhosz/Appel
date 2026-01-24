@@ -1,4 +1,4 @@
-#include <graphic/frame.h>
+#include <Appel/graphic/frame.h>
 #include <cassert>
 
 Frame::Frame(): verticalResolution(0), horizontalResolution(0) {}

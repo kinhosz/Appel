@@ -1,4 +1,4 @@
-#include <entity/triangularMesh.h>
+#include <Appel/entity/triangularMesh.h>
 #include <cassert>
 using namespace std;
 

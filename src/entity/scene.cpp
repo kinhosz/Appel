@@ -1,6 +1,6 @@
-#include <entity/scene.h>
-#include <geometry/utils.h>
-#include <geometry/coordinateSystem.h>
+#include <Appel/entity/scene.h>
+#include <Appel/geometry/utils.h>
+#include <Appel/geometry/coordinateSystem.h>
 #include <memory>
 #include <math.h>
 #include <algorithm>

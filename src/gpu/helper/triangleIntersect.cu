@@ -1,4 +1,4 @@
-#include <gpu/helper.h>
+#include <Appel/gpu/helper.h>
 
 __device__ float triangleIntersect(GRay ray, GTriangle triangle) {
     if(triangle.host_id == -1) return -1.0;

@@ -1,8 +1,8 @@
-#include <geometry/triangle.h>
-#include <geometry/point.h>
-#include <graphic/color.h>
-#include <geometry/vetor.h> 
-#include <geometry/utils.h>
+#include <Appel/geometry/triangle.h>
+#include <Appel/geometry/point.h>
+#include <Appel/graphic/color.h>
+#include <Appel/geometry/vetor.h> 
+#include <Appel/geometry/utils.h>
 #include <cmath>
 
 const double EPSILON = 1e-10;

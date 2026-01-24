@@ -1,4 +1,4 @@
-#include <geometry/ray.h>
+#include <Appel/geometry/ray.h>
 
 Ray::Ray() {
     location = Point();

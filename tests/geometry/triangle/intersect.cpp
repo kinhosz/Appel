@@ -1,5 +1,5 @@
-#include <geometry/triangle.h>
-#include <geometry/utils.h>
+#include <Appel/geometry/triangle.h>
+#include <Appel/geometry/utils.h>
 using namespace std;
 
 int main(){

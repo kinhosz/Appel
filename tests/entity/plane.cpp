@@ -1,7 +1,7 @@
-#include <entity/plane.h>
-#include <geometry/point.h>
-#include <geometry/vetor.h>
-#include <graphic/color.h>
+#include <Appel/entity/plane.h>
+#include <Appel/geometry/point.h>
+#include <Appel/geometry/vetor.h>
+#include <Appel/graphic/color.h>
 #include <assert.h>
 using namespace std;
 

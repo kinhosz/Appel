@@ -1,5 +1,5 @@
-#include <geometry/vetor.h>
-#include <geometry/utils.h>
+#include <Appel/geometry/vetor.h>
+#include <Appel/geometry/utils.h>
 #include <math.h>
 
 Vetor::Vetor(): x(0), y(0), z(0) {}

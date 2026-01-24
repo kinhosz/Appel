@@ -1,5 +1,5 @@
-#include <geometry/surfaceIntersection.h>
-#include <geometry/utils.h>
+#include <Appel/geometry/surfaceIntersection.h>
+#include <Appel/geometry/utils.h>
 #include <math.h>
 
 SurfaceIntersection::SurfaceIntersection(){

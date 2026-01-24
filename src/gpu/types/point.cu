@@ -1,4 +1,4 @@
-#include <gpu/types/point.h>
+#include <Appel/gpu/types/point.h>
 
 __host__ __device__ GPoint::GPoint() {}
 

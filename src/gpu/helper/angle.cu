@@ -1,4 +1,4 @@
-#include <gpu/helper.h>
+#include <Appel/gpu/helper.h>
 
 __device__ float angle(GPoint a, GPoint b) {
     float eps = 1e-9;

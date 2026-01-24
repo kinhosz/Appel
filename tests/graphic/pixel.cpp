@@ -1,5 +1,5 @@
-#include <graphic/pixel.h>
-#include <graphic/color.h>
+#include <Appel/graphic/pixel.h>
+#include <Appel/graphic/color.h>
 #include <assert.h>
 using namespace std;
 

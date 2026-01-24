@@ -1,6 +1,6 @@
-#include <entity/box.h>
-#include <geometry/ray.h>
-#include <geometry/utils.h>
+#include <Appel/entity/box.h>
+#include <Appel/geometry/ray.h>
+#include <Appel/geometry/utils.h>
 #include <cassert>
 using namespace std;
 

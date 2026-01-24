@@ -1,4 +1,4 @@
-#include <gpu/helper.h>
+#include <Appel/gpu/helper.h>
 
 __device__ int f_cmp(float a, float b) {
     float eps = 0.0005;

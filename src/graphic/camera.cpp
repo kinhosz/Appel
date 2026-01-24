@@ -1,6 +1,6 @@
-#include <graphic/camera.h>
-#include <geometry/coordinateSystem.h>
-#include <geometry/vetor.h>
+#include <Appel/graphic/camera.h>
+#include <Appel/geometry/coordinateSystem.h>
+#include <Appel/geometry/vetor.h>
 
 Camera::Camera(Point loc, Point focus, int vPixels, int hPixels): 
     Camera(loc, focus, vPixels, hPixels, (double) (hPixels - 1) / 2.0) {}

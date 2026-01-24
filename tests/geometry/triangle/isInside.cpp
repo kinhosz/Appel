@@ -1,4 +1,4 @@
-#include <geometry/triangle.h>
+#include <Appel/geometry/triangle.h>
 using namespace std;
 
 int main(){

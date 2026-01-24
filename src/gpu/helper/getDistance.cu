@@ -1,4 +1,4 @@
-#include <gpu/helper.h>
+#include <Appel/gpu/helper.h>
 
 __device__ float getDistance(GRay ray, GTriangle triangle) {
     GPoint normal = getNormal(triangle);

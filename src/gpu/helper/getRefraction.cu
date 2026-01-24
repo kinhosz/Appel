@@ -1,4 +1,4 @@
-#include <gpu/helper.h>
+#include <Appel/gpu/helper.h>
 
 __device__ GPoint getRefraction(GTriangle surface, GPoint dir, 
     float refIndex) {

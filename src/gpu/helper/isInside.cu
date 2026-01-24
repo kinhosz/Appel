@@ -1,4 +1,4 @@
-#include <gpu/helper.h>
+#include <Appel/gpu/helper.h>
 
 __device__ int isInside(GPoint point, GTriangle triangle) {
     float ABC = 0.5 * norm(cross(sub(triangle.point[1],triangle.point[0]), sub(triangle.point[2], triangle.point[0])));

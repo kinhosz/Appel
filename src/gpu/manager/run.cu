@@ -1,10 +1,10 @@
 #ifndef APPEL_GPU_DISABLED
 
-#include <gpu/manager.h>
-#include <gpu/types/ray.h>
-#include <gpu/kernel.h>
-#include <gpu/pragma.h>
-#include <gpu/reducer.h>
+#include <Appel/gpu/manager.h>
+#include <Appel/gpu/types/ray.h>
+#include <Appel/gpu/kernel.h>
+#include <Appel/gpu/pragma.h>
+#include <Appel/gpu/reducer.h>
 
 int Manager::run(const Ray& ray) {
     GRay gr(ray);

@@ -1,6 +1,6 @@
-#include <entity/box.h>
+#include <Appel/entity/box.h>
 #include <assert.h>
-#include <geometry/ray.h>
+#include <Appel/geometry/ray.h>
 
 Box::Box() {
     this->diffuseCoefficient = 0.0;

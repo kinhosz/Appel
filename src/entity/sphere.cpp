@@ -1,6 +1,6 @@
-#include <entity/sphere.h>
-#include <geometry/vetor.h>
-#include <geometry/utils.h>
+#include <Appel/entity/sphere.h>
+#include <Appel/geometry/vetor.h>
+#include <Appel/geometry/utils.h>
 #include <cmath>
 
 Sphere::Sphere() : Box(), center(Point()), radius(0.0), color(Color()) {}

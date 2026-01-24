@@ -1,4 +1,4 @@
-#include <gpu/helper.h>
+#include <Appel/gpu/helper.h>
 
 __device__ GPoint pointAt(GRay ray, float t) {
     GPoint p;

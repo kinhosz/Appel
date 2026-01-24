@@ -1,7 +1,7 @@
-#include <entity/scene.h>
-#include <entity/light.h>
-#include <geometry/point.h>
-#include <graphic/color.h>
+#include <Appel/entity/scene.h>
+#include <Appel/entity/light.h>
+#include <Appel/geometry/point.h>
+#include <Appel/graphic/color.h>
 #include <vector>
 #include <assert.h>
 using namespace std;

@@ -1,4 +1,4 @@
-#include <gpu/helper.h>
+#include <Appel/gpu/helper.h>
 
 __device__ GPoint cross(GPoint a, GPoint b) {
     float i = (a.y * b.z) - (a.z * b.y);

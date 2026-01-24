@@ -1,4 +1,4 @@
-#include <gpu/helper.h>
+#include <Appel/gpu/helper.h>
 
 __device__ GPoint normalize(GPoint p) {
     float r = sqrt(p.x * p.x + p.y * p.y + p.z * p.z);

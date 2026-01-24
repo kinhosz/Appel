@@ -1,6 +1,6 @@
-#include <entity/light.h>
-#include <geometry/point.h>
-#include <graphic/color.h>
+#include <Appel/entity/light.h>
+#include <Appel/geometry/point.h>
+#include <Appel/graphic/color.h>
 #include <assert.h>
 using namespace std;
 

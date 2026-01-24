@@ -1,8 +1,8 @@
 #ifndef APPEL_GPU_DISABLED
 
-#include <gpu/manager.h>
+#include <Appel/gpu/manager.h>
 #include <stdexcept>
-#include <gpu/kernel.h>
+#include <Appel/gpu/kernel.h>
 
 int Manager::add(const Triangle& t, int host_id) {
     if(free_pos == (int)maxTriangles) {

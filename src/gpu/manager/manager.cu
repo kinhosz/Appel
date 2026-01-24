@@ -1,10 +1,10 @@
 #ifndef APPEL_GPU_DISABLED
 
-#include <gpu/manager.h>
-#include <gpu/pragma.h>
-#include <gpu/types/triangle.h>
-#include <gpu/kernel.h>
-#include <gpu/types/ray.h>
+#include <Appel/gpu/manager.h>
+#include <Appel/gpu/pragma.h>
+#include <Appel/gpu/types/triangle.h>
+#include <Appel/gpu/kernel.h>
+#include <Appel/gpu/types/ray.h>
 
 Manager::Manager(unsigned int maxTriangles) {
     this->maxTriangles = maxTriangles;

@@ -1,4 +1,4 @@
-#include <gpu/helper.h>
+#include <Appel/gpu/helper.h>
 
 __device__ int castRay(GRay ray, GTriangle* cache_triangle) {
     float minDist = -1.0;
