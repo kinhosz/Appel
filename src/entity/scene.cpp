@@ -93,6 +93,14 @@ namespace Appel {
         assert(false);
     }
 
+    Box* Scene::getObjectRef(int index) {
+        if(planes.find(index) != planes.end()) return &planes.at(index);
+        if(spheres.find(index) != this->spheres.end()) return &spheres.at(index);
+        if(meshes.find(index) != this->meshes.end()) return &meshes.at(index);
+        assert(false);
+        return nullptr;
+    }
+
     std::pair<SurfaceIntersection, int> Scene::castRay(const Ray &ray) {
         SurfaceIntersection nearSurface;
         int index = -1;
