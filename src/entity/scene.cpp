@@ -216,9 +216,17 @@ namespace Appel {
         mappedTriangles.clear();
         triangleToMesh.clear();
         for(const std::pair<const int, TriangularMesh>& p: meshes) {
+            const Point &mesh_position = p.second.getPosition();
+
             const std::vector<Triangle>& triangles = p.second.getTriangles();
             for(const Triangle& triangle: triangles) {
-                mappedTriangles.push_back(triangle.rebase(cs));
+                mappedTriangles.push_back(
+                    triangle.moveTo(
+                        mesh_position
+                    ).rebase(
+                        cs
+                    )
+                );
                 triangleToMesh.push_back(p.first);
             }
         }

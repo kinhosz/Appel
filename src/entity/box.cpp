@@ -65,4 +65,11 @@ namespace Appel {
     void Box::setRefractionIndex(double refractionIndex) {
         this->refractionIndex = refractionIndex;
     }
+
+    /* Override */
+    Point Box::getPosition() const {
+        return Point();
+    }
+
+    void Box::moveTo(const Point &p) {}
 }

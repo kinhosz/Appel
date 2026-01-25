@@ -53,4 +53,12 @@ namespace Appel {
 
         return nearSurface;
     }
+
+    Point TriangularMesh::getPosition() const {
+        return position;
+    }
+
+    void TriangularMesh::moveTo(const Point &p) {
+        this->position = p;
+    }
 }
