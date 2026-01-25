@@ -202,4 +202,19 @@ namespace Appel {
         t.setUVMapping(uv[0], uv[1], uv[2]);
         return t;
     }
+
+    Triangle Triangle::moveTo(const Point &p) const {
+        Vetor vp(p);
+        Vetor v0 = Vetor(vertices[0]) + vp;
+        Vetor v1 = Vetor(vertices[1]) + vp;
+        Vetor v2 = Vetor(vertices[2]) + vp;
+
+        Point p0(v0.x, v0.y, v0.z);
+        Point p1(v1.x, v1.y, v1.z);
+        Point p2(v2.x, v2.y, v2.z);
+
+        Triangle t(p0, p1, p2, color);
+        t.setUVMapping(uv[0], uv[1], uv[2]);
+        return t;
+    }
 }

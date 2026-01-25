@@ -13,6 +13,7 @@ namespace Appel {
         std::vector<Triangle> triangles;
         bool _hasTexture;
         Image texture;
+        Point position;
     public:
         TriangularMesh();
         TriangularMesh(const std::vector<Triangle> triangles);
@@ -24,6 +25,8 @@ namespace Appel {
         Triangle getTriangle(int index) const;
         std::vector<Triangle> getTriangles() const;
         SurfaceIntersection intersect(const Ray& ray) const override;
+        virtual Point getPosition() const override;
+        virtual void moveTo(const Point &p) override;
     };
 }
 

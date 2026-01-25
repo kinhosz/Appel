@@ -8,6 +8,7 @@
 namespace Appel {
     class Box {
     private:
+        /* Phong */
         double diffuseCoefficient;
         double specularCoefficient;
         double ambientCoefficient;
@@ -19,6 +20,7 @@ namespace Appel {
         Box();
         virtual SurfaceIntersection intersect(const Ray& ray) const;
 
+        /* Phong */
         double getDiffuseCoefficient() const;
         double getSpecularCoefficient() const;
         double getAmbientCoefficient() const;
@@ -28,6 +30,10 @@ namespace Appel {
         double getRefractionIndex() const;
         void setPhongValues(double kd, double ks, double ka, double kr, double kt, double roughness);
         void setRefractionIndex(double refractionIndex);
+
+        /* Entity */
+        virtual Point getPosition() const;
+        virtual void moveTo(const Point &p);
     };
 }
 
