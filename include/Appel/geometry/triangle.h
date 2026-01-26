@@ -45,6 +45,7 @@ namespace Appel {
 
         Triangle rebase(const CoordinateSystem& cs) const;
         Triangle moveTo(const Point &p) const;
+        Triangle rotate(double alphaX, double alphaY, double alphaZ) const;
     };
 }
 

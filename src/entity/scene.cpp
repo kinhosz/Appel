@@ -225,11 +225,16 @@ namespace Appel {
         triangleToMesh.clear();
         for(const std::pair<const int, TriangularMesh>& p: meshes) {
             const Point &mesh_position = p.second.getPosition();
+            double alphaX = p.second.getXRotation();
+            double alphaY = p.second.getYRotation();
+            double alphaZ = p.second.getZRotation();
 
             const std::vector<Triangle>& triangles = p.second.getTriangles();
             for(const Triangle& triangle: triangles) {
                 mappedTriangles.push_back(
-                    triangle.moveTo(
+                    triangle.rotate(
+                        alphaX, alphaY, alphaZ
+                    ).moveTo(
                         mesh_position
                     ).rebase(
                         cs

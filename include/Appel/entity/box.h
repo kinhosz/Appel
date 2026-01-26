@@ -34,6 +34,14 @@ namespace Appel {
         /* Entity */
         virtual Point getPosition() const;
         virtual void moveTo(const Point &p);
+
+        virtual double getXRotation() const;
+        virtual double getYRotation() const;
+        virtual double getZRotation() const;
+
+        virtual void setXRotation(double alpha);
+        virtual void setYRotation(double alpha);
+        virtual void setZRotation(double alpha);
     };
 }
 
