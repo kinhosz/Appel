@@ -61,4 +61,28 @@ namespace Appel {
     void TriangularMesh::moveTo(const Point &p) {
         this->position = p;
     }
+
+    double TriangularMesh::getXRotation() const {
+        return alphaRotation[0];
+    }
+
+    double TriangularMesh::getYRotation() const {
+        return alphaRotation[1];
+    }
+
+    double TriangularMesh::getZRotation() const {
+        return alphaRotation[2];
+    }
+
+    void TriangularMesh::setXRotation(double alpha) {
+        alphaRotation[0] = alpha;
+    }
+
+    void TriangularMesh::setYRotation(double alpha) {
+        alphaRotation[1] = alpha;
+    }
+
+    void TriangularMesh::setZRotation(double alpha) {
+        alphaRotation[2] = alpha;
+    }
 }
