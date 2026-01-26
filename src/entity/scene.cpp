@@ -93,6 +93,14 @@ namespace Appel {
         assert(false);
     }
 
+    Box* Scene::getObjectRef(int index) {
+        if(planes.find(index) != planes.end()) return &planes.at(index);
+        if(spheres.find(index) != this->spheres.end()) return &spheres.at(index);
+        if(meshes.find(index) != this->meshes.end()) return &meshes.at(index);
+        assert(false);
+        return nullptr;
+    }
+
     std::pair<SurfaceIntersection, int> Scene::castRay(const Ray &ray) {
         SurfaceIntersection nearSurface;
         int index = -1;
@@ -216,9 +224,22 @@ namespace Appel {
         mappedTriangles.clear();
         triangleToMesh.clear();
         for(const std::pair<const int, TriangularMesh>& p: meshes) {
+            const Point &mesh_position = p.second.getPosition();
+            double alphaX = p.second.getXRotation();
+            double alphaY = p.second.getYRotation();
+            double alphaZ = p.second.getZRotation();
+
             const std::vector<Triangle>& triangles = p.second.getTriangles();
             for(const Triangle& triangle: triangles) {
-                mappedTriangles.push_back(triangle.rebase(cs));
+                mappedTriangles.push_back(
+                    triangle.rotate(
+                        alphaX, alphaY, alphaZ
+                    ).moveTo(
+                        mesh_position
+                    ).rebase(
+                        cs
+                    )
+                );
                 triangleToMesh.push_back(p.first);
             }
         }

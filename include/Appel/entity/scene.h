@@ -70,6 +70,7 @@ namespace Appel {
         int addObject(TriangularMesh object);
 
         Box getObject(int index) const;
+        Box* getObjectRef(int index);
 
         std::pair<SurfaceIntersection, int> castRay(const Ray &ray);
         Color traceRay(const Ray &ray, int layer);

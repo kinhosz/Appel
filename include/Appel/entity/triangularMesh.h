@@ -13,6 +13,9 @@ namespace Appel {
         std::vector<Triangle> triangles;
         bool _hasTexture;
         Image texture;
+        Point position;
+        double alphaRotation[3];
+
     public:
         TriangularMesh();
         TriangularMesh(const std::vector<Triangle> triangles);
@@ -24,6 +27,16 @@ namespace Appel {
         Triangle getTriangle(int index) const;
         std::vector<Triangle> getTriangles() const;
         SurfaceIntersection intersect(const Ray& ray) const override;
+        virtual Point getPosition() const override;
+        virtual void moveTo(const Point &p) override;
+
+        virtual double getXRotation() const override;
+        virtual double getYRotation() const override;
+        virtual double getZRotation() const override;
+
+        virtual void setXRotation(double alpha) override;
+        virtual void setYRotation(double alpha) override;
+        virtual void setZRotation(double alpha) override;
     };
 }
 

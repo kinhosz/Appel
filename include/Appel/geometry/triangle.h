@@ -44,6 +44,8 @@ namespace Appel {
         SurfaceIntersection getSurface(Ray ray) const;
 
         Triangle rebase(const CoordinateSystem& cs) const;
+        Triangle moveTo(const Point &p) const;
+        Triangle rotate(double alphaX, double alphaY, double alphaZ) const;
     };
 }
 

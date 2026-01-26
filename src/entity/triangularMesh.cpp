@@ -29,7 +29,7 @@ namespace Appel {
     }
 
     Pixel TriangularMesh::getTexture(double x, double y) const {
-        int px = (texture.getWidth() - 1) * (1.0 - x);
+        int px = (texture.getWidth() - 1) * x;
         int py = (texture.getHeight() - 1) * y;
         return texture.getPixel(px, py);
     }
@@ -52,5 +52,37 @@ namespace Appel {
         }
 
         return nearSurface;
+    }
+
+    Point TriangularMesh::getPosition() const {
+        return position;
+    }
+
+    void TriangularMesh::moveTo(const Point &p) {
+        this->position = p;
+    }
+
+    double TriangularMesh::getXRotation() const {
+        return alphaRotation[0];
+    }
+
+    double TriangularMesh::getYRotation() const {
+        return alphaRotation[1];
+    }
+
+    double TriangularMesh::getZRotation() const {
+        return alphaRotation[2];
+    }
+
+    void TriangularMesh::setXRotation(double alpha) {
+        alphaRotation[0] = alpha;
+    }
+
+    void TriangularMesh::setYRotation(double alpha) {
+        alphaRotation[1] = alpha;
+    }
+
+    void TriangularMesh::setZRotation(double alpha) {
+        alphaRotation[2] = alpha;
     }
 }
