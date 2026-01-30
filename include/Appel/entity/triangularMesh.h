@@ -14,7 +14,7 @@ namespace Appel {
         bool _hasTexture;
         Image texture;
         Point position;
-        double alphaRotation[3];
+        Quaternion rotation;
 
     public:
         TriangularMesh();
@@ -30,13 +30,9 @@ namespace Appel {
         virtual Point getPosition() const override;
         virtual void moveTo(const Point &p) override;
 
-        virtual double getXRotation() const override;
-        virtual double getYRotation() const override;
-        virtual double getZRotation() const override;
+        virtual Quaternion getRotation() const override;
 
-        virtual void setXRotation(double alpha) override;
-        virtual void setYRotation(double alpha) override;
-        virtual void setZRotation(double alpha) override;
+        virtual void setRotation(const Quaternion &q) override;
     };
 }
 

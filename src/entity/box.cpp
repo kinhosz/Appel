@@ -73,11 +73,7 @@ namespace Appel {
 
     void Box::moveTo(const Point &p) {}
 
-    double Box::getXRotation() const { return 0.0; }
-    double Box::getYRotation() const { return 0.0; }
-    double Box::getZRotation() const { return 0.0; }
+    Quaternion Box::getRotation() const { return Quaternion(); }
 
-    void Box::setXRotation(double alpha) {}
-    void Box::setYRotation(double alpha) {}
-    void Box::setZRotation(double alpha) {}
+    void Box::setRotation(const Quaternion &q) {}
 }

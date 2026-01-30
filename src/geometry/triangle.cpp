@@ -218,20 +218,14 @@ namespace Appel {
         return t;
     }
 
-    Triangle Triangle::rotate(double alphaX, double alphaY, double alphaZ) const {
-        Vetor v0(vertices[0]);
-        Vetor v1(vertices[1]);
-        Vetor v2(vertices[2]);
+    Triangle Triangle::rotate(const Quaternion &q) const {
+        Triangle t(
+            q.rotatePoint(vertices[0]),
+            q.rotatePoint(vertices[1]),
+            q.rotatePoint(vertices[2]),
+            color
+        );
 
-        v0 = v0.rotateX(alphaX).rotateY(alphaY).rotateZ(alphaZ);
-        v1 = v1.rotateX(alphaX).rotateY(alphaY).rotateZ(alphaZ);
-        v2 = v2.rotateX(alphaX).rotateY(alphaY).rotateZ(alphaZ);
-
-        Point p0(v0.x, v0.y, v0.z);
-        Point p1(v1.x, v1.y, v1.z);
-        Point p2(v2.x, v2.y, v2.z);
-
-        Triangle t(p0, p1, p2, color);
         t.setUVMapping(uv[0], uv[1], uv[2]);
         return t;
     }

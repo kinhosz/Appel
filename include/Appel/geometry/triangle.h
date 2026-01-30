@@ -6,6 +6,7 @@
 #include <Appel/geometry/surfaceIntersection.h>
 #include <Appel/geometry/ray.h>
 #include <Appel/geometry/coordinateSystem.h>
+#include <Appel/geometry/quaternion.h>
 #include <Appel/graphic/color.h>
 #include <assert.h> 
 #include <utility>
@@ -45,7 +46,7 @@ namespace Appel {
 
         Triangle rebase(const CoordinateSystem& cs) const;
         Triangle moveTo(const Point &p) const;
-        Triangle rotate(double alphaX, double alphaY, double alphaZ) const;
+        Triangle rotate(const Quaternion &q) const;
     };
 }
 
