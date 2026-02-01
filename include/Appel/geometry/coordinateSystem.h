@@ -7,7 +7,7 @@
 namespace Appel {
     struct CoordinateSystem {
         Point origin;
-        double angle_x, angle_y, angle_z;
+        Vetor ux, uy, uz;
 
         CoordinateSystem();
         CoordinateSystem(Point origin, Vetor ux, Vetor uy, Vetor uz);
