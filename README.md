@@ -2,7 +2,7 @@
 Computer Vision with Ray Tracing
 
 <!-- Dont modify this line!!! -->
-**Current Version**: 0.28.0
+**Current Version**: 0.29.0
 
 > Project for the Graphics Processing discipline of Computer Science course @ CIn/UFPE.
 ## Contributing guide
