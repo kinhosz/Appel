@@ -23,8 +23,6 @@ namespace Appel {
         std::vector<Vetor> triangleNormals,
         std::vector<Color> colors
     );
-
-    double getAngle(double x, double y);
 }
 
 #endif

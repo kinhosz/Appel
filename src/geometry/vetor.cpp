@@ -27,8 +27,7 @@ namespace Appel {
 
     double Vetor::angle(const Vetor &other) const {
         double cost = dot(other) / (norm() * other.norm());
-        cost = std::min(std::max(cost, -1.0 + EPSILON), 1.0 - EPSILON);
-
+    
         return acos(cost);
     }
 
